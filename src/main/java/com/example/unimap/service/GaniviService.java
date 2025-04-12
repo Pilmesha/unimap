@@ -40,8 +40,8 @@ public class GaniviService {
     public String runPythonScript(String username, String password) {
         try {
             // Create the ProcessBuilder to call the Python script with credentials
-            String pythonExecutable = "C:/Users/Emoboy/anaconda3/envs/myenv/Scripts/python.exe";
-            ProcessBuilder pb = new ProcessBuilder(pythonExecutable, "uni_scrape.py", username, password);
+            String scriptRunner = "scripts/run_uni_scrape.bat"; // Or just "run_uni_scrape.bat" if in project root
+            ProcessBuilder pb = new ProcessBuilder(scriptRunner, username, password);
             pb.redirectErrorStream(true); // Merge stderr and stdout
 
             Process process = pb.start();
