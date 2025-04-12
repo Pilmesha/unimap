@@ -22,7 +22,7 @@ public class Djikstra {
 
         mapCreator();
         fillAdjacentAndEdgeWeight();
-        zerothIteration();
+        
     }
 
     private void mapCreator() {
@@ -72,6 +72,7 @@ public class Djikstra {
 
 
     public String minPathBetweenPoints(String source, String finish) {
+        zerothIteration();
         int ourSource = realRoomToOur.get(source);
         int ourFinish = realRoomToOur.get(finish);
         int processingV;
