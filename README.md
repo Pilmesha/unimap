@@ -20,3 +20,5 @@ User manual:
    Enter your uni.tsu.ge username and password in the specified field. After some time of processing the data, you will see your personal schedule: subjects, times and classrooms on the map.
 
 Tip: It's better to use the application before the lectures in order to manage accessing the classroom timely.
+
+For any questions feel free to contact our support via e-mail: techsupport@ganivimap.ge
