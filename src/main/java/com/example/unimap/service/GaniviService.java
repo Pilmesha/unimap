@@ -2,6 +2,7 @@ package com.example.unimap.service;
 
 import com.example.unimap.algorithm.Graph;
 import com.example.unimap.database.GaniviDataApi;
+import com.example.unimap.dto.PathResult;
 
 import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
@@ -10,26 +11,22 @@ import java.util.stream.Collectors;
 
 @Service
 public class GaniviService {
-    public String findShortestPath(String start, String end) {
-        try{
-            String minimalPath;
-            minimalPath = GaniviDataApi.selectPathsTable(start + "-" + end);
-            if (minimalPath != null) {
-            return minimalPath;
+    public PathResult findShortestPath(String start, String end) {
+        String minimalPath;
+        minimalPath = GaniviDataApi.selectPathsTable(start + "-" + end);
+        if (minimalPath != null) {
+        return new PathResult(minimalPath, true);
         }
 
-            minimalPath = GaniviDataApi.selectPathsTable(start + "-" + end);
-            if (minimalPath != null) {
-                return  GaniviDataApi.pathReverser(minimalPath);
-            }
-
-            minimalPath = Graph.minPathBetweenPoints(start, end);
-            GaniviDataApi.insertIntoPathsTable(start + "-" + end, minimalPath);
-
-            return minimalPath;
+        minimalPath = GaniviDataApi.selectPathsTable(start + "-" + end);
+        if (minimalPath != null) {
+            return new PathResult(GaniviDataApi.pathReverser(minimalPath), true);
         }
-        catch (Exception e) {return "Error: Could not find the shortest path. " + e.getMessage();}
-        
+
+        minimalPath = Graph.minPathBetweenPoints(start, end);
+        GaniviDataApi.insertIntoPathsTable(start + "-" + end, minimalPath);
+
+        return new PathResult(minimalPath, false);
     }
 
     public String findStaffRoom(String fullName) {
