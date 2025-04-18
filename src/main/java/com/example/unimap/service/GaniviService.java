@@ -15,10 +15,10 @@ public class GaniviService {
         String minimalPath;
         minimalPath = GaniviDataApi.selectPathsTable(start + "-" + end);
         if (minimalPath != null) {
-        return new PathResult(minimalPath, true);
+            return new PathResult(minimalPath, true);
         }
 
-        minimalPath = GaniviDataApi.selectPathsTable(start + "-" + end);
+        minimalPath = GaniviDataApi.selectPathsTable(end + "-" + start);
         if (minimalPath != null) {
             return new PathResult(GaniviDataApi.pathReverser(minimalPath), true);
         }
@@ -37,8 +37,8 @@ public class GaniviService {
     public String runPythonScript(String username, String password) {
         try {
             // Create the ProcessBuilder to call the Python script with credentials
-            String scriptRunner = "scripts/run_uni_scrape.bat"; // Or just "run_uni_scrape.bat" if in project root
-            ProcessBuilder pb = new ProcessBuilder(scriptRunner, username, password);
+            String scriptRunner = "resources/uni_scrape.py";
+            ProcessBuilder pb = new ProcessBuilder("python3", scriptRunner, username, password);
             pb.redirectErrorStream(true); // Merge stderr and stdout
 
             Process process = pb.start();
