@@ -34,10 +34,10 @@ COPY src/main/resources/requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copy project files
-COPY . .
+COPY target/unimap-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port
 EXPOSE 8080
 
 # Start Spring Boot app
-CMD ["java", "-jar", "target/unimap-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "app.jar"]
