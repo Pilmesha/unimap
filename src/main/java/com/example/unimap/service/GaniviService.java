@@ -37,8 +37,9 @@ public class GaniviService {
     public String runPythonScript(String username, String password) {
         try {
             // Create the ProcessBuilder to call the Python script with credentials
-            String scriptRunner = "resources/uni_scrape.py";
-            ProcessBuilder pb = new ProcessBuilder("python3", scriptRunner, username, password);
+            String scriptRunner = "/app/uni_scrape.py";
+            String pythonPath = "python3";
+            ProcessBuilder pb = new ProcessBuilder(pythonPath, scriptRunner ,username, password);
             pb.redirectErrorStream(true); // Merge stderr and stdout
 
             Process process = pb.start();
