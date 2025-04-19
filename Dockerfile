@@ -6,7 +6,8 @@ ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies for Python, Chrome, Selenium
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip wget unzip gnupg curl && \
+    apt-get install -y python3 python3-pip python3-venv && \
+    python3 -m venv /opt/venv \
     # Install Chrome
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     apt install -y ./google-chrome-stable_current_amd64.deb && \
@@ -27,7 +28,10 @@ WORKDIR /app
 COPY . .
 
 # Install Python dependencies
-RUN pip3 install --no-cache-dir -r src/main/resources/requirements.txt
+ENV PATH="/opt/venv/bin:$PATH"
+COPY src/main/resources/requirements.txt requirements.txt
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Make Maven wrapper executable and build Spring Boot app
 RUN chmod +x mvnw && ./mvnw clean install -DskipTests
