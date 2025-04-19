@@ -5,9 +5,6 @@ import com.example.unimap.service.GaniviService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
-// import java.util.Arrays;
-
-// import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -45,16 +42,11 @@ public class GaniviController {
 
         PathResponse response = new PathResponse(path, cost, true, "Path found successfully", result.isFromDatabase());
         return ResponseEntity.ok(response);
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new PathResponse("", 0, false, "Internal error: " + e.getMessage(), false));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new PathResponse("", 0, false, "Internal error: " + e.getMessage(), false));
+        }
     }
-}
-
-
-    
 
     // Endpoint to get the staff room number by full name
     @GetMapping("/staff-room")
@@ -73,12 +65,11 @@ public class GaniviController {
     
             return ResponseEntity.ok(new ScheduleResponse(result, true, "Schedule fetched successfully"));
     
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ScheduleResponse("", false, "An error occurred: " + e.getMessage()));
         }
     }
-    
 }
