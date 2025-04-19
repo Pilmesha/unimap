@@ -1,43 +1,43 @@
-FROM eclipse-temurin:17-jdk
+# Use OpenJDK 17 base image
+FROM openjdk:17-slim
 
-# Environment setup
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Set workdir
+WORKDIR /app
 
-# Install system dependencies for Python, Chrome, Selenium
+# Install dependencies
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip python3-venv && \
-    python3 -m venv /opt/venv \
-    # Install Chrome
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    apt install -y ./google-chrome-stable_current_amd64.deb && \
-    rm google-chrome-stable_current_amd64.deb && \
-    # Install ChromeDriver (fallback to fixed version if auto-match fails)
-    CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+') && \
+    apt-get install -y wget curl unzip gnupg python3 python3-pip python3-venv fonts-liberation && \
+    apt-get clean
+
+# Set up Python venv
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --upgrade pip
+
+# Install Google Chrome
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && \
+    apt-get install -y google-chrome-stable && \
+    apt-get clean
+
+# Get Chrome version and install matching ChromeDriver
+RUN CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+') && \
     wget -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip" || \
     wget -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip" && \
     unzip /tmp/chromedriver.zip -d /usr/local/bin && \
     chmod +x /usr/local/bin/chromedriver && \
-    rm /tmp/chromedriver.zip && \
-    apt-get clean
+    rm /tmp/chromedriver.zip
 
-# Set the working directory
-WORKDIR /app
+# Copy and install Python dependencies
+COPY src/main/resources/requirements.txt .
+RUN pip install -r requirements.txt
 
-# Copy all project files
+# Copy project files
 COPY . .
 
-# Install Python dependencies
-ENV PATH="/opt/venv/bin:$PATH"
-COPY src/main/resources/requirements.txt requirements.txt
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Make Maven wrapper executable and build Spring Boot app
-RUN chmod +x mvnw && ./mvnw clean install -DskipTests
-
-# Expose Spring Boot's default port
+# Expose port
 EXPOSE 8080
 
 # Start Spring Boot app
-CMD ["./mvnw", "spring-boot:run"]
+CMD ["java", "-jar", "target/unimap-0.0.1-SNAPSHOT.jar"]
