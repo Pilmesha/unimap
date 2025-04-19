@@ -1,3 +1,12 @@
+# --- Stage 1: Build Java Spring Boot .jar ---
+FROM maven:3.9.4-eclipse-temurin-17 AS builder
+
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+
+# --- Stage 2: Runtime with Java, Python, Selenium ---
 # Use OpenJDK 17 base image
 FROM openjdk:17-slim
 
@@ -34,7 +43,10 @@ COPY src/main/resources/requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copy project files
-COPY target/unimap-0.0.1-SNAPSHOT.jar app.jar
+COPY . .
+
+# Copy the built jar from builder stage
+COPY --from=builder /app/target/unimap-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port
 EXPOSE 8080
