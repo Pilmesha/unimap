@@ -20,4 +20,4 @@ User manual:
 
 Tip: It's better to use the application before the lectures in order to manage accessing the classroom timely.
 
-For any questions feel free to contact our support via e-mail: techsupport@ https://unimap-5vf6.onrender.com
+For any questions feel free to contact our support via e-mail: techsupport@unimap-5vf6.onrender.com
