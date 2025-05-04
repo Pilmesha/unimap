@@ -18,7 +18,6 @@ public class GaniviDataApi {
         createStaffTable();
     }
 
-
     // create and delete --------------------------------------------------------------------------
     private static void createPathsTable() {
         // SQL statement for creating a Paths table

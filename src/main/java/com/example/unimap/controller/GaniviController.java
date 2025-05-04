@@ -19,33 +19,33 @@ public class GaniviController {
     // Endpoint to get the shortest path
     @PostMapping("/shortest-path")
     public ResponseEntity<PathResponse> getShortestPath(@RequestBody PathRequest request) {
-    try {
-        PathResult result = ganiviService.findShortestPath(request.getStart(), request.getEnd());
-        String rawPath = result.getRawPath();
+        try {
+            PathResult result = ganiviService.findShortestPath(request.getStart(), request.getEnd());
+            String rawPath = result.getRawPath();
 
-        if (rawPath == null || rawPath.isEmpty()) {
-            return ResponseEntity.ok(new PathResponse("", 0, false, "Path not found", result.isFromDatabase()));
-        }
-
-        String[] parts = rawPath.trim().split("-");
-        double cost = Double.parseDouble(parts[parts.length - 1]);
-
-        StringBuilder pathBuilder = new StringBuilder();
-        for (int i = 0; i < parts.length - 1; i++) {
-            pathBuilder.append(parts[i]);
-            if (i < parts.length - 2) {
-                pathBuilder.append(" -> ");
+            if (rawPath == null || rawPath.isEmpty()) {
+                return ResponseEntity.ok(new PathResponse("", 0, false, "Path not found", result.isFromDatabase()));
             }
-        }
 
-        String path = pathBuilder.toString();
+            String[] parts = rawPath.trim().split("-");
+            double cost = Double.parseDouble(parts[parts.length - 1]);
 
-        PathResponse response = new PathResponse(path, cost, true, "Path found successfully", result.isFromDatabase());
-        return ResponseEntity.ok(response);
+            StringBuilder pathBuilder = new StringBuilder();
+            for (int i = 0; i < parts.length - 1; i++) {
+                pathBuilder.append(parts[i]);
+                if (i < parts.length - 2) {
+                    pathBuilder.append(" -> ");
+                }
+            }
+
+            String path = pathBuilder.toString();
+
+            PathResponse response = new PathResponse(path, cost, true, "Path found successfully", result.isFromDatabase());
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new PathResponse("", 0, false, "Internal error: " + e.getMessage(), false));
-        }
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new PathResponse("", 0, false, "Internal error: " + e.getMessage(), false));
+            }
     }
 
     // Endpoint to get the staff room number by full name
@@ -65,11 +65,11 @@ public class GaniviController {
     
             return ResponseEntity.ok(new ScheduleResponse(result, true, "Schedule fetched successfully"));
     
-            } catch (Exception e) {
+        } catch (Exception e) {
                 e.printStackTrace();
                 return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ScheduleResponse("", false, "An error occurred: " + e.getMessage()));
-        }
+            }
     }
 }
