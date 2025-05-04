@@ -1,17 +1,16 @@
 Interactive campus map for freshmen students.
-Web based project built using Spring Boot framework in the backend, React Native in the frontend and bit of python ;)
+https://unimap-5vf6.onrender.com
+Web based project built using Spring Boot framework in the backend, React Native in the frontend and bit of python ;). The solution is containerized and ran on render server on a linux machine, which handles all the functionality.
 Accessable in two languages and is fully responsive.
 It has three functionalities: 
 1. Getting shortest path from one classroom to another;
 2. Getting shortest path to the staff members cabinets (works by inputing academic personal's first and last name);
 3. Getting user's personal schedule in order to show where will the lecture take place.
 
-Installation guide:
-For now, the project is only available on windows operating system. In order all of three functionalities to work smoothly, you should install Anaconda on your device. After making sure you have it, please run setup_and_run.bat file, located in the scrips folder. It will install all the necessary libraries and environments for the application. Your device will be ready to run the project
 
 User manual:
 1. Running the application
-   Visit webpage ganivimap.ge, where you will see a detailed map of Ganivi
+   Visit webpage https://unimap-5vf6.onrender.com, where you will see a detailed map of Ganivi
 2. Classrooms' location:
    In the search field enter the number of classroom you are closest to and the number of classroom you want to access, click 'Let's go' button and the application will show the shortest path from your location to the willing place on the map.
 3. Staff members' location:
@@ -21,4 +20,4 @@ User manual:
 
 Tip: It's better to use the application before the lectures in order to manage accessing the classroom timely.
 
-For any questions feel free to contact our support via e-mail: techsupport@ganivimap.ge
+For any questions feel free to contact our support via e-mail: techsupport@unimap-5vf6.onrender.com
