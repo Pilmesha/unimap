@@ -1,4 +1,4 @@
-Interactive campus map for freshmen students.
+Backend for interactive campus map for freshmen students.
 https://unimap-5vf6.onrender.com
 Web based project built using Spring Boot framework in the backend, React Native in the frontend and bit of python ;). The solution is containerized and ran on render server on a linux machine, which handles all the functionality.
 Accessable in two languages and is fully responsive.
