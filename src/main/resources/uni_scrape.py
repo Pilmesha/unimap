@@ -52,9 +52,9 @@ def scrape_uni(username, password):
             schedule_entry[headers[idx]] = None
         
         schedule_data.append(schedule_entry)
-        df_schedule = pd.DataFrame(schedule_data)
-        for column in df_schedule.columns:
-            df_schedule[column] = df_schedule[column].apply(lambda x: '\n'.join(x) if isinstance(x, list) else x)
+    df_schedule = pd.DataFrame(schedule_data)
+    for column in df_schedule.columns:
+        df_schedule[column] = df_schedule[column].apply(lambda x: '\n'.join(x) if isinstance(x, list) else x)
         
     driver.quit()
     return df_schedule.to_json(orient="records", force_ascii=False)
