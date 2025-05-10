@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 import pandas as pd
 import time
 import sys
+import json
 def scrape_uni(username, password):
     #Innit
     chrome_options = Options()
@@ -57,14 +58,21 @@ def scrape_uni(username, password):
         df_schedule[column] = df_schedule[column].apply(lambda x: '\n'.join(x) if isinstance(x, list) else x)
         
     driver.quit()
-    return df_schedule.to_json(orient="records", force_ascii=False)
+    return f'{{"data": {df_schedule.to_json(orient="records", force_ascii=False)}}}'
 
 if __name__ == "__main__":
-    username = sys.argv[1]
-    password = sys.argv[2]
+    try:
+        username = sys.argv[1]
+        password = sys.argv[2]
+        # Call the scraping function
+        result = scrape_uni(username, password)
 
-    # Call the scraping function
-    result = scrape_uni(username, password)
-
-    # Print result so Java can read it
-    sys.stdout.buffer.write(result.encode('utf-8'))  # Ensure UTF-8 output
+        # Print result so Java can read it
+        sys.stdout.buffer.write(result.encode('utf-8'))  # Ensure UTF-8 output
+    except Exception as e:
+        error_response = {
+            "error": True,
+            "message": str(e)
+        }
+        sys.stdout.buffer.write(json.dumps(error_response).encode('utf-8'))
+        sys.exit(1)

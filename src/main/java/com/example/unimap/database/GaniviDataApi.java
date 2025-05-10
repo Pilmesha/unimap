@@ -16,6 +16,7 @@ public class GaniviDataApi {
     static {
         createPathsTable();
         createStaffTable();
+        FillStaffTable.fill();
     }
 
     // create and delete --------------------------------------------------------------------------
