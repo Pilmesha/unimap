@@ -4,8 +4,6 @@ public class PathRequest {
     private String start;
     private String end;
 
-    public PathRequest() {}
-
     public String getStart() {
         return start;
     }

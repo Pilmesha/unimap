@@ -3,11 +3,14 @@ package com.example.unimap.service;
 import com.example.unimap.algorithm.Graph;
 import com.example.unimap.database.GaniviDataApi;
 import com.example.unimap.dto.PathResult;
-import static com.example.unimap.service.GeorgianToLatinMaker.*;          // imports static members of class
+import static com.example.unimap.service.Translator.*;          // imports static members of class
 import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 import com.example.unimap.exception.*;
@@ -25,7 +28,7 @@ public class GaniviService {
 
         minimalPath = GaniviDataApi.selectPathsTable(end + "-" + start);
         if (minimalPath != null) {
-            return new PathResult(GaniviDataApi.pathReverser(minimalPath), true);
+            return new PathResult(pathReverser(minimalPath), true);
         }
         minimalPath = Graph.minPathBetweenPoints(start, end);
         if (minimalPath != null) {               // if rooms were valid
@@ -33,12 +36,14 @@ public class GaniviService {
         } else throw new ResourceNotFoundException("One of the rooms doesn't exist.");
         return new PathResult(minimalPath, false);
     }
+
+
     public String findStaffRoom(String staffFullName) {
         if (!staffFullName.matches(".*[a-zA-Zა-ჰ].*")) {
             throw new InvalidInputException("Name must contain letters, not just numbers.");
         }
         if (georgianToLatin.keySet().contains(staffFullName.charAt(0))) {
-            staffFullName = translator(staffFullName);          // converts into latin
+            staffFullName = Translator.translator(staffFullName);     // converts into latin
         }
         String staffRoom = GaniviDataApi.selectStaffTable(staffFullName.toLowerCase());
         
@@ -47,13 +52,8 @@ public class GaniviService {
         }
         return staffRoom;    
     }
-    private String translator(String georgian) {
-        StringBuilder toEnglish = new StringBuilder();
-        for (int i = 0; i < georgian.length(); i++) {
-            toEnglish.append(georgianToLatin.get(georgian.charAt(i)));
-        }
-        return toEnglish.toString();
-    }
+
+
     // Method to execute the Python script and return its result
     public String runPythonScript(String username, String password) {
         if (username.isEmpty() || password.isEmpty()|| username.trim().isEmpty() || password.trim().isEmpty()) 
@@ -83,5 +83,14 @@ public class GaniviService {
         } catch (Exception e) {
             throw new ExternalProcessException("Login or password is invalid " + e.getMessage());
         }
+    }
+
+    private static String pathReverser(String path) {
+        String[] points = path.split("-");
+        ArrayList<String> listPoints = new ArrayList<>(Arrays.asList(points));
+        String lastElement = listPoints.remove(listPoints.size() - 1);
+        Collections.reverse(listPoints);
+        listPoints.add(lastElement);
+        return String.join("-", listPoints);
     }
 }

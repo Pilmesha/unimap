@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 public class GaniviDataApi {
     private static final String url = "jdbc:sqlite:ganivi.db";
 
-    private GaniviDataApi() {}
+    private GaniviDataApi() {
+    }
 
     static {
         createPathsTable();
@@ -105,13 +106,5 @@ public class GaniviDataApi {
         }
 
         return null;
-    }
-    public static String pathReverser(String path) {
-        String[] points = path.split("-");
-        ArrayList<String> listPoints = new ArrayList<>(Arrays.asList(points));
-        String lastElement = listPoints.remove(listPoints.size() - 1);
-        Collections.reverse(listPoints);
-        listPoints.add(lastElement);
-        return String.join("-", listPoints);
     }
 }

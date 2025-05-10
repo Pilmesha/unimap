@@ -10,7 +10,6 @@ public class PathResponse {
 
 
     // Constructors
-    public PathResponse() {}
     public PathResponse(String path, double cost, boolean success, String message, boolean fromDatabase) {
         this.path = path;
         this.cost = cost;
@@ -51,6 +50,7 @@ public class PathResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
     public boolean isFromDatabase() {
         return fromDatabase;
     }

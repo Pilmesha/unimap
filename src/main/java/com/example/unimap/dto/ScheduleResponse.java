@@ -6,7 +6,6 @@ public class ScheduleResponse {
     private String message;
 
     public ScheduleResponse() {}
-
     public ScheduleResponse(String schedule, boolean success, String message) {
         this.schedule = schedule;
         this.success = success;

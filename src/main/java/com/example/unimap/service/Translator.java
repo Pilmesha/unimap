@@ -2,7 +2,7 @@ package com.example.unimap.service;
 
 import java.util.*;
 
-public class GeorgianToLatinMaker {
+public class Translator {
     static Map<Character, String> georgianToLatin = new HashMap<>();
     private static char[] georgianLetters = {'ა', 'ბ', 'გ', 'დ', 'ე', 'ვ', 'ზ', 'თ', 'ი', 'კ',
             'ლ', 'მ', 'ნ', 'ო', 'პ', 'ჟ', 'რ', 'ს', 'ტ', 'უ', 'ფ', 'ქ', 'ღ', 'ყ', 'შ', 'ჩ', 'ც',
@@ -17,6 +17,14 @@ public class GeorgianToLatinMaker {
         }
     }
 
-    private GeorgianToLatinMaker(){
+    private Translator(){
+    }
+
+    public static String translator(String georgian) {
+        StringBuilder toEnglish = new StringBuilder();
+        for (int i = 0; i < georgian.length(); i++) {
+            toEnglish.append(georgianToLatin.get(georgian.charAt(i)));
+        }
+        return toEnglish.toString();
     }
 }
