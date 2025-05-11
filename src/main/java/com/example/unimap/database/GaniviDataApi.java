@@ -92,6 +92,12 @@ public class GaniviDataApi {
         return executeSelectStatement(selectStatement);
     }
 
+    static int selectCountStaffTable(){
+        String selectCountStatement = "select count(*) from StaffRooms";
+        String rowsNumber = executeSelectStatement(selectCountStatement);
+        return Integer.parseInt(rowsNumber);
+    }
+
     private static String executeSelectStatement(String statement) {
         try (Connection conn = DriverManager.getConnection(url)) {
             Statement st = conn.createStatement();
