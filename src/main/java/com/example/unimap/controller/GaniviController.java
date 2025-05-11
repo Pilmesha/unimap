@@ -48,6 +48,5 @@ public class GaniviController {
     public ResponseEntity<ScheduleResponse> getSchedule(@RequestBody ScheduleRequest request) {
         String result = ganiviService.runPythonScript(request.getUsername(), request.getPassword());
         return ResponseEntity.ok(new ScheduleResponse(result, true, "Schedule fetched successfully"));
-
     }
 }

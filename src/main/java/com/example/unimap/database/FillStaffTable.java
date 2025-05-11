@@ -10,6 +10,10 @@ public class FillStaffTable {
     }
 
     static void fill() {
+        if(GaniviDataApi.selectCountStaffTable() > 0){
+            return;
+        }
+
         File staffRoomsFile = new File("staffRooms.txt");
 
         try (Scanner sc = new Scanner(staffRoomsFile)) {
