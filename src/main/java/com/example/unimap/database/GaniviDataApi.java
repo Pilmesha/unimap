@@ -1,9 +1,6 @@
 package com.example.unimap.database;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 import org.springframework.stereotype.Component;
 
