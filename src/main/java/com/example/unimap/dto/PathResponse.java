@@ -1,6 +1,5 @@
 package com.example.unimap.dto;
 
-
 public class PathResponse {
     private String path;
     private double cost;
@@ -54,7 +53,7 @@ public class PathResponse {
     public boolean isFromDatabase() {
         return fromDatabase;
     }
-    
+
     public void setFromDatabase(boolean fromDatabase) {
         this.fromDatabase = fromDatabase;
     }

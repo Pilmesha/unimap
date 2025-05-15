@@ -1,7 +1,10 @@
 package com.example.unimap.controller;
 
 import com.example.unimap.dto.*;
-import com.example.unimap.service.GaniviService;
+import com.example.unimap.service.MinimalPathService;
+import com.example.unimap.service.PythonService;
+import com.example.unimap.service.StaffRoomService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.ResponseEntity;
@@ -9,16 +12,19 @@ import org.springframework.http.ResponseEntity;
 @RestController
 @RequestMapping("/api")
 public class GaniviController {
-    private final GaniviService ganiviService;
+    private final MinimalPathService minPathService;
+    private final StaffRoomService staffService;
 
-    public GaniviController() {
-        this.ganiviService = new GaniviService();
+    @Autowired
+    private GaniviController(MinimalPathService minPathService, StaffRoomService staffService) {
+        this.minPathService = minPathService;
+        this.staffService = staffService;
     }
 
     // Endpoint to get the shortest path
     @PostMapping("/shortest-path")
-    public ResponseEntity<PathResponse> getShortestPath(@RequestBody PathRequest request) {
-        PathResult result = ganiviService.findShortestPath(request.getStart(), request.getEnd());
+    public ResponseEntity<PathResponse> getShortestPath(@RequestBody PathRequest pathReq) {
+        PathResult result = minPathService.findShortestPath(pathReq.getStart(), pathReq.getEnd());
         String rawPath = result.getRawPath();
 
         String[] parts = rawPath.trim().split("-");
@@ -41,12 +47,13 @@ public class GaniviController {
     // Endpoint to get the staff room number by full name
     @GetMapping("/staff-room")
     public ResponseEntity<String> getStaffRoom(@RequestParam(name = "staffFullName") String fullName) {
-        String room = ganiviService.findStaffRoom(fullName);
+        String room = staffService.findStaffRoom(fullName);
         return ResponseEntity.ok(room);
     }
+
     @PostMapping("/get_schedule")
     public ResponseEntity<ScheduleResponse> getSchedule(@RequestBody ScheduleRequest request) {
-        String result = ganiviService.runPythonScript(request.getUsername(), request.getPassword());
+        String result = PythonService.runPythonScript(request.getUsername(), request.getPassword());
         return ResponseEntity.ok(new ScheduleResponse(result, true, "Schedule fetched successfully"));
     }
 }
