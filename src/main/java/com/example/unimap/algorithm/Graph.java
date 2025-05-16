@@ -65,7 +65,7 @@ public class Graph {
     }
 
     private static void addAllEdges() {
-        File edgesFile = new File("edges.txt");
+        File edgesFile = new File("src/main/resources/edges.txt");
         try (Scanner sc = new Scanner(edgesFile)) {
             while (sc.hasNextLine()) {
                 String[] fromFile = sc.nextLine().split(", ");          // node1, node2 and length

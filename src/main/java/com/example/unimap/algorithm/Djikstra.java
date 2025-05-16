@@ -95,11 +95,11 @@ public class Djikstra {
 
         int pathLength = (int) Math.round(dist[ourFinish]);    // as last element of our min path
 
-        return returnPath(ourFinish) + "-" + pathLength;
+        return constractPath(ourFinish) + " -> " + pathLength;
     }
 
 
-    private String returnPath(int ourFinish) {
+    private String constractPath(int ourFinish) {
         ArrayList<String> path = new ArrayList<>();
         Integer oneParent = ourFinish;
 
@@ -111,6 +111,6 @@ public class Djikstra {
 
         Collections.reverse(path);
 
-        return String.join("-", path);
+        return String.join(" -> ", path);
     }
 }

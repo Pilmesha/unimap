@@ -13,6 +13,7 @@ public class MinimalPath {
     @Id
     private String points;
 
+    @Lob
     @Column(nullable = false)
     private String pathBetween;
 }

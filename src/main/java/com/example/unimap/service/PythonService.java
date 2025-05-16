@@ -19,12 +19,14 @@ public class PythonService {
     public static String runPythonScript(String username, String password) {
         if (username.isEmpty() || password.isEmpty() || username.trim().isEmpty() || password.trim().isEmpty())
             throw new InvalidInputException("Credentials cannot be empty.");
+
+        String scriptRunner = "src/main/resources/uni_scrape.py";
+        String pythonPath = "python3";
+
         try {
             // Create the ProcessBuilder to call the Python script with credentials
-            String scriptRunner = "/app/uni_scrape.py";
-            String pythonPath = "python3";
             ProcessBuilder pb = new ProcessBuilder(pythonPath, scriptRunner, username, password);
-            pb.redirectErrorStream(true); // Merge stderr and stdout
+            pb.redirectErrorStream(true);            // Merge stderr and stdout
 
             Process process = pb.start();
 
@@ -37,12 +39,13 @@ public class PythonService {
             if (exitCode != 0) {
                 throw new ExternalProcessException("Python script exited with code " + exitCode + ". Output: " + output);
             }
-            return output;  // Return JSON string from Python script
+            return output;          // Return JSON string from Python script
         } catch (IOException | InterruptedException e) {
-            Thread.currentThread().interrupt();  // best practice
+            Thread.currentThread().interrupt();     // best practice
             throw new ExternalProcessException("Failed to run Python script.");
         } catch (Exception e) {
             throw new ExternalProcessException("Login or password is invalid " + e.getMessage());
         }
     }
+
 }

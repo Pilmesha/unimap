@@ -1,7 +1,7 @@
 package com.example.unimap.service;
 
 import com.example.unimap.algorithm.Graph;
-import com.example.unimap.dto.PathResult;
+import com.example.unimap.dto.PathResponse;
 import com.example.unimap.entity.MinimalPath;
 import com.example.unimap.exception.InvalidInputException;
 import com.example.unimap.exception.ResourceNotFoundException;
@@ -29,39 +29,49 @@ public class MinimalPathService {
     }
 
 
-    public PathResult findShortestPath(String start, String end) {
+    public String findShortestPath(String start, String end) {
         if (start == null || end == null || start.trim().isEmpty() || end.trim().isEmpty())
             throw new InvalidInputException("Start or end room cannot be empty.");
 
         String minimalPath;
-        minimalPath = getMinimalPath(start + "-" + end);
+        minimalPath = getMinimalPath(start + " -> " + end);
 
-        minimalPath = getMinimalPath(start + "-" + end);
+        minimalPath = getMinimalPath(start + " -> " + end);
         if (minimalPath != null) {
-            return new PathResult(minimalPath, true);
+            return minimalPath;
         }
 
-        minimalPath = getMinimalPath(end + "-" + start);
+        minimalPath = getMinimalPath(end + " -> " + start);
         if (minimalPath != null) {
-            return new PathResult(pathReverser(minimalPath), true);
+            return pathReverser(minimalPath);
         }
 
         minimalPath = Graph.minPathBetweenPoints(start, end);
         if (minimalPath != null) {                              // if rooms were valid
-            pathRepo.save(new MinimalPath(start + "-" + end, minimalPath));
+            pathRepo.save(new MinimalPath(start + " -> " + end, minimalPath));
         } else {
             throw new ResourceNotFoundException("One of the rooms doesn't exist.");
         }
 
-        return new PathResult(minimalPath, false);
+        return minimalPath;
     }
 
     private String pathReverser(String path) {
-        String[] points = path.split("-");
+        String[] points = path.split(" -> ");
         ArrayList<String> listPoints = new ArrayList<>(Arrays.asList(points));
         String lastElement = listPoints.remove(listPoints.size() - 1);
         Collections.reverse(listPoints);
         listPoints.add(lastElement);
-        return String.join("-", listPoints);
+        return String.join(" -> ", listPoints);
+    }
+
+
+    public PathResponse makePathResponse(String minPath) {
+        int lastArrowIndex = minPath.lastIndexOf(" -> ");
+        String strCost = minPath.substring(lastArrowIndex + 4);
+        int cost = Integer.parseInt(strCost);
+        String minPathWithoutCost = minPath.substring(0, lastArrowIndex);
+
+        return new PathResponse(minPathWithoutCost, cost, "Path found successfully");
     }
 }
