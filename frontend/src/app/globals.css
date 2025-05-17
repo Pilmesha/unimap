@@ -5,6 +5,7 @@
 @layer utilities {
   .responsive-room-text {
     @apply text-[5px] sm:text-[8px] md:text-[10px] lg:text-[12px] xl:text-[14px];
+    @apply text-white border-blue-500 bg-blue-600 z-30 flex items-center justify-center;
   }
 }
 
@@ -124,7 +125,5 @@ input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.room-numbers {
 
-}
 
