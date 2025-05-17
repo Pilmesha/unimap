@@ -2,7 +2,13 @@
 FROM maven:3.9.4-eclipse-temurin-17 AS builder
 
 WORKDIR /app
-COPY . .
+
+# Copy only the necessary files for Maven build
+COPY pom.xml .
+COPY src/main/java src/main/java
+COPY src/main/resources src/main/resources
+
+# Build JAR
 RUN mvn clean package -DskipTests
 
 
@@ -36,14 +42,10 @@ RUN wget -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/1
     chmod +x /usr/local/bin/chromedriver && \
     rm /tmp/chromedriver.zip
 
-
 # Copy and install Python dependencies
-COPY src/main/resources/requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
+COPY src/main/py /app/py
+RUN pip install -r /app/py/requirements.txt
 
-# Copy project files
-COPY . .
-COPY src/main/resources/uni_scrape.py /app/uni_scrape.py
 
 
 # Copy the built jar from builder stage
