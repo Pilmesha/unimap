@@ -70,7 +70,15 @@
 			<artifactId>json</artifactId>
 			<version>20240303</version> <!-- latest as of 2024 -->
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.13.1</version>
+	    </dependency>
 	</dependencies>
+
+
 
 	<build>
 		<plugins>

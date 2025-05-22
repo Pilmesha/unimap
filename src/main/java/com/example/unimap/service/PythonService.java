@@ -1,4 +1,5 @@
 package com.example.unimap.service;
+
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,11 +13,11 @@ import com.example.unimap.exception.*;
 @Service
 public class PythonService {
 
-    private PythonService(){
+    private PythonService() {
     }
 
     // Method to execute the Python script and return its result
-    public static String runPythonScript(String username, String password) {
+    public static String getSchedule(String username, String password) {
         if (username.isEmpty() || password.isEmpty() || username.trim().isEmpty() || password.trim().isEmpty())
             throw new InvalidInputException("Credentials cannot be empty.");
 
@@ -39,7 +40,7 @@ public class PythonService {
             if (exitCode != 0) {
                 throw new ExternalProcessException("Python script exited with code " + exitCode + ". Output: " + output);
             }
-            return output;          // Return JSON string from Python script
+            return output.replace("\\/", "/");          // Return JSON string from Python script
         } catch (IOException | InterruptedException e) {
             Thread.currentThread().interrupt();     // best practice
             throw new ExternalProcessException("Failed to run Python script.");

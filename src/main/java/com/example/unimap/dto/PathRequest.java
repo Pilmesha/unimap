@@ -1,14 +1,17 @@
 package com.example.unimap.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
-@Setter
 @Getter
-@AllArgsConstructor
 public class PathRequest {
     private String start;
     private String end;
+
+    private void setStart(String start) {
+        this.start = start;
+        if (start == null || start.trim().isEmpty()) {
+            this.start = "entrance";
+        }
+    }
 }
 

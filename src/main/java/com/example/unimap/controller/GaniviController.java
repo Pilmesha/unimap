@@ -1,9 +1,14 @@
 package com.example.unimap.controller;
 
 import com.example.unimap.dto.*;
+import com.example.unimap.jsonConvertor.Convertor;
+import com.example.unimap.jsonConvertor.toJson.ClearSubjectsCreator;
+import com.example.unimap.jsonConvertor.fromJson.SubjectsFromJson;
+import com.example.unimap.jsonConvertor.toJson.Subjects;
 import com.example.unimap.service.MinimalPathService;
 import com.example.unimap.service.PythonService;
 import com.example.unimap.service.StaffRoomService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,9 +41,10 @@ public class GaniviController {
         return ResponseEntity.ok(room);
     }
 
-    @GetMapping("/get_schedule")
-    public ResponseEntity<String> getSchedule(@RequestParam String userName, @RequestParam String password) {
-        String result = PythonService.runPythonScript(userName, password);
-        return ResponseEntity.ok(result);
+    @PostMapping("/schedule")
+    public ResponseEntity<String> getSchedule(@RequestBody ScheduleRequest scheduleReq) {
+        String scheduleJson = PythonService.getSchedule(scheduleReq.getUsername(), scheduleReq.getPassword());
+        String newSchedule = Convertor.newSchedule(scheduleJson);
+        return ResponseEntity.ok(newSchedule);
     }
 }
