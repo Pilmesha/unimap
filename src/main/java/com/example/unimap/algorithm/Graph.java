@@ -1,7 +1,8 @@
 package com.example.unimap.algorithm;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -65,13 +66,22 @@ public class Graph {
     }
 
     private static void addAllEdges() {
-        File edgesFile = new File("src/main/resources/edges.txt");
-        try (Scanner sc = new Scanner(edgesFile)) {
-            while (sc.hasNextLine()) {
-                String[] fromFile = sc.nextLine().split(", ");          // node1, node2 and length
-                addEdge(fromFile[0], fromFile[1], Double.parseDouble(fromFile[2]));
+        try (InputStream inputStream = Graph.class.getClassLoader().getResourceAsStream("edges.txt")) {
+            if (inputStream == null) {
+                System.err.println("edges.txt not found in resources.");
+                return;
             }
-        } catch (FileNotFoundException e) {
+
+            try (Scanner sc = new Scanner(inputStream)) {
+                while (sc.hasNextLine()) {
+                    String[] fromFile = sc.nextLine().split(", "); // node1, node2, length
+                    addEdge(fromFile[0], fromFile[1], Double.parseDouble(fromFile[2]));
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
 }

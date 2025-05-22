@@ -6,7 +6,6 @@ import com.example.unimap.entity.MinimalPath;
 import com.example.unimap.exception.InvalidInputException;
 import com.example.unimap.exception.ResourceNotFoundException;
 import com.example.unimap.repository.MinimalPathRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.Optional;
 public class MinimalPathService {
     private MinimalPathRepo pathRepo;
 
-    @Autowired
     private MinimalPathService(MinimalPathRepo pathRepo) {
         this.pathRepo = pathRepo;
     }

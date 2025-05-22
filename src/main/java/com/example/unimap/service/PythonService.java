@@ -21,7 +21,7 @@ public class PythonService {
         if (username.isEmpty() || password.isEmpty() || username.trim().isEmpty() || password.trim().isEmpty())
             throw new InvalidInputException("Credentials cannot be empty.");
 
-        String scriptRunner = "src/main/resources/uni_scrape.py";
+        String scriptRunner = "py/uni_scrape.py";
         String pythonPath = "python3";
 
         try {
