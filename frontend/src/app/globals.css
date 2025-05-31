@@ -4,8 +4,8 @@
 
 @layer utilities {
   .responsive-room-text {
-    @apply text-[5px] sm:text-[8px] md:text-[10px] lg:text-[12px] xl:text-[14px];
-    @apply text-white border-blue-500 bg-blue-600 z-30 flex items-center justify-center;
+    @apply text-[4px] sm:text-[6px] md:text-[8px] lg:text-[10px] xl:text-[12px];
+    @apply text-black border border-blue-600 bg-blue-500 z-30 flex items-center justify-center;
   }
 }
 

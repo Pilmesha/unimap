@@ -38,8 +38,8 @@ const MapDisplay:React.FC<Props>= ({floors}) => {
 
                 {/* <FloorOne /> */}
                 {/* <FloorTwo /> */}
-                <FloorThree />
-                {/* <FloorFour /> */} 
+                {/* <FloorThree /> */}
+                <FloorFour />
                 {/* <FloorFive /> */}
 
               <div className='relative flex flex-col gap-0'>
