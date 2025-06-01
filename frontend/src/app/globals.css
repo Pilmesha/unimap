@@ -1,0 +1,133 @@
+@import "tailwindcss";
+@import url('https://free.bboxtype.com/embedfonts/?family=FiraGO:700i');
+
+
+@layer utilities {
+  .responsive-room-text {
+    @apply text-[4px] sm:text-[6px] md:text-[8px] lg:text-[10px] xl:text-[12px];
+    @apply text-black border border-blue-600 bg-blue-500 z-30 flex items-center justify-center;
+  }
+  .stairs {
+    @apply border border-red-600 bg-red-500 z-30 flex items-center;
+    @apply text-[4px] sm:text-[6px] md:text-[8px] lg:text-[10px] xl:text-[12px];
+  }
+}
+
+@theme {
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  --color-twitter-blue: #1da1f2;
+  --blury-black: rgba(0,0,0,0.4);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  max-width: 1920px;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'FiraGO', sans-serif;
+}
+
+.font-firago {
+  font-family: 'FiraGO', sans-serif;
+}
+.light-mode {
+  --text-color: #171717;
+  --background: #ffffff;
+  --foreground: #171717;
+  --hover-color-primary: rgba(38, 38, 39, 0.61);
+  --hover-color-toggle: rgb(255, 217, 0);
+  --blurrer-bg: rgba(255, 255, 255, 0.2);
+  --basic: #000;
+  --second-text-color: rgb(180, 180, 180);
+  --button-bg: black;
+  --overlay-bg: rgba(255, 255, 255, 0.1);
+  --third-text-color: #4e4d4d;
+}
+
+.dark-mode {
+  --text-color: #ededed;
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --hover-color-primary: #DBEAFE;
+  --hover-color-toggle: rgb(255, 217, 0);
+  --blurrer-bg: rgba(0, 0, 0, 0.2);
+  --basic: #fff;
+  --second-text-color: black;
+  --overlay-bg: rgba(0, 0, 0, 0.4);
+  --third-text-color: #f5f3f3;
+
+}
+.floor-button {
+  font-family: 'Firago', sans-serif;
+  width: 110px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #3b82f6;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.floor-button:hover {
+  background-color: #3b82f6;
+  color: white;
+  scale: 1.05;
+  transition: all 0.2s ease-in-out;
+}
+
+.filtering-button {
+  font-family: 'Firago', sans-serif;
+  width: 150px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #3b82f6;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.filtering-button:hover {
+  background-color: #3b82f6;
+  color: white;
+  scale: 1.05;
+  transition:  0.3s ease-in-out  ;
+}
+.overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay-bg);
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
