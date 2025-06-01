@@ -16,7 +16,7 @@ const FloorFive = () => {
                     </div>
         
                     {/*start ოთახების ნომრები */}
-                    <div className='absolute top-[11.5%] left-[25.1%] w-[1.7%] h-[27.6%] border border-blue-500 bg-blue-600 z-30 flex items-center 
+                    <div  className='absolute top-[11.5%] left-[25.1%] w-[1.7%] h-[27.6%] border border-blue-500 bg-blue-600 z-30 flex items-center 
                     justify-center responsive-room-text'>
                         501
                     </div>
