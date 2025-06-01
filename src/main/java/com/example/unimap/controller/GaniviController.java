@@ -2,13 +2,9 @@ package com.example.unimap.controller;
 
 import com.example.unimap.dto.*;
 import com.example.unimap.jsonConvertor.Convertor;
-import com.example.unimap.jsonConvertor.toJson.ClearSubjectsCreator;
-import com.example.unimap.jsonConvertor.fromJson.SubjectsFromJson;
-import com.example.unimap.jsonConvertor.toJson.Subjects;
 import com.example.unimap.service.MinimalPathService;
 import com.example.unimap.service.PythonService;
 import com.example.unimap.service.StaffRoomService;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +23,7 @@ public class GaniviController {
     }
 
     // Endpoint to get the shortest path
-    @PostMapping("/shortest-path")
+    @PostMapping("/minimal-path")
     public ResponseEntity<PathResponse> getShortestPath(@RequestBody PathRequest pathReq) {
         String minPath = minPathService.findShortestPath(pathReq.getStart(), pathReq.getEnd());
         PathResponse response = minPathService.makePathResponse(minPath);

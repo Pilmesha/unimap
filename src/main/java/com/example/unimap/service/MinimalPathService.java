@@ -30,7 +30,6 @@ public class MinimalPathService {
     public String findShortestPath(String start, String end) {
         if (end == null || end.trim().isEmpty())
             throw new InvalidInputException("End room cannot be empty.");
-        System.out.println(start+" "+end);
 
         String minimalPath;
         minimalPath = getMinimalPath(start + " -> " + end);
