@@ -5,10 +5,6 @@ import com.example.unimap.jsonConvertor.Convertor;
 import com.example.unimap.service.MinimalPathService;
 import com.example.unimap.service.PythonService;
 import com.example.unimap.service.StaffRoomService;
-<<<<<<< HEAD
-=======
-import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> 152be2bd8c25348d297094a866569a432345b88a
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.ResponseEntity;
