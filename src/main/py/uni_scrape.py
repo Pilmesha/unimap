@@ -59,7 +59,6 @@ def scrape_uni(username, password):
         
     driver.quit()
     return df_schedule.to_json(orient="records", force_ascii=False)
-    #return f'{{"data": {df_schedule.to_json(orient="records", force_ascii=False)}}}'
 
 if __name__ == "__main__":
     try:
