@@ -1,35 +1,43 @@
-import Image from 'next/image'
-import React from 'react'
+'use client';
+import React from 'react';
 
-const FloorSix = () => {
+import {roomCoordinates} from '../../data/roomCoordinates'
 
-  return (
-    <main className='w-full h-auto'>
-                    <div className='relative w-full bg-white h-full '>
-                        <div className='w-full h-full overflow-hidden flex justify-center '>
-                            <Image
-                            src={'/images/600-ianebi.png'} 
-                            alt='third floor image'
-                            width={4000}
-                            height={4000}
-                            className='object-center object-cover w-[85%] h-full mb-0'
-                            />
-                        </div>
-                        
-                        {/*start ოთახების ნომრები */}
-                        <div data-room='620' className='absolute top-[63%] left-[62.8%] w-[16.4%] h-[31%]  responsive-room-text'>
-                            620
-                        </div>
-                        <div data-room ='621' className='absolute top-[63.5%] left-[58.5%] w-[4%] h-[33%]  responsive-room-text'>
-                            621
-                        </div>
-                        <div data-room ='628' className='absolute top-[62%] left-[16.2%] w-[17%] h-[31%]  responsive-room-text'>
-                            628
-                        </div>
-                        {/*end ოთახების ნომრები */}
-                    </div>
-                </main>
-  )
+interface FloorFourProps {
+  onRoomClick: (room: string) => void;
 }
 
-export default FloorSix
+const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick }) => {
+  const floorRooms = roomCoordinates[6]; // Get coordinates for floor 6
+
+  return (
+    <div className="relative w-full max-w-[1000px] mx-auto">
+      {/* Map image */}
+      <img
+        src="/images/606 ianebi.png"
+        alt="Floor 6 Map"
+        className="w-full h-auto"
+      />
+
+      {/* Clickable dots */}
+      {Object.entries(floorRooms).map(([room, coords]) => (
+        <div
+          key={room}
+          onClick={() => onRoomClick(room)}
+          className="absolute bg-red-500 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200"
+          style={{
+            left: `${coords.x}%`,
+            top: `${coords.y}%`,
+            width: '5px',
+            height: '5px',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 10
+          }}
+          title={`Room ${room}`}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default FloorFour;

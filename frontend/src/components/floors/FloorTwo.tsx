@@ -1,170 +1,177 @@
-import Image from 'next/image'
-import React from 'react'
+// 'use client';
+// import React from 'react';
+// import {roomCoordinates} from '../../data/roomCoordinates'
 
-const FloorTwo = () => {
+// interface FloorTwoProps {
+//   onRoomClick: (room: string) => void;
+// }
 
-   /*  const roomPositions = {
-        '1': {top: '20', left: '10.2'},
-        '2': {top: '20', left: '19.2'},
-    } */
+// const FloorTwo: React.FC<FloorTwoProps> = ({ onRoomClick }) => {
+//   const floorRooms = roomCoordinates[2]; // Get coordinates for floor 2
+//   return (
+//     <div className="relative w-full max-w-[1000px] mx-auto">
+//       {/* Map image */}
+//       <img
+//         src="/images/200-ianebi.png"
+//         alt="Floor 2 Map"
+//         className="w-full h-auto"
+//       />
 
+//       {/* Clickable dots */}
+//       {Object.entries(floorRooms).map(([room, coords]) => (
+//         <div
+//           key={room}
+//           onClick={() => onRoomClick(room)}
+//           className="absolute bg-red-500 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200"
+//           style={{
+//             left: `${coords.x}%`,
+//             top: `${coords.y}%`,
+//             width: '5px',
+//             height: '5px',
+//             transform: 'translate(-50%, -50%)',
+//             zIndex: 10
+//           }}
+//           title={`Room ${room}`}
+//         />
+//       ))}
+//     </div>
+//   );
+// };
 
-  return (
-    <main className='w-full h-auto'>
-            <div className='relative w-full h-full'>
-                <div className='w-full h-full overflow-hidden '>
-                    <Image
-                    src={'/images/meore-sartuli.jpg'} 
-                    alt='first floor image'
-                    width={4000}
-                    height={4000}
-                    className='object-center object-cover w-full h-full'
-                    />
-                </div>
-
-                {/* <div data-room='1' className='absolute top-[20%] left-[19.2%] w-[0.3%] h-[1%]  bg-black z-40'>
-                </div>
-     */}
-
-
-                {/*start ოთახების ნომრები */}
-                <div data-room='1' className='absolute top-[4.3%] left-[2.67%] w-[8.75%] h-[11.6%]  responsive-room-text'>
-                    1
-                </div>
-                <div data-room='2' className='absolute top-[4.3%] left-[11.5%] w-[8.75%] h-[11.6%]  responsive-room-text'>
-                    2
-                </div>
-                <div data-room='3' className='absolute top-[4.3%] left-[20.6%] w-[4.15%] h-[11.6%]  responsive-room-text'>
-                    3
-                </div>
-                <div data-room='4' className='absolute top-[4.35%] left-[25%] w-[4.3%] h-[11.8%]  responsive-room-text'>
-                    4
-                </div>
-                <div data-room='5' className='absolute top-[4.35%] left-[29.5%] w-[4.24%] h-[11.8%]  responsive-room-text'>
-                    5
-                </div>
-                <div data-room='6' className='absolute top-[4.35%] left-[33.9%] w-[4.2%] h-[11.8%]  responsive-room-text'>
-                    6
-                </div>
-                <div data-room='7' className='absolute top-[4.35%] left-[38.25%] w-[2.2%] h-[11.8%]  responsive-room-text'>
-                    7
-                </div>
-                <div data-room='8' className='absolute top-[4.32%] left-[40.6%] w-[8.65%] h-[11.6%]  responsive-room-text'>
-                    8
-                </div>
-                <div data-room='9' className='absolute top-[4.35%] left-[49.4%]  w-[2.2%] h-[11.99%]  responsive-room-text'>
-                    9
-                </div>
-                <div data-room='10' className='absolute top-[4.35%] left-[51.7%] w-[4.4%] h-[11.95%]  responsive-room-text'>
-                    10
-                </div>
-                <div data-room='11' className='absolute top-[4.35%] left-[56.2%] w-[4.3%] h-[11.92%]  responsive-room-text'>
-                    11
-                </div>
-                <div data-room='12' className='absolute top-[4.35%] left-[60.6%] w-[13.2%] h-[11.94%]  responsive-room-text'>
-                    12
-                </div>
-                <div data-room='13' className='absolute top-[4.4%] left-[74%] w-[6.55%] h-[11.89%]  responsive-room-text'>
-                    13
-                </div>
-                <div data-room='14' className='absolute top-[4.4%] left-[80.6%] w-[6.58%] h-[11.89%]  responsive-room-text'>
-                    14
-                </div>
+// export default FloorTwo;
 
 
-                <div data-room='15' className='absolute top-[25.6%] left-[7.2%] w-[4.4%] h-[11.89%]  responsive-room-text'>
-                    15
-                </div>
-                <div data-room='16' className='absolute top-[25.6%] left-[11.7%] w-[4.4%] h-[11.89%]  responsive-room-text'>
-                    16
-                </div>
-                <div data-room='17' className='absolute top-[25.6%] left-[16.2%] w-[4.3%] h-[11.89%]  responsive-room-text'>
-                    17
-                </div>
-                <div data-room='18' className='absolute top-[25.6%] left-[20.6%] w-[4.3%] h-[11.89%]  responsive-room-text'>
-                    18
-                </div>
-                <div data-room='19' className='absolute top-[25.6%] left-[25%] w-[4.38%] h-[11.9%]  responsive-room-text'>
-                    19
-                </div>
-                <div data-room='20' className='absolute top-[25.6%] left-[29.5%] w-[2.15%] h-[11.9%]  responsive-room-text'>
-                    20
-                </div>
-                <div data-room='21' className='absolute top-[25.6%] left-[38.45%] w-[2.12%] h-[11.9%]  responsive-room-text'>
-                    21
-                </div>
-                <div data-room='22' className='absolute top-[26.2%] left-[49.5%] w-[2.1%] h-[11.6%]  responsive-room-text'>
-                    22
-                </div>
-                <div data-room='23' className='absolute top-[26.2%] left-[51.7%] w-[2.22%] h-[11.7%]  responsive-room-text'>
-                    23
-                </div>
-                <div data-room='24' className='absolute top-[26.2%] left-[54.1%] w-[2%] h-[11.6%]  responsive-room-text'>
-                    24
-                </div>
-                <div data-room='25' className='absolute top-[26.2%] left-[56.2%] w-[4.35%] h-[11.6%]  responsive-room-text'>
-                    25
-                </div>
-                <div data-room='26' className='absolute top-[26.2%] left-[60.6%] w-[2.1%] h-[11.6%]  responsive-room-text'>
-                    26
-                </div>
-                <div data-room='27' className='absolute top-[26.2%] left-[62.8%] w-[2.2%] h-[11.6%]  responsive-room-text'>
-                    27
-                </div>
-                <div data-room='28' className='absolute top-[26.2%] left-[65.1%] w-[6.55%] h-[11.6%]  responsive-room-text'>
-                    28
-                </div>
-                <div data-room='29' className='absolute top-[26.2%] left-[71.9%] w-[6.5%] h-[11.6%]  responsive-room-text'>
-                    29
-                </div>
-                <div data-room='30' className='absolute top-[26.2%] left-[78.45%] w-[4.4%] h-[11.6%]  responsive-room-text'>
-                    30
-                </div>
-                <div data-room='31' className='absolute top-[26.2%] left-[82.9%] w-[4.4%] h-[11.6%]  responsive-room-text'>
-                    31
-                </div>
 
-                <div data-room='32' className='absolute top-[46%] left-[41.98%] w-[3.6%] h-[14%]  responsive-room-text'>
-                    32
-                </div>
-                <div data-room='33' className='absolute top-[60.4%] left-[41.98%] w-[3.6%] h-[14.1%]  responsive-room-text'>
-                    33
-                </div>
-                <div data-room='34' className='absolute top-[74.8%] left-[41.98%] w-[3.6%] h-[21.1%]  responsive-room-text'>
-                    34
-                </div>
+'use client';
+import React, { useRef, useEffect, useState } from 'react';
+import { roomCoordinates } from '../../data/roomCoordinates';
 
-
-                <div data-room='35' className='absolute top-[38.3%] left-[93.48%] w-[3.7%] h-[14.2%]  responsive-room-text'>
-                    35
-                </div>
-                <div data-room='36' className='absolute top-[53%] left-[93.48%] w-[3.7%] h-[14.2%]  responsive-room-text'>
-                    36
-                </div>
-                <div data-room='37' className='absolute top-[67.7%] left-[93.48%] w-[3.7%] h-[14.2%]  responsive-room-text'>
-                    37
-                </div>
-                <div data-room='38' className='absolute top-[82.25%] left-[93.48%] w-[3.7%] h-[14.2%]  responsive-room-text'>
-                    38
-                </div>
-                {/*end ოთახების ომრები */}
-
-                   
-
-              {/* კიბეები */}     
-                <div data-room='00' className='absolute top-[29%] left-[4%] w-[1.6%] h-[5.5%] stairs'>
-                    00
-                </div>
-                <div data-room='01' className='absolute top-[29.3%] left-[41.95%] w-[1.6%] h-[4.5%] stairs'>
-                    01
-                </div>
-                <div data-room='02' className='absolute top-[29.5%] left-[95.5%] w-[1.6%] h-[4.5%] stairs'>
-                    02
-                </div>
-
-            </div>
-        </main>
-  )
+interface FloorTwoProps {
+  onRoomClick: (room: string) => void;
+  pathPoints?: { x: number; y: number }[]; // Optional path points on this floor
+  cost?: number | null;
 }
 
-export default FloorTwo
+const FloorTwo: React.FC<FloorTwoProps> = ({ onRoomClick, pathPoints = [], cost }) => {
+  const floorRooms = roomCoordinates[2]; // Get coordinates for floor 2
+  
+  // Ref to the container div to track size if needed
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // State for container dimensions (optional, if needed for further scaling)
+  const [containerSize, setContainerSize] = useState<{width: number; height: number}>({width: 0, height: 0});
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setContainerSize({ width: rect.width, height: rect.height });
+    }
+  }, []);
+
+  // Build SVG path string from pathPoints
+  const pathD = pathPoints.length > 0
+    ? pathPoints.map((pt, i) => `${i === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`).join(' ')
+    : '';
+
+  return (
+    <div ref={containerRef} className="relative w-full max-w-[1000px] mx-auto" style={{ userSelect: 'none' }}>
+      <img
+        src="/images/200-ianebi.png"
+        alt="Floor 2 Map"
+        className="w-full h-auto block"
+        draggable={false}
+      />
+
+      {/* Room markers */}
+      {Object.entries(floorRooms).map(([room, coords]) => (
+        <div
+          key={room}
+          onClick={() => onRoomClick(room)}
+          className="absolute bg-red-500 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200"
+          style={{
+            left: `${coords.x}%`,
+            top: `${coords.y}%`,
+            width: '3px',
+            height: '3px',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 10,
+            boxShadow: '0 0 5px rgba(255,50,50,0.8)'
+          }}
+          title={`Room ${room}`}
+        />
+      ))}
+
+      {/* SVG overlay for path */}
+      <svg
+        className="absolute top-0 left-0 w-full h-full pointer-events-none"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        style={{ zIndex: 5 }}
+        aria-hidden="true"
+      >
+        {pathD && (
+          <path
+            d={pathD}
+            fill="none"
+            stroke="red"
+            strokeWidth={0.4}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="path-animation"
+            style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))' }}
+          />
+        )}
+        {/* 🚩 Cost label above path */}
+        {cost !== null && pathPoints.length > 1 && (() => {
+        const p1 = pathPoints[0];
+        const p2 = pathPoints[1];
+
+        const midX = (p1.x + p2.x) / 2;
+        const midY = (p1.y + p2.y) / 2;
+
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+
+        const length = Math.sqrt(dx * dx + dy * dy);
+        if (length === 0) return null;
+
+        const offsetAmount = -1; // You can tweak this
+        const offsetX = (-dy / length) * offsetAmount;
+        const offsetY = (dx / length) * offsetAmount;
+
+        const labelX = midX + offsetX;
+        const labelY = midY + offsetY;
+
+        return (
+          <g>
+            <text
+              x={labelX}
+              y={labelY}
+              fontSize="1.7"
+              fill="black"
+              textAnchor="middle"
+              alignmentBaseline="middle"
+              style={{ pointerEvents: 'none' }}
+            >
+              {cost}
+            </text>
+          </g>
+        );
+        })()}
+        {pathPoints.map((pt, idx) => (
+          <circle
+            key={idx}
+            cx={pt.x}
+            cy={pt.y}
+            r={0.4}
+            fill="red"
+            className="animate-ping-fast"
+          />
+        ))}
+        
+      </svg>
+    </div>
+  );
+};
+
+export default FloorTwo;

@@ -1,162 +1,135 @@
-import Image from 'next/image'
-import React from 'react'
+'use client';
+import React, { useRef, useEffect, useState } from 'react';
+import { roomCoordinates } from '../../data/roomCoordinates';
 
-const FloorFive = () => {
-  return (
-    <main className='w-full h-auto'>
-                <div className='relative w-full h-full'>
-                    <div className='w-full h-full overflow-hidden '>
-                        <Image
-                        src={'/images/mekhute_sartuli.png'} 
-                        alt='first floor image'
-                        width={4000}
-                        height={4000}
-                        className='object-center object-cover w-full h-full'
-                        />
-                    </div>
-        
-                    {/*start ოთახების ნომრები */}
-                    <div  className='absolute top-[11.5%] left-[25.1%] w-[1.7%] h-[27.6%] border border-blue-500 bg-blue-600 z-30 flex items-center 
-                    justify-center responsive-room-text'>
-                        501
-                    </div>
-                    <div className='absolute top-[11.5%] left-[26.9%] w-[3.5%] h-[27.6%]  responsive-room-text'>
-                        502
-                    </div>
-                    <div className='absolute top-[11.5%] left-[30.5%] w-[3.5%] h-[27.6%]  responsive-room-text'>
-                        503
-                    </div>
-                    <div className='absolute top-[11.5%] left-[34.1%] w-[1.7%] h-[27.6%]  responsive-room-text'>
-                        504
-                    </div>
-                    <div className='absolute top-[11.5%] left-[35.9%] w-[3.5%] h-[27.6%]  responsive-room-text'>
-                        505
-                    </div>
-                    <div className='absolute top-[11.5%] left-[39.5%] w-[1.7%] h-[27.6%]  responsive-room-text'>
-                        506
-                    </div>
-                    <div className='absolute top-[11.5%] left-[44.8%] w-[3.5%] h-[27.6%]  responsive-room-text'>
-                        507
-                    </div>
-                    <div className='absolute top-[11.5%] left-[48.4%] w-[3.5%] h-[27.6%]  responsive-room-text'>
-                        508
-                    </div>
-                    <div className='absolute top-[11.5%] left-[52.05%] w-[1.7%] h-[27.6%]  responsive-room-text'>
-                        509
-                    </div>
-                    <div className='absolute top-[11.5%] left-[53.9%] w-[3.5%] h-[27.6%]  responsive-room-text'>
-                        510
-                    </div>
-                    <div className='absolute top-[12%] left-[64.65%] w-[3.6%] h-[29%]  responsive-room-text'>
-                        511
-                    </div>
-                    <div className='absolute top-[12%] left-[68.3%] w-[1.75%] h-[29%]  responsive-room-text'>
-                        512
-                    </div>
-                    <div className='absolute top-[12%] left-[70.1%] w-[1.75%] h-[29%]  responsive-room-text'>
-                        513
-                    </div>
-                    <div className='absolute top-[12%] left-[72%] w-[5.3%] h-[29%]  responsive-room-text'>
-                        514
-                    </div>
-                    <div className='absolute top-[12%] left-[77.35%] w-[3.6%] h-[29%]  responsive-room-text'>
-                        515
-                    </div>
-                    <div className='absolute top-[12%] left-[81%] w-[3.4%] h-[32.3%]  responsive-room-text'>
-                        516
-                    </div>
-                    <div className='absolute top-[12%] left-[84.6%] w-[1.65%] h-[29%]  responsive-room-text'>
-                        517
-                    </div>
-                    <div className='absolute top-[12%] left-[86.4%] w-[1.65%] h-[29%]  responsive-room-text'>
-                        518
-                    </div>
-                    <div className='absolute top-[12%] left-[88.15%] w-[3.45%] h-[29%]  responsive-room-text'>
-                        519
-                    </div>
-                    <div className='absolute top-[12%] left-[91.7%] w-[3.5%] h-[29%]  responsive-room-text'>
-                        520
-                    </div>
-                    <div className='absolute top-[12%] left-[95.3%] w-[3.5%] h-[28.7%]  responsive-room-text'>
-                        521
-                    </div>
-
-                    <div className='absolute top-[64.5%] left-[1.65%] w-[3.45%] h-[27.5%]  responsive-room-text'>
-                        522
-                    </div>
-                    <div className='absolute top-[64.5%] left-[5.2%] w-[3.45%] h-[27.5%]  responsive-room-text'>
-                        523
-                    </div>
-                    <div className='absolute top-[64.5%] left-[8.75%] w-[3.45%] h-[27.5%]  responsive-room-text'>
-                        524
-                    </div>
-                    <div className='absolute top-[64.5%] left-[12.3%] w-[1.75%] h-[27.5%]  responsive-room-text'>
-                        525
-                    </div>
-                    <div className='absolute top-[64.5%] left-[14.2%] w-[1.7%] h-[27.5%]  responsive-room-text'>
-                        526
-                    </div>
-                    <div className='absolute top-[64.5%] left-[16.2%] w-[1.45%] h-[27.5%]  responsive-room-text'>
-                        527
-                    </div>
-                    <div className='absolute top-[64%] left-[17.8%] w-[7.05%] h-[28%]  responsive-room-text'>
-                        528
-                    </div>
-                    <div className='absolute top-[64%] left-[26.85%] w-[3.5%] h-[27%]  responsive-room-text'>
-                        529
-                    </div>
-                    <div className='absolute top-[64%] left-[30.45%] w-[3.45%] h-[27%]  responsive-room-text'>
-                        530
-                    </div>
-                    <div className='absolute top-[64%] left-[34.1%] w-[3.45%] h-[27%]  responsive-room-text'>
-                        531
-                    </div>
-                    <div className='absolute top-[64%] left-[37.65%] w-[3.45%] h-[27%]  responsive-room-text'>
-                        532
-                    </div>
-                    <div className='absolute top-[64%] left-[41.3%] w-[3.45%] h-[27%]  responsive-room-text'>
-                        533
-                    </div>
-                    <div className='absolute top-[64%] left-[44.85%] w-[3.55%] h-[27%]  responsive-room-text'>
-                        534
-                    </div>
-                    <div className='absolute top-[64%] left-[48.5%] w-[3.5%] h-[27%]  responsive-room-text'>
-                        535
-                    </div>
-                    <div className='absolute top-[64%] left-[52.1%] w-[3.5%] h-[27%]  responsive-room-text'>
-                        536
-                    </div>
-                    <div className='absolute top-[64%] left-[55.7%] w-[1.65%] h-[27%]  responsive-room-text'>
-                        537
-                    </div>
-                    <div className='absolute top-[64%] left-[66.7%] w-[1.7%] h-[27.3%]  responsive-room-text'>
-                        538
-                    </div>
-                    <div className='absolute top-[64%] left-[73.9%] w-[3.4%] h-[27.3%]  responsive-room-text'>
-                        539
-                    </div>
-                    <div className='absolute top-[64%] left-[77.4%] w-[3.4%] h-[27.3%]  responsive-room-text'>
-                        540
-                    </div>
-                    <div className='absolute top-[64%] left-[81%] w-[3.45%] h-[27.3%]  responsive-room-text'>
-                        541
-                    </div>
-                    <div className='absolute top-[64%] left-[84.6%] w-[3.45%] h-[27.3%]  responsive-room-text'>
-                        542
-                    </div>
-                    <div className='absolute top-[64%] left-[88.15%] w-[3.5%] h-[27.3%]  responsive-room-text'>
-                        543
-                    </div>
-                    <div className='absolute top-[64%] left-[91.8%] w-[3.45%] h-[27.3%]  responsive-room-text'>
-                        544
-                    </div>
-                    <div className='absolute top-[64%] left-[95.3%] w-[3.5%] h-[27.3%]  responsive-room-text'>
-                        545
-                    </div>
-                    {/*end ოთახების ნომრები */}
-                </div>
-            </main>
-  )
+interface FloorFiveProps {
+  onRoomClick: (room: string) => void;
+  pathPoints?: { x: number; y: number }[]; // Optional path points on this floor
+  cost?: number | null;
 }
 
-export default FloorFive
+const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cost }) => {
+  const floorRooms = roomCoordinates[5]; // Get coordinates for floor 5
+  
+  // Ref to the container div to track size if needed
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // State for container dimensions (optional, if needed for further scaling)
+  const [containerSize, setContainerSize] = useState<{width: number; height: number}>({width: 0, height: 0});
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setContainerSize({ width: rect.width, height: rect.height });
+    }
+  }, []);
+
+  // Build SVG path string from pathPoints
+  const pathD = pathPoints.length > 0
+    ? pathPoints.map((pt, i) => `${i === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`).join(' ')
+    : '';
+
+  return (
+    <div ref={containerRef} className="relative w-full max-w-[1000px] mx-auto" style={{ userSelect: 'none' }}>
+      {/* Map image */}
+      <img
+        src="/images/500-ianebi.png"
+        alt="Floor 5 Map"
+        className="w-full h-auto block"
+        draggable={false}
+      />
+
+      {/* Room markers */}
+      {Object.entries(floorRooms).map(([room, coords]) => (
+        <div
+          key={room}
+          onClick={() => onRoomClick(room)}
+          className="absolute bg-red-500 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200"
+          style={{
+            left: `${coords.x}%`,
+            top: `${coords.y}%`,
+            width: '5px',
+            height: '5px',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 10,
+            boxShadow: '0 0 5px rgba(255,50,50,0.8)'
+          }}
+          title={`Room ${room}`}
+        />
+      ))}
+
+      {/* SVG overlay for path */}
+      <svg
+        className="absolute top-0 left-0 w-full h-full pointer-events-none"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        style={{ zIndex: 5 }}
+        aria-hidden="true"
+      >
+        {pathD && (
+          <path
+            d={pathD}
+            fill="none"
+            stroke="red"
+            strokeWidth={0.4}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="path-animation"
+            style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))' }}
+          />
+        )}
+        {/* 🚩 Cost label above path */}
+        {cost !== null && pathPoints.length > 1 && (() => {
+        const p1 = pathPoints[0];
+        const p2 = pathPoints[1];
+
+        const midX = (p1.x + p2.x) / 2;
+        const midY = (p1.y + p2.y) / 2;
+
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+
+        const length = Math.sqrt(dx * dx + dy * dy);
+        if (length === 0) return null;
+
+        const offsetAmount = -1; // You can tweak this
+        const offsetX = (-dy / length) * offsetAmount;
+        const offsetY = (dx / length) * offsetAmount;
+
+        const labelX = midX + offsetX;
+        const labelY = midY + offsetY;
+
+        return (
+          <g>
+            <text
+              x={labelX}
+              y={labelY}
+              fontSize="1.7"
+              fill="black"
+              textAnchor="middle"
+              alignmentBaseline="middle"
+              style={{ pointerEvents: 'none' }}
+            >
+              {cost}
+            </text>
+          </g>
+        );
+        })()}
+        {pathPoints.map((pt, idx) => (
+          <circle
+            key={idx}
+            cx={pt.x}
+            cy={pt.y}
+            r={0.4}
+            fill="red"
+            className="animate-ping-fast"
+          />
+        ))}
+        
+      </svg>
+    </div>
+  );
+};
+
+export default FloorFive;
+

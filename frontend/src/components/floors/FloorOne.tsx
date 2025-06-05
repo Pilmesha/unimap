@@ -1,100 +1,138 @@
-import Image from 'next/image'
-import React from 'react'
+'use client';
+import React, { useRef, useEffect, useState } from 'react';
+import { roomCoordinates } from '../../data/roomCoordinates';
+import "app/globals.css";
 
-const FloorOne = () => {
-
-  return (
-    <main className='w-full h-auto'>
-        <div className='relative w-full h-full'>
-            <div className='w-full h-full overflow-hidden '>
-                <Image
-                src={'/images/I_floor.png'} 
-                alt='first floor image'
-                width={4000}
-                height={4000}
-                className='object-center object-cover w-full h-full'
-                />
-            </div>
-
-            {/*start ოთახების ნომრები */}
-            <div data-room='311' className='absolute top-[14.5%] left-[19.4%] w-[8.4%] h-[13.6%]  responsive-room-text'>
-                311
-            </div>
-            <div data-room='312' className='absolute top-[14.5%] left-[31.8%] w-[8.3%] h-[13.6%]  responsive-room-text'>
-                312
-            </div>
-            <div data-room='314' className='absolute top-[3.6%] left-[43.6%] w-[9.8%] h-[24.66%]  responsive-room-text'>
-                314
-            </div> 
-
-            <div data-room='315' className='absolute top-[52.3%] left-[9.4%] w-[4%] h-[5.9%]  responsive-room-text'>
-                315
-            </div>
-            <div data-room='316' className='absolute top-[52.3%] left-[13.5%] w-[4.1%] h-[5.9%]  responsive-room-text'>
-                316
-            </div> 
-            <div data-room='317' className='absolute top-[52.3%] left-[17.7%] w-[4%] h-[5.9%]  responsive-room-text'>
-                317
-            </div>
-            <div data-room='318' className='absolute top-[52.3%] left-[21.8%] w-[2%] h-[5.9%]  responsive-room-text'>
-                318
-            </div>
-            <div data-room='319' className='absolute top-[52.3%] left-[23.9%] w-[2%] h-[5.9%]  responsive-room-text'>
-                319
-            </div>
-            <div data-room='320' className='absolute top-[52.3%] left-[26%] w-[3.84%] h-[5.9%]  responsive-room-text'>
-                320
-            </div>
-            <div data-room='321' className='absolute top-[52.3%] left-[30.1%] w-[4%] h-[5.9%]  responsive-room-text'>
-                321
-            </div>
-            <div data-room='322' className='absolute top-[52.3%] left-[34.22%] w-[4.01%] h-[5.9%]  responsive-room-text'>
-                322
-            </div>
-            <div data-room='323' className='absolute top-[52.3%] left-[38.4%] w-[4%] h-[5.98%]  responsive-room-text'>
-                323
-            </div>
-            <div data-room='324' className='absolute top-[52.3%] left-[42.5%] w-[2%] h-[5.98%]  responsive-room-text'>
-                324
-            </div>
-            <div data-room='325' className='absolute top-[52.3%] left-[44.76%] w-[7.9%] h-[5.98%]  responsive-room-text'>
-                325
-            </div>
-            <div data-room='326' className='absolute top-[52.3%] left-[52.8%] w-[6.2%] h-[5.98%]  responsive-room-text'>
-                326
-            </div>
-            <div data-room='327' className='absolute top-[52.3%] left-[59.1%] w-[3.95%] h-[5.98%]  responsive-room-text'>
-                327
-            </div>
-
-            <div data-room='328' className='absolute top-[63.3%] left-[13.7%] w-[4%] h-[5.8%]  responsive-room-text'>
-                328
-            </div>
-            <div data-room='329' className='absolute top-[63.3%] left-[17.8%] w-[4%] h-[5.8%]  responsive-room-text'>
-                329
-            </div>
-            <div data-room='330' className='absolute top-[63.3%] left-[21.9%] w-[4%] h-[5.8%]  responsive-room-text'>
-                330
-            </div>
-            <div data-room='331' className='absolute top-[63.3%] left-[26.03%] w-[4.05%] h-[5.8%]  responsive-room-text'>
-                331
-            </div>
-            <div data-room='332' className='absolute top-[63.3%] left-[30.1%] w-[6.2%] h-[5.8%]  responsive-room-text'>
-                332
-            </div>
-            <div data-room='333' className='absolute top-[63.3%] left-[42.65%] w-[1.95%] h-[5.8%]  responsive-room-text'>
-                333
-            </div>
-            <div data-room='334' className='absolute top-[63.3%] left-[52.8%] w-[6.15%] h-[5.85%]  responsive-room-text'>
-                334
-            </div>
-            <div data-room='335' className='absolute top-[63.3%] left-[59.03%] w-[3.94%] h-[5.85%]  responsive-room-text'>
-                335
-            </div>
-            {/*end ოთახების ომრები */}
-        </div>
-    </main>
-  )
+interface FloorOneProps {
+  onRoomClick: (room: string) => void;
+  pathPoints?: { x: number; y: number }[]; // Optional path points on this floor
+  cost?: number | null;
 }
 
-export default FloorOne
+const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost }) => {
+  const floorRooms = roomCoordinates[1]; // Coordinates for floor 1
+  
+  // Ref to the container div to track size if needed
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // State for container dimensions (optional, if needed for further scaling)
+  const [containerSize, setContainerSize] = useState<{width: number; height: number}>({width: 0, height: 0});
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setContainerSize({ width: rect.width, height: rect.height });
+    }
+    // Optionally add resize observer if your layout is responsive
+  }, []);
+
+  // Convert pathPoints [%] to SVG points assuming viewBox 0 0 100 100 - direct mapping of % to SVG coords
+  // So pathPoints coordinates can be used directly.
+
+  // Build SVG path string from pathPoints
+  const pathD = pathPoints.length > 0
+    ? pathPoints.map((pt, i) => `${i === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`).join(' ')
+    : '';
+
+  return (
+    <div ref={containerRef} className="relative w-full max-w-[1000px] mx-auto" style={{ userSelect: 'none' }}>
+      <img
+        src="/images/100-ianebi.png"
+        alt="Floor 1 Map"
+        className="w-full h-auto block"
+        draggable={false}
+      />
+
+      {/* Room markers */}
+      {Object.entries(floorRooms).map(([room, coords]) => (
+        <div
+          key={room}
+          onClick={() => onRoomClick(room)}
+          className="absolute bg-red-500 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200"
+          style={{
+            left: `${coords.x}%`,
+            top: `${coords.y}%`,
+            width: '3px',
+            height: '3px',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 10,
+            boxShadow: '0 0 4px rgba(255,50,50,0.8)'
+          }}
+          title={`Room ${room}`}
+        />
+      ))}
+
+      {/* SVG overlay for path */}
+      <svg
+        className="absolute top-0 left-0 w-full h-full pointer-events-none"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        style={{ zIndex: 5 }}
+        aria-hidden="true"
+      >
+        {pathD && (
+          <path
+            d={pathD}
+            fill="none"
+            stroke="red"
+            strokeWidth={0.4}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="path-animation"
+            style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))' }}
+          />
+        )}
+        {/* 🚩 Cost label above path */}
+        {cost !== null && pathPoints.length > 1 && (() => {
+        const p1 = pathPoints[0];
+        const p2 = pathPoints[1];
+
+        const midX = (p1.x + p2.x) / 2;
+        const midY = (p1.y + p2.y) / 2;
+
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+
+        const length = Math.sqrt(dx * dx + dy * dy);
+        if (length === 0) return null;
+
+        const offsetAmount = -1; // You can tweak this
+        const offsetX = (-dy / length) * offsetAmount;
+        const offsetY = (dx / length) * offsetAmount;
+
+        const labelX = midX + offsetX;
+        const labelY = midY + offsetY;
+
+        return (
+          <g>
+            <text
+              x={labelX}
+              y={labelY}
+              fontSize="1.7"
+              fill="black"
+              textAnchor="middle"
+              alignmentBaseline="middle"
+              style={{ pointerEvents: 'none' }}
+            >
+              {cost}
+            </text>
+          </g>
+        );
+        })()}
+        {pathPoints.map((pt, idx) => (
+          <circle
+            key={idx}
+            cx={pt.x}
+            cy={pt.y}
+            r={0.4}
+            fill="red"
+            className="animate-ping-fast"
+          />
+        ))}
+        
+      </svg>
+    </div>
+  );
+};
+
+export default FloorOne;

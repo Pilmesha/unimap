@@ -1,22 +1,20 @@
-import MapDisplay from '@/components/filtering/MapDisplay'
-import React from 'react'
+import React from 'react'; 
+import MapDisplay from '../../components/filtering/MapDisplay';
+const floors = [
+  { id: 1, name: 'I' },
+  { id: 2, name: 'II' },
+  { id: 3, name: 'III' },
+  { id: 4, name: 'IV' },
+  { id: 5, name: 'V' },
+  { id: 6, name: 'VI' },
+];
 
-const IndoorMap = () => {
-  const floors = [
-    {id:1, name: 'I'},
-    {id:2, name: 'II'},
-    {id:3, name: 'III'},
-    {id:4, name: 'IV'},
-    {id:5, name: 'V'},
-    {id:6, name: 'VI'}
-  ]
+const Page = () => {
   return (
-    <section className='realtive w-full min-h-[100vh] mb-[4rem]' >
-          <MapDisplay
-          floors={floors}
-           />
-        </section>
-  )
-}
+    <main className="flex min-h-screen flex-col items-center justify-between p-4">
+      <MapDisplay floors={floors} />
+    </main>
+  );
+};
 
-export default IndoorMap
+export default Page;

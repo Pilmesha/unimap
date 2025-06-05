@@ -1,4 +1,4 @@
-import MainPgButton from '@/assets/MainPgButton'
+import MainPgButton from 'assets/MainPgButton'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
