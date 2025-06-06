@@ -11,15 +11,10 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick }) => {
   const floorRooms = roomCoordinates[4]; // Get coordinates for floor 4
 
   return (
-    <div className="relative w-full max-w-[1000px] mx-auto">
+    <div className="relative w-full max-w-[1500px] mx-auto ml-32">
       {/* Map image */}
       <img
-        src="/images/400_2.png"
-        alt="Floor 4 Map"
-        className="w-full h-auto"
-      />
-        <img
-        src="/images/400_1.png"
+        src="/images/400.png"
         alt="Floor 4 Map"
         className="w-full h-auto"
       />

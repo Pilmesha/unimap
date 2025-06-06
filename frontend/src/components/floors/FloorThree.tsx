@@ -91,19 +91,13 @@ const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], c
     : '';
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-[1000px] mx-auto" style={{ userSelect: 'none' }}>
+    <div ref={containerRef} className="relative w-full max-w-[1500px] mx-auto" style={{ userSelect: 'none' }}>
       {/* Wrap both images in one container */}
       <div className="relative w-full">
         <img
-          src="/images/300_2.png"
+          src="/images/300.png"
           alt="Floor 3 Part 1"
           className="w-full h-auto"
-          draggable={false}
-        />
-        <img
-          src="/images/300_1.png"
-          alt="Floor 3 Part 2"
-          className="w-full h-auto ml-32"
           draggable={false}
         />
       </div>

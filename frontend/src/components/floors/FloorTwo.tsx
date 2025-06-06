@@ -74,9 +74,9 @@ const FloorTwo: React.FC<FloorTwoProps> = ({ onRoomClick, pathPoints = [], cost 
     : '';
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-[1000px] mx-auto" style={{ userSelect: 'none' }}>
+    <div ref={containerRef} className="relative w-full max-w-[1500px] mx-auto" style={{ userSelect: 'none' }}>
       <img
-        src="/images/200-ianebi.png"
+        src="/images/200.png"
         alt="Floor 2 Map"
         className="w-full h-auto block"
         draggable={false}

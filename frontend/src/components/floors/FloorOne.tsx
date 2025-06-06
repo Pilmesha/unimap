@@ -35,9 +35,9 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost 
     : '';
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-[1000px] mx-auto" style={{ userSelect: 'none' }}>
+    <div ref={containerRef} className="relative w-full max-w-[1300px] mx-auto -mt-25 px-2 sm:px-4 md:px-6 lg:px-8" style={{ userSelect: 'none' }}>
       <img
-        src="/images/100-ianebi.png"
+        src="/images/100.png"
         alt="Floor 1 Map"
         className="w-full h-auto block"
         draggable={false}

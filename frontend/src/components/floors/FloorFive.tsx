@@ -30,10 +30,10 @@ const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cos
     : '';
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-[1000px] mx-auto" style={{ userSelect: 'none' }}>
+    <div ref={containerRef} className="relative w-full max-w-[1500px] mx-auto" style={{ userSelect: 'none' }}>
       {/* Map image */}
       <img
-        src="/images/500-ianebi.png"
+        src="/images/500.png"
         alt="Floor 5 Map"
         className="w-full h-auto block"
         draggable={false}
@@ -48,8 +48,8 @@ const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cos
           style={{
             left: `${coords.x}%`,
             top: `${coords.y}%`,
-            width: '5px',
-            height: '5px',
+            width: '3px',
+            height: '3px',
             transform: 'translate(-50%, -50%)',
             zIndex: 10,
             boxShadow: '0 0 5px rgba(255,50,50,0.8)'
