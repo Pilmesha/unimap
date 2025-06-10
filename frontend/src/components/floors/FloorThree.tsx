@@ -71,6 +71,12 @@ interface FloorThreeProps {
 
 const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], cost }) => {
   const floorRooms = roomCoordinates[3]; // Get coordinates for floor 3
+  const handleDebugClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    console.log(`{ x: ${x.toFixed(1)}, y: ${y.toFixed(1)} }`);
+  };
   
   // Ref to the container div to track size if needed
   const containerRef = useRef<HTMLDivElement>(null);
@@ -91,7 +97,7 @@ const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], c
     : '';
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-[1500px] mx-auto" style={{ userSelect: 'none' }}>
+    <div ref={containerRef} className="relative w-full max-w-[1500px] mx-auto" style={{ userSelect: 'none' }} onClick={handleDebugClick}>
       {/* Wrap both images in one container */}
       <div className="relative w-full">
         <img

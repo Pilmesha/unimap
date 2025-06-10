@@ -94,15 +94,6 @@ const openLoginMoadl = () => {
                                     </h1> 
                                 </Link>
                             </li>
-                            <li>
-                                <div 
-                                title='Login to see your subjects table'
-                                onClick={openLoginMoadl}
-                                className=' flex justify-center items-center w-[100px] h-[30px] rounded-full text-white bg-twitter-blue 
-                                font-firago text-[16px] cursor-pointer shadow-md hover:shadow-lg hover:shadow-twitter-blue/50 transition-all duration-300'>
-                                    Log In
-                                </div>
-                            </li>
                         </ul>
                     </div>
                  )}
@@ -134,11 +125,12 @@ const openLoginMoadl = () => {
                         </div>
                     </Link>
                     <div 
-                    title='Login to see your subjects table'
-                    onClick={openLoginMoadl}
-                    className=' flex justify-center items-center w-[100px] h-[30px] rounded-full text-white bg-twitter-blue 
-                    font-firago text-[16px] cursor-pointer shadow-md hover:shadow-lg hover:shadow-twitter-blue/50 transition-all duration-300'>
-                    Log In
+                    className=' flex justify-center items-center w-[100px] h-[30px] font-firago text-[16px]'>
+                            <img
+                            src="/images/owl_drawing.png"
+                            alt="Ku Ku"
+                            className="w-full h-auto block"
+                            draggable={false}/>
                     </div>
                 </div>
             </div>

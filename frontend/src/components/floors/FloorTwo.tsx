@@ -54,6 +54,12 @@ interface FloorTwoProps {
 
 const FloorTwo: React.FC<FloorTwoProps> = ({ onRoomClick, pathPoints = [], cost }) => {
   const floorRooms = roomCoordinates[2]; // Get coordinates for floor 2
+  const handleDebugClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    console.log(`{ x: ${x.toFixed(1)}, y: ${y.toFixed(1)} }`);
+  };
   
   // Ref to the container div to track size if needed
   const containerRef = useRef<HTMLDivElement>(null);
@@ -74,7 +80,7 @@ const FloorTwo: React.FC<FloorTwoProps> = ({ onRoomClick, pathPoints = [], cost 
     : '';
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-[1500px] mx-auto" style={{ userSelect: 'none' }}>
+    <div ref={containerRef} className="relative w-full max-w-[1500px] mx-auto" style={{ userSelect: 'none' }} onClick={handleDebugClick}>
       <img
         src="/images/200.png"
         alt="Floor 2 Map"

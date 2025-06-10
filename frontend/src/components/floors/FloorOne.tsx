@@ -11,8 +11,7 @@ interface FloorOneProps {
 
 const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost }) => {
   const floorRooms = roomCoordinates[1]; // Coordinates for floor 1
-  
-  // Ref to the container div to track size if needed
+  //Ref to the container div to track size if needed
   const containerRef = useRef<HTMLDivElement>(null);
 
   // State for container dimensions (optional, if needed for further scaling)

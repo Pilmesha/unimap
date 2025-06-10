@@ -168,6 +168,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               <FloorFour
                 onRoomClick={handleRoomClick}
                 pathPoints={getPathForFloor(pathRooms, 4)}
+                cost = {pathCost}
               />
             )}
             {selectedFloor === 5 && (
