@@ -48,16 +48,22 @@ public class StaffRoomService {
     private void fillStaffRoomTable() {
         if (staffRepo.count() > 0) return;
 
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("staffRooms.txt")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/staffRooms.txt")) {
             if (inputStream == null) {
-                System.err.println("staffRooms.txt not found in resources.");
-                return;
+                throw new IllegalStateException("staffRooms.txt not found in classpath");
             }
 
             try (Scanner sc = new Scanner(inputStream)) {
                 while (sc.hasNextLine()) {
-                    String[] fromFile = sc.nextLine().split(", ");
-                    staffRepo.save(new StaffRoom(fromFile[0], fromFile[1])); // 0-staff, 1-room
+                    String line = sc.nextLine().trim();
+                    if (line.isEmpty()) continue;
+                    
+                    String[] fromFile = line.split(", ");
+                    if (fromFile.length != 2) {
+                        System.err.println("Skipping malformed line: " + line);
+                        continue;
+                    }
+                    staffRepo.save(new StaffRoom(fromFile[0], fromFile[1]));
                 }
             }
 
