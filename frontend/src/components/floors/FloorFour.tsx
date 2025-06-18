@@ -2,26 +2,27 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { roomCoordinates } from '../../data/roomCoordinates';
 import "app/globals.css";
+import Image from 'next/image';
+import FourthFloorRooms from 'components/rooms/FourthFloorRooms';
 
 interface FloorFourProps {
   onRoomClick: (room: string) => void;
-  pathPoints?: { x: number; y: number }[]; // Optional path points on this floor
+  pathPoints?: { x: number; y: number }[]; 
   cost?: number | null;
 }
 
 const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cost }) => {
-  const floorRooms = roomCoordinates[4]; // Get coordinates for floor 4
-  //Ref to the container div to track size if needed
+  const floorRooms = roomCoordinates[4]; 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // State for container dimensions (optional, if needed for further scaling)
+
   const [containerSize, setContainerSize] = useState<{width: number; height: number}>({width: 0, height: 0});
   useEffect(() => {
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
       setContainerSize({ width: rect.width, height: rect.height });
     }
-    // Optionally add resize observer if your layout is responsive
+
   }, []);
   const handleDebugClick = (e: React.MouseEvent<HTMLDivElement>) => {
       const rect = e.currentTarget.getBoundingClientRect();
@@ -29,24 +30,22 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cos
       const y = ((e.clientY - rect.top) / rect.height) * 100;
       console.log(`{ x: ${x.toFixed(1)}, y: ${y.toFixed(1)} }`);
     };
-  // Convert pathPoints [%] to SVG points assuming viewBox 0 0 100 100 - direct mapping of % to SVG coords
-  // So pathPoints coordinates can be used directly.
 
-  // Build SVG path string from pathPoints
   const pathD = pathPoints.length > 0
     ? pathPoints.map((pt, i) => `${i === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`).join(' ')
     : '';
 
   return (
     <div ref={containerRef} className="relative w-full max-w-[1500px] mx-auto px-2 sm:px-4 md:px-6 lg:px-8" style={{ userSelect: 'none' }} onClick={handleDebugClick}>
-      <img
+      <Image
         src="/images/400.png"
         alt="Floor 4 Map"
         className="w-full h-auto block"
         draggable={false}
+        width={3000}
+        height={3000}
       />
-
-      {/* Room markers */}
+      <FourthFloorRooms />
       {Object.entries(floorRooms).map(([room, coords]) => (
         <div
           key={room}
@@ -65,7 +64,6 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cos
         />
       ))}
 
-      {/* SVG overlay for path */}
       <svg
         className="absolute top-0 left-0 w-full h-full pointer-events-none"
         viewBox="0 0 100 100"
@@ -85,7 +83,7 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cos
             style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))' }}
           />
         )}
-        {/* 🚩 Cost label above path */}
+        
         {cost !== null && pathPoints.length > 1 && (() => {
         const p1 = pathPoints[0];
         const p2 = pathPoints[1];
@@ -99,7 +97,7 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cos
         const length = Math.sqrt(dx * dx + dy * dy);
         if (length === 0) return null;
 
-        const offsetAmount = -1; // You can tweak this
+        const offsetAmount = -1; 
         const offsetX = (-dy / length) * offsetAmount;
         const offsetY = (dx / length) * offsetAmount;
 

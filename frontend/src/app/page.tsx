@@ -7,7 +7,7 @@ const page = () => {
     <main className='w-full h-auto mt-6 z-0'>
       <div className='w-full h-full flex flex-col gap-10'>
         <div className='w-full text-center'>
-          <h1 className='inline-block  relative text-[3vw] font-semibold font-firago mt-12 text-center'>
+          <h1 className='inline-block  relative text-[3.5vw] font-semibold font-firago mt-12 text-center'>
           TBILISI STATE UNIVERSITY BUILDING INDOOR PLAN
           <span className='absolute bottom-[-5px] left-0 h-[3px] w-full bg-[var(--color-twitter-blue)]'></span>
           </h1>

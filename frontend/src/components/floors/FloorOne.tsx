@@ -2,19 +2,20 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { roomCoordinates } from '../../data/roomCoordinates';
 import "app/globals.css";
+import Image from 'next/image';
+import FirstFloorRooms from 'components/rooms/FirstFloorRooms';
 
 interface FloorOneProps {
   onRoomClick: (room: string) => void;
-  pathPoints?: { x: number; y: number }[]; // Optional path points on this floor
+  pathPoints?: { x: number; y: number }[];
   cost?: number | null;
 }
 
 const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost }) => {
-  const floorRooms = roomCoordinates[1]; // Coordinates for floor 1
-  //Ref to the container div to track size if needed
+  const floorRooms = roomCoordinates[1]; 
+
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // State for container dimensions (optional, if needed for further scaling)
   const [containerSize, setContainerSize] = useState<{width: number; height: number}>({width: 0, height: 0});
 
   useEffect(() => {
@@ -22,27 +23,29 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost 
       const rect = containerRef.current.getBoundingClientRect();
       setContainerSize({ width: rect.width, height: rect.height });
     }
-    // Optionally add resize observer if your layout is responsive
   }, []);
 
-  // Convert pathPoints [%] to SVG points assuming viewBox 0 0 100 100 - direct mapping of % to SVG coords
-  // So pathPoints coordinates can be used directly.
 
-  // Build SVG path string from pathPoints
   const pathD = pathPoints.length > 0
     ? pathPoints.map((pt, i) => `${i === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`).join(' ')
     : '';
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-[1300px] mx-auto -mt-25 px-2 sm:px-4 md:px-6 lg:px-8" style={{ userSelect: 'none' }}>
-      <img
-        src="/images/100.png"
-        alt="Floor 1 Map"
-        className="w-full h-auto block"
-        draggable={false}
-      />
+    <div ref={containerRef} className="relative w-full max-w-[1300px] mx-auto -mt-25 px-2 sm:px-4 md:px-6 lg:px-8">
+        <div className='relative w-auto h-auto'>
+          <Image
+          src="/images/100.png"
+          alt="Floor 1 Map"
+          className="w-full h-auto block"
+          draggable={false}
+          width={3000}
+          height={3000}
+          />
+         
+         {/* otakhebi */}
+          <FirstFloorRooms />
+        </div>
 
-      {/* Room markers */}
       {Object.entries(floorRooms).map(([room, coords]) => (
         <div
           key={room}
@@ -61,7 +64,6 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost 
         />
       ))}
 
-      {/* SVG overlay for path */}
       <svg
         className="absolute top-0 left-0 w-full h-full pointer-events-none"
         viewBox="0 0 100 100"
@@ -78,10 +80,9 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost 
             strokeLinecap="round"
             strokeLinejoin="round"
             className="path-animation"
-            style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))' }}
-          />
+            style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))' }}/>
         )}
-        {/* 🚩 Cost label above path */}
+
         {cost !== null && pathPoints.length > 1 && (() => {
         const p1 = pathPoints[0];
         const p2 = pathPoints[1];
@@ -95,7 +96,7 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost 
         const length = Math.sqrt(dx * dx + dy * dy);
         if (length === 0) return null;
 
-        const offsetAmount = -1; // You can tweak this
+        const offsetAmount = -1;
         const offsetX = (-dy / length) * offsetAmount;
         const offsetY = (dx / length) * offsetAmount;
 

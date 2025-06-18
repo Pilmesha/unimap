@@ -4,11 +4,11 @@
 
 @layer utilities {
   .responsive-room-text {
-    @apply text-[4px] sm:text-[6px] md:text-[8px] lg:text-[10px] xl:text-[12px];
-    @apply text-black border border-blue-600 bg-blue-500 z-30 flex items-center justify-center;
+    @apply text-[4px] sm:text-[6px] md:text-[7px] lg:text-[8px] xl:text-[9px];
+    @apply text-white border border-blue-300 bg-blue-400 z-30 flex items-center justify-center;
   }
   .stairs {
-    @apply border border-red-600 bg-red-500 z-30 flex items-center;
+    @apply  bg-red-500 z-30 flex items-center;
     @apply text-[4px] sm:text-[6px] md:text-[8px] lg:text-[10px] xl:text-[12px];
   }
 }

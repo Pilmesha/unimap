@@ -1,5 +1,3 @@
-// src/data/roomCoordinates.ts
-
 export interface RoomCoordinate {
     x: number; // percent (0–100)
     y: number; // percent (0–100)
@@ -30,7 +28,6 @@ export interface RoomCoordinate {
       '114': { x: 63.4, y: 73.7 },
     },
   
-    // Example structure for floor 2 (fill as needed)
     2: {
       's2b1': { x: 68.8, y: 70.6 },
       's2b2': {x: 72.0, y: 70.6 },

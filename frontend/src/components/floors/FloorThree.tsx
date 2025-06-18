@@ -1,76 +1,17 @@
-// 'use client';
-// import React from 'react';
-// import { roomCoordinates } from '../../data/roomCoordinates';
-
-// interface FloorThreeProps {
-//   onRoomClick: (room: string) => void;
-// }
-
-// const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick }) => {
-//   const floorRooms = roomCoordinates[3];
-
-//   const handleDebugClick = (e: React.MouseEvent<HTMLDivElement>) => {
-//     const rect = e.currentTarget.getBoundingClientRect();
-//     const x = ((e.clientX - rect.left) / rect.width) * 100;
-//     const y = ((e.clientY - rect.top) / rect.height) * 100;
-//     console.log(`{ x: ${x.toFixed(1)}, y: ${y.toFixed(1)} }`);
-//   };
-
-//   return (
-//     <div className="relative w-full max-w-[1000px] mx-auto">
-//       {/* ⬇️ Wrap both images in one click target */}
-//       <div className="relative w-full" onClick={handleDebugClick}>
-//         <img
-//           src="/images/300_2.png"
-//           alt="Floor 3 Part 1"
-//           className="w-full h-auto"
-//         />
-//         <img
-//           src="/images/300_1.png"
-//           alt="Floor 3 Part 2"
-//           className="w-full h-auto ml-32"
-//         />
-//       </div>
-
-//       {/* Room dots — same container */}
-//       <div className="pointer-events-none absolute top-0 left-0 w-full h-full">
-//         {Object.entries(floorRooms).map(([room, coords]) => (
-//           <div
-//             key={room}
-//             onClick={() => onRoomClick(room)}
-//             className="absolute bg-red-500 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200"
-//             style={{
-//               left: `${coords.x}%`,
-//               top: `${coords.y}%`,
-//               width: '5px',
-//               height: '5px',
-//               transform: 'translate(-50%, -50%)',
-//               zIndex: 10
-//             }}
-//             title={`Room ${room}`}
-//           />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FloorThree;
-
-
-
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
 import { roomCoordinates } from '../../data/roomCoordinates';
+import Image from 'next/image';
+import ThirdFloorRooms from 'components/rooms/ThirdFloorRooms';
 
 interface FloorThreeProps {
   onRoomClick: (room: string) => void;
-  pathPoints?: { x: number; y: number }[]; // Optional path points on this floor
+  pathPoints?: { x: number; y: number }[];
   cost?: number | null;
 }
 
 const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], cost }) => {
-  const floorRooms = roomCoordinates[3]; // Get coordinates for floor 3
+  const floorRooms = roomCoordinates[3];
   const handleDebugClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -78,10 +19,8 @@ const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], c
     console.log(`{ x: ${x.toFixed(1)}, y: ${y.toFixed(1)} }`);
   };
   
-  // Ref to the container div to track size if needed
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // State for container dimensions (optional, if needed for further scaling)
   const [containerSize, setContainerSize] = useState<{width: number; height: number}>({width: 0, height: 0});
 
   useEffect(() => {
@@ -91,24 +30,23 @@ const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], c
     }
   }, []);
 
-  // Build SVG path string from pathPoints
   const pathD = pathPoints.length > 0
     ? pathPoints.map((pt, i) => `${i === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`).join(' ')
     : '';
 
   return (
     <div ref={containerRef} className="relative w-full max-w-[1500px] mx-auto" style={{ userSelect: 'none' }} onClick={handleDebugClick}>
-      {/* Wrap both images in one container */}
-      <div className="relative w-full">
-        <img
+      <div className="relative w-full h-auto">
+        <Image
           src="/images/300.png"
           alt="Floor 3 Part 1"
-          className="w-full h-auto"
+          className="w-full h-auto block"
           draggable={false}
+          width={3000}
+          height={3000}
         />
+        <ThirdFloorRooms />
       </div>
-
-      {/* Room markers */}
       {Object.entries(floorRooms).map(([room, coords]) => (
         <div
           key={room}
@@ -127,7 +65,6 @@ const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], c
         />
       ))}
 
-      {/* SVG overlay for path */}
       <svg
         className="absolute top-0 left-0 w-full h-full pointer-events-none"
         viewBox="0 0 100 100"
@@ -147,7 +84,7 @@ const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], c
             style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))' }}
           />
         )}
-        {/* 🚩 Cost label above path */}
+        
         {cost !== null && pathPoints.length > 1 && (() => {
         const p1 = pathPoints[0];
         const p2 = pathPoints[1];
