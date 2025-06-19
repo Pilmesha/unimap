@@ -11,6 +11,9 @@
     @apply  bg-red-500 z-30 flex items-center;
     @apply text-[4px] sm:text-[6px] md:text-[8px] lg:text-[10px] xl:text-[12px];
   }
+  .options {
+    @apply bg-[var(--background)] text-[var(--foreground)] cursor-pointer;
+  }
 }
 
 @theme {

@@ -9,6 +9,8 @@ import { UseUser } from 'app/context/UseProvider'
 import { TiThMenu } from 'react-icons/ti'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
+import i18n from 'utils/i18n'
+import PageLoader from 'components/loaders/PageLoader'
 
 const Navigation = () => {
 const {isLoginModalOpen, setIsLoginModalOpen} = UseUser();
@@ -16,6 +18,7 @@ const[theme, setTheme] = useState('dark');
 const[showMenu, setShowMenu] = useState(false)
 const path = usePathname();
 const { t } = useTranslation()
+
 
 const handleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -83,7 +86,7 @@ const openLoginMoadl = () => {
                                 <Link href={'/indoor-map'}>
                                     <h1
                                     onClick={handleMenu}
-                                     className='relative inline-block font-firago font-semibold text-[16px] cursor-pointer tracking-[1.2] group text-[var(--background)]'>
+                                     className='relative inline-block font-firago font-semibold text-[14px] cursor-pointer tracking-[1.2] group text-[var(--background)]'>
                                     {t('header.indoorMap')}
                                     <span className={path === '/indoor-map' ? 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--background)] w-full' : 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--background)] w-0 transition-all duration-300 group-hover:w-full'} />
                                     </h1> 
@@ -93,7 +96,7 @@ const openLoginMoadl = () => {
                                 <Link href={'/about'}>
                                     <h1
                                     onClick={handleMenu}
-                                    className='relative inline-block font-firago font-semibold text-[16px] cursor-pointer tracking-[1.2] group text-[var(--background)]'>
+                                    className='relative inline-block font-firago font-semibold text-[14px] cursor-pointer tracking-[1.2] group text-[var(--background)]'>
                                     {t('header.aboutUs')}
                                     <span className={path === '/about' ? 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--background)] w-full' : 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--background)] w-0 transition-all duration-300 group-hover:w-full'} />
                                     </h1> 
@@ -102,18 +105,48 @@ const openLoginMoadl = () => {
                             <li>
                                 <h1
                                 onClick={openLoginMoadl} 
-                                className='relative inline-block font-firago font-semibold text-[16px] cursor-pointer tracking-[1.2] group text-[var(--background)]'>
+                                className='relative inline-block font-firago font-semibold text-[14px] cursor-pointer tracking-[1.2] group text-[var(--background)]'>
                                     {t('header.authenticate')}
                                     <span className='absolute left-0 bottom-[-5px] h-[2px] bg-[var(--background)] w-0 transition-all duration-300 group-hover:w-full'></span>
                                 </h1>
+                            </li>
+                            <li>
+                                <select
+                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                                    const lang = e.target.value
+                                    localStorage.setItem('lang', lang)
+                                    i18n.changeLanguage(lang)
+                                    }}
+                                    value={i18n.language}
+                                    className='border-[2px] border-[var(--background)] text-[var(--background)] text-sm px-2 py-[2px] outline-none hover:cursor-pointer'
+                                    >
+                                        <option className='options curso' value="en">EN</option>
+                                        <option className='options' value="ka">KA</option>
+                                        <option className='options' value="ru">RU</option>
+                                </select>
                             </li>
                         </ul>
                     </div>
                  )}
             </div>
 
-            <div className='md:w-[24rem] md:block hidden '>
+            <div className='md:w-[27rem] md:block hidden '>
                 <div className='flex justify-between items-center h-full'>
+                    <div>
+                        <select
+                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                                    const lang = e.target.value
+                                    localStorage.setItem('lang', lang)
+                                    i18n.changeLanguage(lang)
+                                    }}
+                                    value={i18n.language}
+                                    className=' text-[var(--foreground)] text-sm px-2 py-[2px] outline-none hover:cursor-pointer'
+                                    >
+                                        <option className='options' value="en">EN</option>
+                                        <option className='options' value="ka">KA</option>
+                                        <option className='options' value="ru">RU</option>
+                                    </select>
+                    </div>
                     <div
                     title={`change theme to ${theme === 'light' ? 'dark' : 'light'} mode`}
                     onClick={handleThemeToggle}

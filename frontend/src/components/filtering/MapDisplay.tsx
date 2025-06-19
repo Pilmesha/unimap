@@ -1,7 +1,7 @@
 'use client'
 import React, { lazy, Suspense, useState } from 'react';
 import { roomCoordinates } from '../../data/roomCoordinates';
-import LoaderComp from './LoaderComp';
+import LoaderComp from '../loaders/LoaderComp';
 const FloorOne = lazy(() => import('../floors/FloorOne'));
 const FloorTwo = lazy(() => import('../floors/FloorTwo'));
 const FloorThree = lazy(() => import('../floors/FloorThree'));
@@ -153,7 +153,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
             <div className='relative flex flex-col gap-4 min-w-[160px]'>
               <div
                 onClick={() => handleModalOpen('route')}
-                className={`filtering-button ${openModal === 'route' ? 'bg-blue-500 text-white' : ''}`}>
+                className={`filtering-button text-[12px] ${openModal === 'route' ? 'bg-blue-500 text-white' : ''}`}>
                 {t('indoorMap.route')}
               </div>
 
@@ -166,14 +166,14 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                         value={fromRoom}
                         onChange={(e) => setFromRoom(e.target.value)}
                         placeholder={`${t('indoorMap.from')}`}
-                        className='text-[14px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
+                        className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
                       />
                       <input
                         type="text"
                         value={toRoom}
                         onChange={(e) => setToRoom(e.target.value)}
                         placeholder={`${t('indoorMap.to')}`}
-                        className='text-[14px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
+                        className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
                       />
                     </div>
                     <button
@@ -185,9 +185,9 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                   </form>
                 </div>
               )}
-            <div
+          <div
           onClick={() => handleModalOpen('office')}
-          className={`filtering-button mt-[2rem] ${openModal === 'office' ? 'bg-blue-500 text-white' : ''}`}
+          className={`filtering-button text-[12px] mt-[2rem] ${openModal === 'office' ? 'bg-blue-500 text-white' : ''}`}
         >
           {t('indoorMap.office')}
         </div>
@@ -197,7 +197,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               <input
                 type="text"
                 placeholder={`${t('indoorMap.lecturerName')}`}
-                className='text-[14px] text-center w-full border border-green-500 h-[30px] rounded-[5px] px-2 outline-none'
+                className='text-[12px] text-center w-full border border-green-500 h-[30px] rounded-[5px] px-2 outline-none'
               />
               <button
                 type='submit'
@@ -211,7 +211,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
 
         <div
           onClick={() => handleModalOpen('table')}
-          className={`filtering-button mt-[2rem] ${openModal === 'table' ? 'bg-blue-500 text-white' : ''}`}
+          className={`filtering-button text-[12px] mt-[2rem] ${openModal === 'table' ? 'bg-blue-500 text-white' : ''}`}
         >
           {t('indoorMap.yourTable')}
         </div>

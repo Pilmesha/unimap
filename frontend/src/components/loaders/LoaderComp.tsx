@@ -1,5 +1,5 @@
 import React from 'react';
-import {  MoonLoader, RiseLoader } from 'react-spinners';
+import { RiseLoader } from 'react-spinners';
 
 const LoaderComp = () => (
   <div
