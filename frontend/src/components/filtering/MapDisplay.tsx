@@ -8,6 +8,7 @@ const FloorThree = lazy(() => import('../floors/FloorThree'));
 const FloorFour = lazy(() => import('../floors/FloorFour'));
 const FloorFive = lazy(() => import('../floors/FloorFive'));
 const FloorSix = lazy(() => import('../floors/FloorSix'));
+import { useTranslation } from 'react-i18next';
 
 interface Floors {
   id: number;
@@ -25,6 +26,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
   const [pathResult, setPathResult] = useState<string | null>(null);
   const [pathCost, setPathCost] = useState<number | null>(null);
   const [selectedFloor, setSelectedFloor] = useState<number>(1);
+  const { t } = useTranslation()
 
   const handleModalOpen = (type: 'route' | 'office' | 'table') => {
     setOpenModal(prev => (prev === type ? null : type));
@@ -88,7 +90,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                 key={floor.id}
                 onClick={() => setSelectedFloor(floor.id)}
                 className={`floor-button font-firago text-[12px] font-semibold ${selectedFloor === floor.id ? 'bg-blue-500 text-white' : ''}`}>
-                {`${floor.name} Floor`}
+                {`${floor.name} ${t('indoorMap.floors')} `}
               </button>
             ))}
           </div>
@@ -152,7 +154,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               <div
                 onClick={() => handleModalOpen('route')}
                 className={`filtering-button ${openModal === 'route' ? 'bg-blue-500 text-white' : ''}`}>
-                Route
+                {t('indoorMap.route')}
               </div>
 
               {openModal === 'route' && (
@@ -163,14 +165,14 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                         type="text"
                         value={fromRoom}
                         onChange={(e) => setFromRoom(e.target.value)}
-                        placeholder='From...'
+                        placeholder={`${t('indoorMap.from')}`}
                         className='text-[14px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
                       />
                       <input
                         type="text"
                         value={toRoom}
                         onChange={(e) => setToRoom(e.target.value)}
-                        placeholder='To...'
+                        placeholder={`${t('indoorMap.to')}`}
                         className='text-[14px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
                       />
                     </div>
@@ -178,33 +180,30 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                       type='submit'
                       className='bg-blue-500 text-white w-[90px] rounded-full h-[30px] text-[14px] font-firago font-semibold cursor-pointer hover:scale-[1.05] transition-all duration-200'
                     >
-                      Submit
+                      {t('indoorMap.search')}
                     </button>
                   </form>
-                  {/* {pathResult && (
-                    <p className='text-xs text-center mt-2 text-blue-600 break-words'>{pathResult}</p>
-                  )} */}
                 </div>
               )}
             <div
           onClick={() => handleModalOpen('office')}
           className={`filtering-button mt-[2rem] ${openModal === 'office' ? 'bg-blue-500 text-white' : ''}`}
         >
-          Lecturer`s office
+          {t('indoorMap.office')}
         </div>
         {openModal === 'office' && (
           <div className='bg-[var(--background)] w-[150px] h-[100px] border border-blue-500 rounded-[8px] flex flex-col gap-[1rem] px-[0.5rem] py-[1rem]'>
             <form className='flex flex-col justify-around items-center gap-[0.5rem]'>
               <input
                 type="text"
-                placeholder='Lecturer`s name...'
+                placeholder={`${t('indoorMap.lecturerName')}`}
                 className='text-[14px] text-center w-full border border-green-500 h-[30px] rounded-[5px] px-2 outline-none'
               />
               <button
                 type='submit'
                 className='bg-blue-500 text-white w-[90px] rounded-full h-[30px] text-[14px] font-firago font-semibold cursor-pointer hover:scale-[1.05] transition-all duration-200'
               >
-                Submit
+                {t('indoorMap.search')}
               </button>
             </form>
           </div>
@@ -214,7 +213,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
           onClick={() => handleModalOpen('table')}
           className={`filtering-button mt-[2rem] ${openModal === 'table' ? 'bg-blue-500 text-white' : ''}`}
         >
-          Your table
+          {t('indoorMap.yourTable')}
         </div>
         {openModal === 'table' && (
           <div className='bg-[var(--background)] w-[150px] h-[180px] border border-blue-500 rounded-[8px] flex flex-col gap-[1rem] p-[1rem]'>

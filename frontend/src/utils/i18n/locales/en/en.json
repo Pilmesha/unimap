@@ -1,0 +1,31 @@
+{
+    "mainPage":{
+        "mainPageHeading":"GANIVI BUILDING INDOOR PLAN",
+        "mainPageImageText": "This website helps TSU students easily navigate the campus and find rooms or lecturers offices. It provides a user-friendly interface to quickly locate classrooms and faculty offices, so students can focus on their studies.",
+        "exploreButton": "Explore"
+    },
+    "header": {
+        "heading": "GANIVI-PLAN",
+        "indoorMap": "Indoor Map",
+        "aboutUs": "About Us",
+        "authenticate": "Authenticate"
+    },
+    "aboutUsPage": {
+        "heading": "About Us",
+        "aboutText":"The Ganivi building feels like a maze — and for first-year students, its basically a rite of passage to get lost in it. With all the winding hallways, unexpected turns, and lookalike doors, finding your classroom can be a daily challenge. <1/> Thats exactly why we created this website. Our indoor plan helps you explore the building with ease, showing you exactly where you need to go without the guesswork. No more wandering, no more panicking between lectures — just a clear path through the maze, right at your fingertips."
+    },
+    "footer": {
+        "address":"Address: Tbilisi, University str N13.",
+        "phone": "Phone:"
+    },
+    "indoorMap": {
+        "floors": "Floor",
+        "route": "Route",
+        "office": "Lecturer`s Office",
+        "yourTable": "Your Table",
+        "from": "From...",
+        "to": "To...",
+        "search": "Search",
+        "lecturerName": "Lecturer`s name..."
+    }
+}

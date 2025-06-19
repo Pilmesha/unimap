@@ -8,12 +8,14 @@ import { BsMoonStarsFill } from 'react-icons/bs'
 import { UseUser } from 'app/context/UseProvider'
 import { TiThMenu } from 'react-icons/ti'
 import { usePathname } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
 
 const Navigation = () => {
 const {isLoginModalOpen, setIsLoginModalOpen} = UseUser();
 const[theme, setTheme] = useState('dark');
 const[showMenu, setShowMenu] = useState(false)
 const path = usePathname();
+const { t } = useTranslation()
 
 const handleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -55,7 +57,7 @@ const openLoginMoadl = () => {
                     <h1
                     onClick={removeShowMenu}
                     className='relative inline-block font-firago font-semibold text-[24px] tracking-[1.2] cursor-pointer group whitespace-nowrap'>
-                        GANIVI-PLAN
+                        {t('header.heading')}
                         <span className='absolute left-0 bottom-[-5px] h-[2px] w-0 bg-[var(--foreground)] transition-all duration-300 group-hover:w-full'></span>
                     </h1>
 
@@ -82,7 +84,7 @@ const openLoginMoadl = () => {
                                     <h1
                                     onClick={handleMenu}
                                      className='relative inline-block font-firago font-semibold text-[16px] cursor-pointer tracking-[1.2] group text-[var(--background)]'>
-                                    Indoor Map
+                                    {t('header.indoorMap')}
                                     <span className={path === '/indoor-map' ? 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--background)] w-full' : 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--background)] w-0 transition-all duration-300 group-hover:w-full'} />
                                     </h1> 
                                  </Link>
@@ -92,7 +94,7 @@ const openLoginMoadl = () => {
                                     <h1
                                     onClick={handleMenu}
                                     className='relative inline-block font-firago font-semibold text-[16px] cursor-pointer tracking-[1.2] group text-[var(--background)]'>
-                                        About Us
+                                    {t('header.aboutUs')}
                                     <span className={path === '/about' ? 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--background)] w-full' : 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--background)] w-0 transition-all duration-300 group-hover:w-full'} />
                                     </h1> 
                                 </Link>
@@ -101,7 +103,7 @@ const openLoginMoadl = () => {
                                 <h1
                                 onClick={openLoginMoadl} 
                                 className='relative inline-block font-firago font-semibold text-[16px] cursor-pointer tracking-[1.2] group text-[var(--background)]'>
-                                    Authenticate
+                                    {t('header.authenticate')}
                                     <span className='absolute left-0 bottom-[-5px] h-[2px] bg-[var(--background)] w-0 transition-all duration-300 group-hover:w-full'></span>
                                 </h1>
                             </li>
@@ -121,7 +123,7 @@ const openLoginMoadl = () => {
                     <Link href={'/indoor-map'}>
                         <div>
                            <h1 className='relative inline-block font-firago font-semibold text-[16px] cursor-pointer tracking-[1.2] group'>
-                            Indoor Map
+                            {t('header.indoorMap')}
                             <span className={path === '/indoor-map' ? 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--foreground)] w-full' : 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--foreground)] w-0 transition-all duration-300 group-hover:w-full'} />
                            </h1> 
                         </div>
@@ -130,19 +132,15 @@ const openLoginMoadl = () => {
                         <div>
                            <h1
                             className='relative inline-block font-firago font-semibold text-[16px] cursor-pointer tracking-[1.2] group'>
-                            About Us
+                            {t('header.aboutUs')}
                             <span className={path === '/about' ? 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--foreground)] w-full' : 'absolute left-0 bottom-[-5px] h-[2px] bg-[var(--foreground)] w-0 transition-all duration-300 group-hover:w-full'} />
                            </h1> 
                         </div>
                     </Link>
                     <div 
                     onClick={openLoginMoadl}
-                    className=' flex justify-center items-center w-[100px] h-[30px] font-firago text-[16px]'>
-                            <img
-                            src="/images/owl_drawing.png"
-                            alt="Ku Ku"
-                            className="w-[4rem] h-auto block cursor-pointer transition-transform duration-300 hover:scale-105"
-                            draggable={false}/>
+                    className='flex justify-center items-center min-w-[100px] h-[30px] font-firago text-[16px] font-semibold tracking-[1.2] bg-yellow-600 rounded-full cursor-pointer hover:transition hover:transform duration-300 hover:scale-110'>
+                        {t('header.authenticate')}
                     </div>
                 </div>
             </div>

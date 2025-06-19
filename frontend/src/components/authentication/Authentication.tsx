@@ -5,7 +5,6 @@ interface Props {
   openLoginMoadl: () => void;
 }
 
-
 const Authentication:React.FC<Props>= ({openLoginMoadl}) => {
 const[shownPass, setShownPass] = useState<true | false>(false);
 const[username,setUsername] = useState<string>('');

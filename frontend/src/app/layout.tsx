@@ -4,6 +4,7 @@ import '@fontsource/firago';
 import Navigation from '../components/header/Navigation'
 import Footer from "../components/footer/Footer";
 import UseProvider from "./context/UseProvider";
+
 export const metadata: Metadata = {
   title: "Ganivi Plan",
   description: "Ganivi building indoor plan",

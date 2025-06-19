@@ -1,5 +1,7 @@
 'use client'
 import React, { createContext, useContext, useState } from 'react';
+import '../../utils/i18n'
+
 interface UserContextType {
     isLoginModalOpen: boolean;
     setIsLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
