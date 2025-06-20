@@ -10,7 +10,6 @@ import { TiThMenu } from 'react-icons/ti'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import i18n from 'utils/i18n'
-import PageLoader from 'components/loaders/PageLoader'
 
 const Navigation = () => {
 const {isLoginModalOpen, setIsLoginModalOpen} = UseUser();
