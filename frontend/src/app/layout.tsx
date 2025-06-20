@@ -4,7 +4,7 @@ import '@fontsource/firago';
 import Navigation from '../components/header/Navigation'
 import Footer from "../components/footer/Footer";
 import UseProvider from "./context/UseProvider";
-import LoaderWrapper from "components/loaders/LoaderWrapper";
+/* import LoaderWrapper from "components/loaders/LoaderWrapper"; */
 
 export const metadata: Metadata = {
   title: "Ganivi Plan",
@@ -21,9 +21,9 @@ export default function RootLayout({
       <body className="xl:px-[8rem] lg:px-[6rem] md:px-[4rem] sm:px-[2rem] px-[1rem]">
         <UseProvider>
           <Navigation />
-            <LoaderWrapper>
+            {/* <LoaderWrapper> */}
               {children}
-            </LoaderWrapper>
+            {/* </LoaderWrapper> */}
           <Footer />
       </UseProvider>
       </body>

@@ -1,4 +1,4 @@
-'use client'
+/* 'use client'
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
@@ -24,4 +24,4 @@ useEffect(()=> {
   )
 }
 
-export default LoaderWrapper
+export default LoaderWrapper */

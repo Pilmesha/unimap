@@ -27,5 +27,12 @@
         "to": "To...",
         "search": "Search",
         "lecturerName": "Lecturer`s name..."
+    },
+    "authenticate": {
+        "heading": "AUTHENTICATE",
+        "mainText": "Please enter your <1>uni.tsu.ge</1> username and password",
+        "personalId": "Perdonal Id...",
+        "password": "Password...",
+        "log_In": "Log In"
     }
 }

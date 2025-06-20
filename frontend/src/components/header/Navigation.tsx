@@ -172,7 +172,7 @@ const openLoginMoadl = () => {
                     </Link>
                     <div 
                     onClick={openLoginMoadl}
-                    className='flex justify-center items-center min-w-[100px] h-[30px] font-firago text-[16px] font-semibold tracking-[1.2] bg-yellow-600 rounded-full cursor-pointer hover:transition hover:transform duration-300 hover:scale-110'>
+                    className='flex justify-center items-center min-w-[100px] h-[30px] font-firago text-[14px] font-semibold tracking-[1.2] bg-yellow-600 rounded-full cursor-pointer hover:transition hover:transform duration-300 hover:scale-110'>
                         {t('header.authenticate')}
                     </div>
                 </div>
