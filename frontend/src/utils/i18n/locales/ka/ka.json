@@ -19,6 +19,7 @@
     "phone": "ტელეფონი:"
   },
   "indoorMap": {
+    "heading": "განივის სართულები",
     "floors": "სართული",
     "route": "მარშრუტი",
     "office": "ლექტორის ოფისი",
@@ -26,7 +27,11 @@
     "from": "დან...",
     "to": "მდე...",
     "search": "მოძებნა",
-    "lecturerName": "სახელი..."
+    "lecturerName": "სახელი და გვარი...",
+    "error": {
+      "noLecturerFound": "ამ სახელით ლექტორი ვერ მოიძებნა.",
+      "lecturerNameRequired": "ლექტორის სახელი აუცილებელია."
+    }
   },
   "authenticate": {
     "heading": "ავთენტიფიკაცია",

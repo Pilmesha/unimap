@@ -9,9 +9,10 @@ interface FloorOneProps {
   onRoomClick: (room: string) => void;
   pathPoints?: { x: number; y: number }[];
   cost?: number | null;
+  hilightedRoom?: string;
 }
 
-const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost }) => {
+const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost, hilightedRoom }) => {
   const floorRooms = roomCoordinates[1]; 
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,7 +44,7 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost 
           />
          
          {/* otakhebi */}
-          <FirstFloorRooms />
+          <FirstFloorRooms  hilightedRoom={hilightedRoom} />
         </div>
 
       {Object.entries(floorRooms).map(([room, coords]) => (

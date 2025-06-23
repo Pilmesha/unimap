@@ -22,19 +22,12 @@ const resources: {
   }
 };
 
-const getInitialLanguage = () => {
-    if(typeof window !== 'undefined'){
-        return localStorage.getItem('lang') || 'en'
-    }
-    return 'en'
-}
-
 i18n
   .use(initReactI18next)
   .init({
     resources,
     fallbackLng: "en",
-    lng: getInitialLanguage(),
+    lng: "en",
     interpolation: {
       escapeValue: false
     },

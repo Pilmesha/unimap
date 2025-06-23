@@ -139,7 +139,7 @@ const handleLogin  = async () => {
             onClick={handleLogin}
             className='h-[40px] w-[110px] flex items-center justify-center border rounded-full 
                 border-green-400 text-[var(--text-color)] bg-[var(--background)] cursor-pointer hover:scale-[1.1] transition-transform duration-300'>
-                {loadingUser ? <ButtonLoader /> : t('authenticate.log_In')}
+                {loadingUser ? <ButtonLoader size={10} /> : t('authenticate.log_In')}
             </button>
         </div>
     </main>

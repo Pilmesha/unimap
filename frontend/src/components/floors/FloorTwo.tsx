@@ -8,9 +8,10 @@ interface FloorTwoProps {
   onRoomClick: (room: string) => void;
   pathPoints?: { x: number; y: number }[]; 
   cost?: number | null;
+  hilightedRoom?: string;
 }
 
-const FloorTwo: React.FC<FloorTwoProps> = ({ onRoomClick, pathPoints = [], cost }) => {
+const FloorTwo: React.FC<FloorTwoProps> = ({ onRoomClick, pathPoints = [], cost, hilightedRoom }) => {
   const floorRooms = roomCoordinates[2]; 
   const handleDebugClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -47,7 +48,7 @@ const FloorTwo: React.FC<FloorTwoProps> = ({ onRoomClick, pathPoints = [], cost 
         />
         
         {/* otakhebi */}
-         <SecondFloorRooms />
+         <SecondFloorRooms hilightedRoom={hilightedRoom} />
       </div>
       {Object.entries(floorRooms).map(([room, coords]) => (
         <div

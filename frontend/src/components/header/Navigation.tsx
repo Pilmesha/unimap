@@ -15,9 +15,23 @@ const Navigation = () => {
 const {isLoginModalOpen, setIsLoginModalOpen} = UseUser();
 const[theme, setTheme] = useState('dark');
 const[showMenu, setShowMenu] = useState(false)
+const[ready, setReady] = useState(false)
 const path = usePathname();
 const { t } = useTranslation()
 
+useEffect(() => {
+    document.body.classList.remove('light-mode', 'dark-mode');
+    document.body.classList.add(`${theme}-mode`)
+},[theme])
+
+useEffect(() => {
+    const lang  = localStorage.getItem('lang') || 'en';
+        i18n.changeLanguage(lang).then(() => setReady(true));
+},[])
+
+if (!ready) {
+    return null;
+}
 
 const handleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -31,16 +45,11 @@ const handleThemeToggle = () => {
     setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
     setShowMenu(false)
 }
-useEffect(() => {
-    document.body.classList.remove('light-mode', 'dark-mode');
-    document.body.classList.add(`${theme}-mode`)
-},[theme])
 
 const openLoginMoadl = () => {
     setIsLoginModalOpen((prevState) => !prevState);
     setShowMenu(false)
 }
-
 
   return (
     <section className='w-full h-[40px] mt-6 relative'>

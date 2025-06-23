@@ -19,6 +19,7 @@
         "phone": "Phone:"
     },
     "indoorMap": {
+        "heading": "GANIVI FLOORS",
         "floors": "Floor",
         "route": "Route",
         "office": "Lecturer`s Office",
@@ -26,7 +27,11 @@
         "from": "From...",
         "to": "To...",
         "search": "Search",
-        "lecturerName": "Lecturer`s name..."
+        "lecturerName": "Name and lastname...",
+        "error": {
+            "noLecturerFound": "No lecturer found with this name.",
+            "lecturerNameRequired": "Lecturer name is required."
+        }
     },
     "authenticate": {
         "heading": "AUTHENTICATE",

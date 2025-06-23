@@ -8,9 +8,10 @@ interface FloorThreeProps {
   onRoomClick: (room: string) => void;
   pathPoints?: { x: number; y: number }[];
   cost?: number | null;
+  hilightedRoom?: string;
 }
 
-const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], cost }) => {
+const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], cost, hilightedRoom }) => {
   const floorRooms = roomCoordinates[3];
   const handleDebugClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -45,7 +46,7 @@ const FloorThree: React.FC<FloorThreeProps> = ({ onRoomClick, pathPoints = [], c
           width={3000}
           height={3000}
         />
-        <ThirdFloorRooms />
+        <ThirdFloorRooms hilightedRoom={hilightedRoom}/>
       </div>
       {Object.entries(floorRooms).map(([room, coords]) => (
         <div

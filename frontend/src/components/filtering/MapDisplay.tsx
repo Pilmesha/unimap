@@ -1,5 +1,5 @@
 'use client'
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { roomCoordinates } from '../../data/roomCoordinates';
 import LoaderComp from '../loaders/LoaderComp';
 const FloorOne = lazy(() => import('../floors/FloorOne'));
@@ -9,6 +9,9 @@ const FloorFour = lazy(() => import('../floors/FloorFour'));
 const FloorFive = lazy(() => import('../floors/FloorFive'));
 const FloorSix = lazy(() => import('../floors/FloorSix'));
 import { useTranslation } from 'react-i18next';
+import { WiDirectionRight } from 'react-icons/wi';
+import { fetchOffice } from 'assets/fetchOffice';
+import ButtonLoader from 'components/loaders/ButtonLoader';
 
 interface Floors {
   id: number;
@@ -26,7 +29,51 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
   const [pathResult, setPathResult] = useState<string | null>(null);
   const [pathCost, setPathCost] = useState<number | null>(null);
   const [selectedFloor, setSelectedFloor] = useState<number>(1);
-  const { t } = useTranslation()
+  const [lecturerName, setLecturerName] = useState<string>('');
+  const [lecturerRoom, setLecturerRoom] = useState<string | null>(null)
+  const [lecturerError, setLecturerError] = useState<string | null>(null);
+  const [hilightedRoom,sethilightedRoom] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { t } = useTranslation();
+
+  const handldeLecturerSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLecturerError(null);
+    
+    if(!lecturerName.trim()) {
+      setLecturerRoom(null);
+      setLecturerError(t('indoorMap.error.lecturerNameRequired'))
+    }
+      setLoading(true);
+      try {
+      const room = await fetchOffice(lecturerName);
+      if(!room) {
+        setLecturerRoom(null);
+        setLecturerError(t('indoorMap.error.noLecturerFound'));
+      }else {
+        setLecturerRoom(room);
+        setLecturerError(null);
+        setLecturerName(''); 
+        const  floor = findFloorByroom(room);
+        if(floor) setSelectedFloor(floor);
+        sethilightedRoom(room); 
+      }
+    } catch (error) {
+      setLecturerRoom(null)
+    } finally {
+      setLoading(false);
+    }
+  } 
+
+  const findFloorByroom = (roomNumber: string): number | null => {
+    for(const [floor, rooms] of Object.entries(roomCoordinates)){
+      if(rooms.hasOwnProperty(roomNumber)) {
+        return parseInt(floor);
+      }
+    }
+    return null;
+  }
+
 
   const handleModalOpen = (type: 'route' | 'office' | 'table') => {
     setOpenModal(prev => (prev === type ? null : type));
@@ -84,21 +131,32 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
     <div className='w-full flex justify-center lg:block'>
       <div className='flex flex-col gap-[4rem] items-center w-full h-full pt-[4rem]'>
         <article className='w-full h-full'>
-          <div className='flex justify-between'>
+          <div className='w-full text-center mb-[2.5rem]'>
+            <h1 className='inline-block  relative text-[3.5vw] font-semibold font-firago mt-0 text-center'>
+              {t('indoorMap.heading')}
+              <span className='absolute bottom-[-5px] left-0 h-[3px] w-full bg-[var(--color-twitter-blue)]'></span>
+            </h1>
+          </div>
+          <div className='flex justify-around'>
             {floors.map((floor) => (
               <button
                 key={floor.id}
                 onClick={() => setSelectedFloor(floor.id)}
-                className={`floor-button font-firago text-[12px] font-semibold ${selectedFloor === floor.id ? 'bg-blue-500 text-white' : ''}`}>
+                className={`floor-button font-firago lg:text-[12px] md:text-[10px] text-[10px] font-semibold ${selectedFloor === floor.id ? 'bg-blue-700 text-white' : 'bg-cyan-500 text-white '}`}>
                 {`${floor.name} ${t('indoorMap.floors')} `}
               </button>
             ))}
           </div>
+          <h1>{lecturerRoom}</h1>
 
-          <section className='mt-[5rem] mb-[5rem] flex flex-col-reverse lg:flex-row-reverse justify-center items-center lg:items-start gap-[2rem] relative py-[2rem] object-center object-contain'>
+          <section className='mt-[3rem] mb-[1rem] flex flex-col lg:flex-row-reverse md:flex-row-reverse justify-center items-center lg:items-start gap-[2rem] relative py-[2rem] object-center object-contain'>
             {selectedFloor === 1 && (
-              <Suspense fallback={<LoaderComp  />}>
+              <Suspense fallback={
+              <div className="relative w-full max-w-[1300px] mx-auto -mt-25 px-2 sm:px-4 md:px-6 lg:px-8">
+                <LoaderComp />
+              </div>}>
                 <FloorOne
+                  hilightedRoom={hilightedRoom ?? undefined}
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 1)}
                   cost = {pathCost}
@@ -106,8 +164,12 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               </Suspense>
             )}
             {selectedFloor === 2 && (
-              <Suspense fallback={<LoaderComp />}>
+              <Suspense fallback={
+              <div className="relative w-full max-w-[1300px] mx-auto -mt-25 px-2 sm:px-4 md:px-6 lg:px-8">
+                <LoaderComp />
+              </div>}>
                 <FloorTwo
+                  hilightedRoom={hilightedRoom ?? undefined}
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 2)}
                   cost = {pathCost}  
@@ -115,8 +177,12 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                 </Suspense>
             )}
             {selectedFloor === 3 && (
-              <Suspense fallback={<LoaderComp />}>
+              <Suspense fallback={
+              <div className="relative w-full max-w-[1300px] mx-auto -mt-25 px-2 sm:px-4 md:px-6 lg:px-8">
+                <LoaderComp />
+              </div>}>
                 <FloorThree
+                  hilightedRoom={hilightedRoom ?? undefined}
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 3)}
                   cost = {pathCost}
@@ -124,8 +190,12 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               </Suspense>
             )}
             {selectedFloor === 4 && (
-              <Suspense fallback={<LoaderComp />}>
+              <Suspense fallback={
+              <div className="relative w-full max-w-[1300px] mx-auto -mt-25 px-2 sm:px-4 md:px-6 lg:px-8">
+                <LoaderComp />
+              </div>}>
                 <FloorFour
+                  hilightedRoom={hilightedRoom ?? undefined}
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 4)}
                   cost = {pathCost}
@@ -133,8 +203,12 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               </Suspense>
             )}
             {selectedFloor === 5 && (
-              <Suspense fallback={<LoaderComp />}>
+              <Suspense fallback={
+              <div className="relative w-full max-w-[1300px] mx-auto -mt-25 px-2 sm:px-4 md:px-6 lg:px-8">
+                <LoaderComp />
+              </div>}>
                 <FloorFive
+                  hilightedRoom={hilightedRoom ?? undefined}
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 5)}
                   cost = {pathCost}
@@ -142,85 +216,107 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               </Suspense>
             )}
             {selectedFloor === 6 && (
-              <Suspense fallback={<LoaderComp />}>
+              <Suspense fallback={
+              <div className="relative w-full max-w-[1300px] mx-auto -mt-25 px-2 sm:px-4 md:px-6 lg:px-8">
+                <LoaderComp />
+              </div>}>
                 <FloorSix
+                  hilightedRoom={hilightedRoom ?? undefined}
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 6)}
                 />
               </Suspense>
             )}
 
-            <div className='relative flex flex-col gap-4 min-w-[160px]'>
-              <div
-                onClick={() => handleModalOpen('route')}
-                className={`filtering-button text-[12px] ${openModal === 'route' ? 'bg-blue-500 text-white' : ''}`}>
-                {t('indoorMap.route')}
+            <div className='relative flex  lg:flex-col md:flex-col flex-row gap-4 min-w-[160px] lg:mt-[2rem] md:mt-[0.5rem] mt-0'>
+                <div> 
+                  <div
+                    onClick={() => handleModalOpen('route')}
+                    className={`filtering-button text-[11px] ${openModal === 'route' ? 'bg-blue-700 text-white' : 'bg-cyan-500 text-white'}`}>
+                    {t('indoorMap.route')}
+                  </div>
+                
+                  {openModal === 'route' && (
+                    <div className='bg-[var(--background)] lg:w-[160px] md:w-[160px] w-[150px] min-h-[120px] border border-blue-500 rounded-[8px] flex flex-col gap-[1rem] px-[0.5rem] py-[1rem]'>
+                      <form className='flex flex-col gap-[1rem] items-center' onSubmit={handleSubmit}>
+                        <div className='flex justify-between gap-1'>
+                          <input
+                            type="text"
+                            value={fromRoom}
+                            onChange={(e) => setFromRoom(e.target.value)}
+                            placeholder={`${t('indoorMap.from')}`}
+                            className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
+                          />
+                          <div className='h-[30px] flex justify-center items-center'>
+                            <WiDirectionRight className='text-[var-(--foreground)] text-[20px]' />
+                          </div>
+                          <input
+                            type="text"
+                            value={toRoom}
+                            onChange={(e) => setToRoom(e.target.value)}
+                            placeholder={`${t('indoorMap.to')}`}
+                            className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
+                          />
+                        </div>
+                        <button
+                          type='submit'
+                          className='bg-blue-500 text-white w-[90px] rounded-full h-[30px] text-[14px] font-firago font-semibold cursor-pointer hover:scale-[1.05] transition-all duration-200'
+                        >
+                          {t('indoorMap.search')}
+                        </button>
+                      </form>
+                    </div>
+                  )}
               </div>
 
-              {openModal === 'route' && (
-                <div className='bg-[var(--background)] w-[150px] min-h-[120px] border border-blue-500 rounded-[8px] flex flex-col gap-[1rem] px-[0.5rem] py-[1rem]'>
-                  <form className='flex flex-col gap-[1rem] items-center' onSubmit={handleSubmit}>
-                    <div className='flex justify-between gap-4'>
-                      <input
-                        type="text"
-                        value={fromRoom}
-                        onChange={(e) => setFromRoom(e.target.value)}
-                        placeholder={`${t('indoorMap.from')}`}
-                        className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
-                      />
-                      <input
-                        type="text"
-                        value={toRoom}
-                        onChange={(e) => setToRoom(e.target.value)}
-                        placeholder={`${t('indoorMap.to')}`}
-                        className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
-                      />
-                    </div>
-                    <button
+              <div>   
+                <div
+                onClick={() => handleModalOpen('office')}
+                className={`filtering-button text-[11px] text-center  ${openModal === 'office' ? 'bg-blue-700 text-white' : 'bg-cyan-500'}`}
+              >
+                {t('indoorMap.office')}
+              </div>
+              {openModal === 'office' && (
+                <div className={`bg-[var(--background)] lg:w-[160px] md:w-[160px] w-[150px]  border ${lecturerError ? 'h-[120px]' : 'h-[100px]'} border-blue-500 rounded-[8px] flex flex-col gap-[1rem] px-[0.5rem] py-[1rem]`}>
+                  <form className='flex flex-col justify-around items-center gap-[0.5rem]'>
+                    <input
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLecturerName(e.target.value)}
+                      value={lecturerName}
+                      type="text"
+                      placeholder={`${t('indoorMap.lecturerName')}`}
+                      className='text-[12px] text-center w-full border border-green-500 h-[30px] rounded-[5px] px-2 outline-none'
+                    />
+                    {lecturerError && (
+                        <span className="text-red-500 text-[9px]">{lecturerError}</span>
+                    )}
+
+                      <button
+                      onClick={handldeLecturerSearch}
                       type='submit'
                       className='bg-blue-500 text-white w-[90px] rounded-full h-[30px] text-[14px] font-firago font-semibold cursor-pointer hover:scale-[1.05] transition-all duration-200'
                     >
-                      {t('indoorMap.search')}
+                      {loading ? <ButtonLoader size={5} /> : t('indoorMap.search')}
                     </button>
                   </form>
                 </div>
               )}
-          <div
-          onClick={() => handleModalOpen('office')}
-          className={`filtering-button text-[12px] mt-[2rem] ${openModal === 'office' ? 'bg-blue-500 text-white' : ''}`}
-        >
-          {t('indoorMap.office')}
-        </div>
-        {openModal === 'office' && (
-          <div className='bg-[var(--background)] w-[150px] h-[100px] border border-blue-500 rounded-[8px] flex flex-col gap-[1rem] px-[0.5rem] py-[1rem]'>
-            <form className='flex flex-col justify-around items-center gap-[0.5rem]'>
-              <input
-                type="text"
-                placeholder={`${t('indoorMap.lecturerName')}`}
-                className='text-[12px] text-center w-full border border-green-500 h-[30px] rounded-[5px] px-2 outline-none'
-              />
-              <button
-                type='submit'
-                className='bg-blue-500 text-white w-[90px] rounded-full h-[30px] text-[14px] font-firago font-semibold cursor-pointer hover:scale-[1.05] transition-all duration-200'
-              >
-                {t('indoorMap.search')}
-              </button>
-            </form>
-          </div>
-        )}
+            </div>
 
-        <div
-          onClick={() => handleModalOpen('table')}
-          className={`filtering-button text-[12px] mt-[2rem] ${openModal === 'table' ? 'bg-blue-500 text-white' : ''}`}
-        >
-          {t('indoorMap.yourTable')}
+            <div>
+              <div
+                onClick={() => handleModalOpen('table')}
+                className={`filtering-button text-[11px] ${openModal === 'table' ? 'bg-blue-700 text-white' : 'bg-cyan-500'}`}
+              >
+                {t('indoorMap.yourTable')}
+              </div>
+              
+              {openModal === 'table' && (
+                <div className='bg-[var(--background)] lg:w-[160px] md:w-[160px] w-[150px] h-[180px] border border-blue-500 rounded-[8px] flex flex-col gap-[1rem] p-[1rem]'>
+                  Log In First
+                </div>
+              )}
+            </div> 
         </div>
-        {openModal === 'table' && (
-          <div className='bg-[var(--background)] w-[150px] h-[180px] border border-blue-500 rounded-[8px] flex flex-col gap-[1rem] p-[1rem]'>
-            Log In First
-          </div>
-        )}
-      </div>
       </section>
     </article>
   </div>

@@ -3,9 +3,9 @@ import { RiseLoader } from 'react-spinners';
 
 const LoaderComp = () => (
   <div
-  className='w-full'
+  className='relative w-full h-full flex items-center justify-center'
     style={{
-      height: '230px',
+      minHeight: '200px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

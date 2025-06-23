@@ -4,8 +4,8 @@
 
 @layer utilities {
   .responsive-room-text {
-    @apply text-[4px] sm:text-[6px] md:text-[7px] lg:text-[8px] xl:text-[9px];
-    @apply text-white border border-blue-300 bg-blue-400 z-30 flex items-center justify-center;
+    @apply text-[2px] sm:text-[4px] md:text-[5px] lg:text-[7px] xl:text-[7px];
+    @apply text-white border border-blue-300 bg-[var(--oklch)] z-30 flex items-center justify-center;
   }
   .stairs {
     @apply  bg-red-500 z-30 flex items-center;
@@ -16,7 +16,11 @@
   }
 }
 
-@theme {
+
+:root {
+  --oklch: oklch(71.5% 0.143 215.221);
+  --background: #ffffff;
+  --foreground: #171717;
   --breakpoint-sm: 480px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
@@ -26,17 +30,12 @@
   --blury-black: rgba(0,0,0,0.4);
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
+/* @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -102,7 +101,7 @@ body {
 
 .filtering-button {
   font-family: 'Firago', sans-serif;
-  width: 150px;
+  min-width: 120px;
   height: 35px;
   display: flex;
   align-items: center;

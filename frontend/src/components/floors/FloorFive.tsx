@@ -8,9 +8,10 @@ interface FloorFiveProps {
   onRoomClick: (room: string) => void;
   pathPoints?: { x: number; y: number }[];
   cost?: number | null;
+  hilightedRoom?: string;
 }
 
-const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cost }) => {
+const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cost, hilightedRoom }) => {
   const floorRooms = roomCoordinates[5];
     const handleDebugClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -44,7 +45,7 @@ const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cos
         width={3000}
         height={3000}
       />
-      <FifthFloorRoom />
+      <FifthFloorRoom hilightedRoom={hilightedRoom} />
       {Object.entries(floorRooms).map(([room, coords]) => (
         <div
           key={room}

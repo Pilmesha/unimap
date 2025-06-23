@@ -9,9 +9,10 @@ interface FloorFourProps {
   onRoomClick: (room: string) => void;
   pathPoints?: { x: number; y: number }[]; 
   cost?: number | null;
+  hilightedRoom?: string | null;
 }
 
-const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cost }) => {
+const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cost, hilightedRoom }) => {
   const floorRooms = roomCoordinates[4]; 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +46,7 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cos
         width={3000}
         height={3000}
       />
-      <FourthFloorRooms />
+      <FourthFloorRooms hilightedRoom={hilightedRoom} />
       {Object.entries(floorRooms).map(([room, coords]) => (
         <div
           key={room}
