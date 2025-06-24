@@ -56,7 +56,9 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
         setLecturerName(''); 
         const  floor = findFloorByroom(room);
         if(floor) setSelectedFloor(floor);
-        sethilightedRoom(room); 
+        sethilightedRoom(String(room)); 
+        setOpenModal(null);
+        console.log(lecturerRoom)
       }
     } catch (error) {
       setLecturerRoom(null)
@@ -147,8 +149,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               </button>
             ))}
           </div>
-          <h1>{lecturerRoom}</h1>
-
+          
           <section className='mt-[3rem] mb-[1rem] flex flex-col lg:flex-row-reverse md:flex-row-reverse justify-center items-center lg:items-start gap-[2rem] relative py-[2rem] object-center object-contain'>
             {selectedFloor === 1 && (
               <Suspense fallback={
