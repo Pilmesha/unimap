@@ -1,5 +1,5 @@
 'use client'
-import React, { lazy, Suspense, useEffect, useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { roomCoordinates } from '../../data/roomCoordinates';
 import LoaderComp from '../loaders/LoaderComp';
 const FloorOne = lazy(() => import('../floors/FloorOne'));
@@ -12,6 +12,8 @@ import { useTranslation } from 'react-i18next';
 import { WiDirectionRight } from 'react-icons/wi';
 import { fetchOffice } from 'assets/fetchOffice';
 import ButtonLoader from 'components/loaders/ButtonLoader';
+import { droebitiCxrili } from 'assets/droebitiCxrili';
+import { div } from 'framer-motion/client';
 
 interface Floors {
   id: number;
@@ -33,7 +35,9 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
   const [lecturerRoom, setLecturerRoom] = useState<string | null>(null)
   const [lecturerError, setLecturerError] = useState<string | null>(null);
   const [hilightedRoom,sethilightedRoom] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [lecturerLoading, setLecturerLoading] = useState<boolean>(false);
+  const [pathError, setPathError] = useState<string | null>(null);
+  const [pathLoader, setPathLoader] = useState<boolean>(false);
   const { t } = useTranslation();
 
   const handldeLecturerSearch = async (e: React.FormEvent) => {
@@ -43,9 +47,11 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
     if(!lecturerName.trim()) {
       setLecturerRoom(null);
       setLecturerError(t('indoorMap.error.lecturerNameRequired'))
+      return;
     }
-      setLoading(true);
+      setLecturerLoading(true);
       try {
+      
       const room = await fetchOffice(lecturerName);
       if(!room) {
         setLecturerRoom(null);
@@ -63,7 +69,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
     } catch (error) {
       setLecturerRoom(null)
     } finally {
-      setLoading(false);
+      setLecturerLoading(false);
     }
   } 
 
@@ -75,6 +81,16 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
     }
     return null;
   }
+
+  const handleTableRoom = (room: string, tableType: string) => {
+    for(const[floor, rooms] of Object.entries(roomCoordinates)){
+      if(rooms.hasOwnProperty(room)){
+        setSelectedFloor(Number(floor))
+        sethilightedRoom(room);
+        handleModalOpen(tableType as 'route' | 'office' | 'table')
+      }
+     }
+    }
 
 
   const handleModalOpen = (type: 'route' | 'office' | 'table') => {
@@ -106,9 +122,17 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setPathError(null);
+
     if (!fromRoom || !toRoom) {
-      alert('Please select both "From" and "To" rooms.');
+      return;
     };
+    if (fromRoom === toRoom) {
+      setPathError(t('indoorMap.error.sameRoom'));
+      return;
+    };
+    
+    setPathLoader(true);
 
     try {
       const res = await fetch(`https://unimap-5vf6.onrender.com/minimal-path`, {
@@ -118,12 +142,26 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
         },
         body: JSON.stringify({ start: fromRoom, end: toRoom }),
       });
-      const data = await res.json();
-      setPathResult(data.path);
-      setPathCost(data.cost);
+      const contentType = res.headers.get('Content-Type');
+      if(contentType && contentType.includes('application/json')) {
+        const data = await res.json();
+        setPathResult(data.path);
+        setPathCost(data.cost);
+        setPathLoader(false);
+
+        const startingFloor = findFloorByroom(fromRoom);
+        if(startingFloor) setSelectedFloor(startingFloor);
+
+      } else {
+        setPathResult(null);
+        setPathCost(null);
+        setPathError(t('indoorMap.error.irrelevantData'));
+      }
     } catch (error) {
       console.error('Failed to fetch path:', error);
-      setPathResult('Error fetching path');
+      setPathResult('Error fetching path');   
+    }finally {
+      setPathLoader(false);
     }
   };
 
@@ -149,7 +187,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               </button>
             ))}
           </div>
-          
+          <h1>{pathResult}</h1>
           <section className='mt-[3rem] mb-[1rem] flex flex-col lg:flex-row-reverse md:flex-row-reverse justify-center items-center lg:items-start gap-[2rem] relative py-[2rem] object-center object-contain'>
             {selectedFloor === 1 && (
               <Suspense fallback={
@@ -233,7 +271,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                 <div> 
                   <div
                     onClick={() => handleModalOpen('route')}
-                    className={`filtering-button text-[11px] ${openModal === 'route' ? 'bg-blue-700 text-white' : 'bg-cyan-500 text-white'}`}>
+                    className={`filtering-button text-[12px] text-center ${openModal === 'route' ? 'bg-blue-700 text-white' : 'bg-cyan-500 text-white'}`}>
                     {t('indoorMap.route')}
                   </div>
                 
@@ -259,11 +297,14 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                             className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
                           />
                         </div>
+                        {pathError && (
+                          <span className="text-red-500 text-[8px] text-center">{pathError}</span>
+                        )}
                         <button
                           type='submit'
                           className='bg-blue-500 text-white w-[90px] rounded-full h-[30px] text-[14px] font-firago font-semibold cursor-pointer hover:scale-[1.05] transition-all duration-200'
                         >
-                          {t('indoorMap.search')}
+                          {pathLoader ? <ButtonLoader size={5} /> : t('indoorMap.search')}
                         </button>
                       </form>
                     </div>
@@ -273,7 +314,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               <div>   
                 <div
                 onClick={() => handleModalOpen('office')}
-                className={`filtering-button text-[11px] text-center  ${openModal === 'office' ? 'bg-blue-700 text-white' : 'bg-cyan-500'}`}
+                className={`filtering-button text-[12px] text-center  ${openModal === 'office' ? 'bg-blue-700 text-white' : 'bg-cyan-500'}`}
               >
                 {t('indoorMap.office')}
               </div>
@@ -288,15 +329,15 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                       className='text-[12px] text-center w-full border border-green-500 h-[30px] rounded-[5px] px-2 outline-none'
                     />
                     {lecturerError && (
-                        <span className="text-red-500 text-[9px]">{lecturerError}</span>
+                        <span className="text-red-500 text-[8px] text-center ">{lecturerError}</span>
                     )}
 
-                      <button
+                    <button
                       onClick={handldeLecturerSearch}
                       type='submit'
                       className='bg-blue-500 text-white w-[90px] rounded-full h-[30px] text-[14px] font-firago font-semibold cursor-pointer hover:scale-[1.05] transition-all duration-200'
-                    >
-                      {loading ? <ButtonLoader size={5} /> : t('indoorMap.search')}
+                      >
+                      {lecturerLoading ? <ButtonLoader size={5} /> : t('indoorMap.search')}
                     </button>
                   </form>
                 </div>
@@ -306,15 +347,84 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
             <div>
               <div
                 onClick={() => handleModalOpen('table')}
-                className={`filtering-button text-[11px] ${openModal === 'table' ? 'bg-blue-700 text-white' : 'bg-cyan-500'}`}
+                className={`filtering-button text-[12px] text-center ${openModal === 'table' ? 'bg-blue-700 text-white' : 'bg-cyan-500'}`}
               >
                 {t('indoorMap.yourTable')}
               </div>
               
               {openModal === 'table' && (
-                <div className='bg-[var(--background)] lg:w-[160px] md:w-[160px] w-[150px] h-[180px] border border-blue-500 rounded-[8px] flex flex-col gap-[1rem] p-[1rem]'>
-                  Log In First
+              <div 
+              onClick={() => handleModalOpen('table')}
+              className='fixed inset-0 flex items-center justify-center z-50 bg-black/90'>
+                <div 
+                onClick={(e) => e.stopPropagation()}
+                className='bg-[var(--background)] w-auto h-auto border border-blue-500 rounded-[8px] flex flex-col 
+                gap-[1rem] p-[1rem] mx-[1rem]'>
+                  <table className='overflow-x-scroll border border-gray-600 text-sm text-left'>
+                    <thead>
+                      <tr>
+                        <th className='th-class font-firago'>საგანი</th>
+                        <th className='th-class font-firago'>ლექცია</th>
+                        <th className='th-class font-firago'>პრაქტიკული</th>
+                        <th className='th-class font-firago'>ლაბორატორიული</th>
+                        <th className='th-class whitespace-nowrap'>სამუშაო ჯგუფი</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {droebitiCxrili.საგნები.map((საგანი, index) => {
+                        const findByType = (type: string) => საგანი.გაკვეთილები.filter((lesson) => lesson.ტიპი === type)
+                        .map((lesson) => lesson.აუდიტორია)
+                        return (
+                            <tr key={index}>
+                              <td className='cursor-pointer border px-[4px] py-[4px] text-center md:text-[12px] lg:text-[14px] text-[10px] 
+                              hover:scale-110 transform transition ease-in-out duration-600'>{საგანი.დასახელება}</td>
+                              <td
+                                onClick={() => {
+                                  const auds = findByType('ლექცია');
+                                  if (auds.length > 0) handleTableRoom(auds[0],'table');
+                                }}
+                                className='cursor-pointer border px-[4px] hover:scale-110 transform transition ease-in-out duration-600 py-[4px] 
+                                text-center md:text-[12px] lg:text-[14px] text-[10px]'
+                              >
+                                {findByType('ლექცია')}
+                              </td>
+                              <td
+                                onClick={() => {
+                                  const auds = findByType('პრაქტიკული');
+                                  if (auds.length > 0) handleTableRoom(auds[0], 'table');
+                                }}
+                                className='cursor-pointer border px-[4px] hover:scale-110 transform transition ease-in-out duration-600 py-[4px] 
+                                md:text-[12px] lg:text-[14px] text-[10px]'
+                              >
+                                {findByType('პრაქტიკული')}
+                              </td>
+                              <td
+                                onClick={() => {
+                                  const auds = findByType('ლაბორატორიული');
+                                  if (auds.length > 0) handleTableRoom(auds[0],'table');
+                                }}
+                                className='cursor-pointer md:text-[12px] lg:text-[14px] text-[10px] 
+                                hover:scale-110 transform transition ease-in-out duration-600 border px-[4px] py-[4px] text-center'
+                              >
+                                {findByType('ლაბორატორიული')}
+                              </td>
+                              <td
+                                onClick={() => {
+                                  const auds = findByType('სამუშაო ჯგუფი');
+                                  if (auds.length > 0) handleTableRoom(auds[0], 'table');
+                                }}
+                                className='cursor-pointer border px-[4px] hover:scale-110 transform transition ease-in-out duration-600 py-[4px]
+                                 text-center md:text-[12px] lg:text-[14px] text-[10px]'
+                              >
+                                {findByType('სამუშაო ჯგუფი')}
+                              </td>
+                            </tr>
+                          );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
+              </div>
               )}
             </div> 
         </div>

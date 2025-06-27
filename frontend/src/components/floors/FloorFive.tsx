@@ -50,7 +50,7 @@ const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cos
         <div
           key={room}
           onClick={() => onRoomClick(room)}
-          className="absolute bg-red-500 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200"
+          className="absolute bg-yellow-500 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200"
           style={{
             left: `${coords.x}%`,
             top: `${coords.y}%`,
@@ -58,7 +58,7 @@ const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cos
             height: '3px',
             transform: 'translate(-50%, -50%)',
             zIndex: 10,
-            boxShadow: '0 0 5px rgba(255,50,50,0.8)'
+            boxShadow: '0 0 5px rgba(255,255,50,0.8)'
           }}
           title={`Room ${room}`}
         />

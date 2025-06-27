@@ -1,17 +1,26 @@
 'use client'
 import React, { createContext, useContext, useState } from 'react';
 import '../../utils/i18n'
-
-interface IUserData {
-  personalId: string;
-  password: string;
+export interface ILesson {
+  ტიპი: string;
+  ლექტორი: string;
+  აუდიტორია: string;
+  დღე: string;
+  დრო: string;
+}
+export interface ISubject {
+  დასახელება: string;
+  გაკვეთილები: ILesson[];
+}
+export interface ITableData {
+  საგნები: ISubject[];
 }
 
 interface IUserContextType {
     isLoginModalOpen: boolean;
     setIsLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    userData: IUserData | null; 
-    setUser: React.Dispatch<React.SetStateAction<IUserData | null>>
+    user: ITableData | null;
+    setUser: React.Dispatch<React.SetStateAction<ITableData | null>>
 }
 
 const UserContext = createContext<IUserContextType | undefined>(undefined);
@@ -19,10 +28,10 @@ const UserContext = createContext<IUserContextType | undefined>(undefined);
 
  const UseProvider:React.FC<{children:React.ReactNode}> = ({children}) => {
     const[isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-    const[user, setUser] = useState<IUserData | null>(null);
+    const[user, setUser] = useState<ITableData | null>(null)
     
   return (
-    <UserContext.Provider value={{isLoginModalOpen, setIsLoginModalOpen, userData: user, setUser}}>
+    <UserContext.Provider value={{isLoginModalOpen, setIsLoginModalOpen, user, setUser}}>
         {children}
     </UserContext.Provider>
   )

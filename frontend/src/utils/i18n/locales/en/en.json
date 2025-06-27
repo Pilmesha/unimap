@@ -29,8 +29,10 @@
         "search": "Search",
         "lecturerName": "Name and lastname...",
         "error": {
-            "noLecturerFound": "No lecturer found with this name.",
-            "lecturerNameRequired": "Lecturer name is required."
+            "noLecturerFound": "No lecturer found",
+            "lecturerNameRequired": "Lecturer name is required.",
+            "sameRoom": "You selected the same room for both 'Starting' and 'Destination'. Please select different rooms.",
+            "irrelevantData": "The data you entered is not relevant to the Ganivi building. Please check the information and try again."
         }
     },
     "authenticate": {
@@ -38,7 +40,8 @@
         "mainText": "Please enter your <1>uni.tsu.ge</1> username and password",
         "personalId": "Perdonal Id...",
         "password": "Password...",
-        "log_In": "Log In"
+        "log_In": "Log In",
+        "userNotFound": "User not found"
     },
     "validation": {
         "personalIdLength": "Personal ID must be between 6 and 20 characters long.",

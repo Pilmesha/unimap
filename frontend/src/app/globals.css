@@ -8,11 +8,14 @@
     @apply text-white border border-blue-300 bg-[var(--oklch)] z-30 flex items-center justify-center;
   }
   .stairs {
-    @apply  bg-red-500 z-30 flex items-center;
+    @apply  bg-red-500 flex items-center z-0;
     @apply text-[4px] sm:text-[6px] md:text-[8px] lg:text-[10px] xl:text-[12px];
   }
   .options {
     @apply bg-[var(--background)] text-[var(--foreground)] cursor-pointer;
+  }
+  .th-class {
+    @apply text-center border text-[9px] lg:text-[13px] md:text-[11px] px-[4px] py-[4px]
   }
 }
 
@@ -83,7 +86,7 @@ body {
 }
 .floor-button {
   font-family: 'Firago', sans-serif;
-  width: 110px;
+  width: 140px;
   height: 35px;
   display: flex;
   align-items: center;
@@ -102,6 +105,7 @@ body {
 .filtering-button {
   font-family: 'Firago', sans-serif;
   min-width: 120px;
+  max-width: 160px;
   height: 35px;
   display: flex;
   align-items: center;
@@ -109,6 +113,7 @@ body {
   border: 1px solid #3b82f6;
   cursor: pointer;
   border-radius: 5px;
+  color: white;
 }
 .filtering-button:hover {
   background-color: #3b82f6;

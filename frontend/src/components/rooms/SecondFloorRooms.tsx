@@ -26,6 +26,7 @@ const SecondFloorRooms: React.FC<SecondFloorRoomsProps> = ({ hilightedRoom }) =>
       <div room-data='218' className={`absolute top-[56%] left-[25.35%] w-[6.9%] h-[27%] responsive-room-text font-firago ${hilightedRoom === '218' ? '!bg-yellow-400 !text-black' : ''}`}>218</div>
       <div room-data='219' className={`absolute top-[56%] left-[32.4%] w-[7%] h-[27%] responsive-room-text font-firago ${hilightedRoom === '219' ? '!bg-yellow-400 !text-black' : ''}`}>219</div>
       <div room-data='220' className={`absolute top-[56%] left-[39.5%] w-[10.7%] h-[27%] responsive-room-text font-firago ${hilightedRoom === '220' ? '!bg-yellow-400 !text-black' : ''}`}>220</div>
+      <div room-data='221' className={`absolute top-[56%] left-[61.2%] w-[3.3%] h-[27%] responsive-room-text font-firago ${hilightedRoom === '221' ? '!bg-yellow-400 !text-black' : ''}`}>221</div>
       <div room-data='201' className={`absolute top-[56.5%] left-[78.9%] w-[3.3%] h-[27%] responsive-room-text font-firago ${hilightedRoom === '201' ? '!bg-yellow-400 !text-black' : ''}`}>201</div>
       <div room-data='202' className={`absolute top-[56.5%] left-[89.7%] w-[6.9%] h-[27%] responsive-room-text font-firago ${hilightedRoom === '202' ? '!bg-yellow-400 !text-black' : ''}`}>202</div>
 

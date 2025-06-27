@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import { FaSun } from 'react-icons/fa'
 import Authentication from 'components/authentication/Authentication'
 import Image from 'next/image'
@@ -50,6 +50,7 @@ const openLoginMoadl = () => {
     setIsLoginModalOpen((prevState) => !prevState);
     setShowMenu(false)
 }
+
 
   return (
     <section className='w-full h-[40px] mt-6 relative'>

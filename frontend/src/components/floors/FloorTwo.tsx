@@ -54,7 +54,7 @@ const FloorTwo: React.FC<FloorTwoProps> = ({ onRoomClick, pathPoints = [], cost,
         <div
           key={room}
           onClick={() => onRoomClick(room)}
-          className="absolute bg-red-500 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200"
+          className="absolute bg-yellow-500 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200"
           style={{
             left: `${coords.x}%`,
             top: `${coords.y}%`,

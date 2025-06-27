@@ -1,55 +1,53 @@
 'use client'
 import { UseUser } from 'app/context/UseProvider';
 import ButtonLoader from 'components/loaders/ButtonLoader';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next';
 import { LuEye, LuEyeClosed } from 'react-icons/lu';
 import { createPersonalIdSchema, createPasswordSchema} from '../../validation/schemas/userSchema'
+import { fetchTable } from 'assets/fetchTable';
 interface Props {
   openLoginMoadl: () => void;
 }
 
 const Authentication:React.FC<Props>= ({openLoginMoadl}) => {
 const[shownPass, setShownPass] = useState<true | false>(false);
-const[personalId,setPersonalId] = useState<string>('');
+const[username,setUsername] = useState<string>('');
 const[password,setPassword] = useState<string>('');
 const[loadingUser, setLoadingUser] = useState<boolean>(false);
-const [errors, setErrors] = useState<{ personalId?: string; password?: string }>({});
+const[tableDataError, setTableDataError] = useState<string | null>(null);
+const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
 const { t } = useTranslation()
-const { setUser, isLoginModalOpen} = UseUser()
+const { setUser, setIsLoginModalOpen, user} = UseUser()
 
 const personalIdSchema = createPersonalIdSchema(t);
 const passwordSchema = createPasswordSchema(t);
 
-const handleTypeChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+const handlePassTypechange = (e: React.MouseEvent<HTMLButtonElement>) => {
   e.preventDefault();
   setShownPass((prev) => !prev)
 }
 
-const handleLogin  = async () => {
-  try {
-    setLoadingUser(true)
-    setErrors({})
+const handleLogin  = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  e.preventDefault()
+  setLoadingUser(true)
+  setTableDataError(null)
 
-    const response = await fetch('https://unimap-5vf6.onrender.com/schedule', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        personalId,
-        password,
-      })
-    })
-    if(!response.ok) {
-      throw new Error ('response is not OK')
+ try {
+    const tableData = await fetchTable(username, password);
+    if (!tableData || typeof tableData === 'string' || ('error' in tableData)) {
+      setUser(null);
+      setTableDataError(t('authenticate.userNotFound'));
+    } else {
+      console.log('table data :', tableData)
+      setUser(tableData);
+      setIsLoginModalOpen(false);
     }
-    const data = await response.json();
-    setUser(data)
-    openLoginMoadl()
-    setLoadingUser(false)   
-  } catch (error) {
-    console.error('error happaned while logging', error)
+  } catch (error: any) {
+    setUser(null);
+    setTableDataError('Server error. Please try again later.');
+  } finally {
+    setLoadingUser(false);
   }
 }
 
@@ -84,14 +82,14 @@ const handleLogin  = async () => {
                 <input 
                 onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
                   const value = e.target.value;
-                  setPersonalId(value)
+                  setUsername(value)
                   const result = personalIdSchema.safeParse(value);
                   setErrors(prev => ({
                     ...prev,
-                    personalId: result.success ? undefined : result.error.errors[0].message,
+                    username: result.success ? undefined : result.error.errors[0].message,
                   }))
                 }}
-                value={personalId}
+                value={username}
                 type="text"
                 placeholder={`${t('authenticate.personalId')}`}
                 autoComplete='off'
@@ -99,8 +97,8 @@ const handleLogin  = async () => {
                 border-blue-400 text-[var(--second-text-color)] text-center placeholder:text-center
                 focus:outline-none focus:ring-0'  />
 
-                {errors.personalId && (
-                  <p className="text-red-500 text-xs">{errors.personalId}</p>
+                {errors.username && (
+                  <p className="text-red-500 text-xs">{errors.username}</p>
                 )}
 
                 <div className='inset-0 relative'>
@@ -123,7 +121,7 @@ const handleLogin  = async () => {
                 focus:outline-none focus:ring-0 '/>
                 <button 
                 type='button'
-                onClick={handleTypeChange}
+                onClick={handlePassTypechange}
                 className='absolute bottom-[11px] right-[13px] text-black text-[18px] '>
                   {shownPass ? <LuEye /> : <LuEyeClosed />}
                 </button>
@@ -134,8 +132,9 @@ const handleLogin  = async () => {
                   )}
 
             </form>
+            <p className='text-red-500 text-[15px]'>{tableDataError}</p>
             <button
-            disabled={!!errors.personalId || !!errors.password}
+            disabled={!!errors.username || !!errors.password}
             onClick={handleLogin}
             className='h-[40px] w-[110px] flex items-center justify-center border rounded-full 
                 border-green-400 text-[var(--text-color)] bg-[var(--background)] cursor-pointer hover:scale-[1.1] transition-transform duration-300'>
