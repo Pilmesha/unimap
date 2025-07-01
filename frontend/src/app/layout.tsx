@@ -5,6 +5,7 @@ import Navigation from '../components/header/Navigation'
 import Footer from "../components/footer/Footer";
 import UseProvider from "./context/UseProvider";
 import LanguageWrapper from "components/language/LanguageWrapper";
+import ThemeWrapper from "components/theme/ThemeWrapper";
 /* import LoaderWrapper from "components/loaders/LoaderWrapper"; */
 
 export const metadata: Metadata = {
@@ -22,9 +23,11 @@ export default function RootLayout({
       <body className="xl:px-[8rem] lg:px-[6rem] md:px-[4rem] sm:px-[2rem] px-[1rem]">
         <UseProvider>
           <LanguageWrapper>
-            <Navigation />
-               {children}
-            <Footer />
+            <ThemeWrapper>
+              <Navigation />
+                {children}
+              <Footer />
+            </ThemeWrapper>
           </LanguageWrapper>
       </UseProvider>
       </body>

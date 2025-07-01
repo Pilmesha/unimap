@@ -13,7 +13,6 @@ import { WiDirectionRight } from 'react-icons/wi';
 import { fetchOffice } from 'assets/fetchOffice';
 import ButtonLoader from 'components/loaders/ButtonLoader';
 import { droebitiCxrili } from 'assets/droebitiCxrili';
-import { div } from 'framer-motion/client';
 
 interface Floors {
   id: number;

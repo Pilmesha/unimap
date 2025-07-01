@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import React, {  useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { FaSun } from 'react-icons/fa'
 import Authentication from 'components/authentication/Authentication'
 import Image from 'next/image'
@@ -18,12 +18,6 @@ const[showMenu, setShowMenu] = useState(false)
 const path = usePathname();
 const { t } = useTranslation()
 
-useEffect(() => {
-    document.body.classList.remove('light-mode', 'dark-mode');
-    document.body.classList.add(`${theme}-mode`)
-},[theme])
-
-
 const handleMenu = () => {
     setShowMenu((prev) => !prev);
     setIsLoginModalOpen(false)
@@ -33,8 +27,11 @@ const removeShowMenu = () => {
 }
 
 const handleThemeToggle = () => {
-    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
-    setShowMenu(false)
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    localStorage.setItem('theme', newTheme);
+     document.body.classList.remove('light-mode', 'dark-mode');
+  document.body.classList.add(newTheme === 'dark' ? 'dark-mode' : 'light-mode');
+    setTheme(newTheme)
 }
 
 const openLoginMoadl = () => {
