@@ -15,7 +15,6 @@ const Navigation = () => {
 const {isLoginModalOpen, setIsLoginModalOpen} = UseUser();
 const[theme, setTheme] = useState('dark');
 const[showMenu, setShowMenu] = useState(false)
-const[ready, setReady] = useState(false)
 const path = usePathname();
 const { t } = useTranslation()
 
@@ -24,14 +23,6 @@ useEffect(() => {
     document.body.classList.add(`${theme}-mode`)
 },[theme])
 
-useEffect(() => {
-    const lang  = localStorage.getItem('lang') || 'en';
-        i18n.changeLanguage(lang).then(() => setReady(true));
-},[])
-
-if (!ready) {
-    return null;
-}
 
 const handleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -143,18 +134,18 @@ const openLoginMoadl = () => {
                 <div className='flex justify-between items-center h-full'>
                     <div>
                         <select
-                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                                    const lang = e.target.value
-                                    localStorage.setItem('lang', lang)
-                                    i18n.changeLanguage(lang)
-                                    }}
-                                    value={i18n.language}
-                                    className=' text-[var(--foreground)] text-sm px-2 py-[2px] outline-none hover:cursor-pointer'
-                                    >
-                                        <option className='options' value="en">EN</option>
-                                        <option className='options' value="ka">KA</option>
-                                        <option className='options' value="ru">RU</option>
-                                    </select>
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                            const lang = e.target.value
+                            localStorage.setItem('lang', lang)
+                            i18n.changeLanguage(lang)
+                            }}
+                            value={i18n.language}
+                            className=' text-[var(--foreground)] text-sm px-2 py-[2px] outline-none hover:cursor-pointer'
+                            >
+                            <option className='options' value="en">EN</option>
+                            <option className='options' value="ka">KA</option>
+                            <option className='options' value="ru">RU</option>
+                        </select>
                     </div>
                     <div
                     title={`change theme to ${theme === 'light' ? 'dark' : 'light'} mode`}

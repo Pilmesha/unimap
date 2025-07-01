@@ -4,6 +4,7 @@ import '@fontsource/firago';
 import Navigation from '../components/header/Navigation'
 import Footer from "../components/footer/Footer";
 import UseProvider from "./context/UseProvider";
+import LanguageWrapper from "components/language/LanguageWrapper";
 /* import LoaderWrapper from "components/loaders/LoaderWrapper"; */
 
 export const metadata: Metadata = {
@@ -20,11 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body className="xl:px-[8rem] lg:px-[6rem] md:px-[4rem] sm:px-[2rem] px-[1rem]">
         <UseProvider>
-          <Navigation />
-            {/* <LoaderWrapper> */}
-              {children}
-            {/* </LoaderWrapper> */}
-          <Footer />
+          <LanguageWrapper>
+            <Navigation />
+               {children}
+            <Footer />
+          </LanguageWrapper>
       </UseProvider>
       </body>
     </html>
