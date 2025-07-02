@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next';
 import { LuEye, LuEyeClosed } from 'react-icons/lu';
 import { createPersonalIdSchema, createPasswordSchema} from '../../validation/schemas/userSchema'
-import { fetchTable } from 'assets/fetchTable';
+import { fetchTable } from 'assets/fetch_table/fetchTable';
 interface Props {
   openLoginMoadl: () => void;
 }

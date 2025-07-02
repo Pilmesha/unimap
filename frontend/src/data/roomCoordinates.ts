@@ -1,9 +1,9 @@
-export interface RoomCoordinate {
-    x: number; // percent (0–100)
-    y: number; // percent (0–100)
+export interface IRoomCoordinate {
+    x: number;
+    y: number; 
   }
   
-  export type FloorRoomCoordinates = Record<string, RoomCoordinate>;
+  export type FloorRoomCoordinates = Record<string, IRoomCoordinate>;
   
   export const roomCoordinates: Record<number, FloorRoomCoordinates> = {
     1: {

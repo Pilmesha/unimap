@@ -10,7 +10,7 @@ const FloorFive = lazy(() => import('../floors/FloorFive'));
 const FloorSix = lazy(() => import('../floors/FloorSix'));
 import { useTranslation } from 'react-i18next';
 import { WiDirectionRight } from 'react-icons/wi';
-import { fetchOffice } from 'assets/fetchOffice';
+import { fetchOffice } from 'assets/fetch_office/fetchOffice';
 import ButtonLoader from 'components/loaders/ButtonLoader';
 import { droebitiCxrili } from 'assets/droebitiCxrili';
 
