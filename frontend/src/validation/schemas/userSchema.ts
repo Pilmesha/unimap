@@ -4,7 +4,7 @@ import {
     personalIdLengthRegex,
     passwordLengthRegex,
     passwordNoSpacesRegex,
-} from '../regex'; 
+} from '../regex/regex'; 
 import type { TFunction } from 'i18next';
 
 

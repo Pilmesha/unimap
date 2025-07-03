@@ -3,7 +3,7 @@ import{
     personalIdLengthRegex,
     passwordLengthRegex,
     passwordNoSpacesRegex,
-} from './regex'
+} from '../regex/regex'
 
 describe('personalIdCharRegex', () => {
     it('accepts letters and numbers', () => {

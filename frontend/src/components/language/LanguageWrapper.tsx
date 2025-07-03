@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import i18n from 'utils/i18n'
+import i18n from '../../utils/i18n'
 
 const LanguageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const [ready, setReady] = useState(false)

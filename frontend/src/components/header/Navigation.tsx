@@ -5,11 +5,11 @@ import { FaSun } from 'react-icons/fa'
 import Authentication from 'components/authentication/Authentication'
 import Image from 'next/image'
 import { BsMoonStarsFill } from 'react-icons/bs'
-import { UseUser } from 'app/context/UseProvider'
+import { UseUser } from '../../app/context/UseProvider'
 import { TiThMenu } from 'react-icons/ti'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
-import i18n from 'utils/i18n'
+import i18n from '../../utils/i18n'
 
 const Navigation = () => {
 const {isLoginModalOpen, setIsLoginModalOpen} = UseUser();
