@@ -1,6 +1,6 @@
 'use client'
 import React, { lazy, Suspense, useState } from 'react';
-import { roomCoordinates } from '../../data/roomCoordinates';
+import { roomCoordinates } from '../../roomCoordinates/roomCoordinates';
 import LoaderComp from '../loaders/LoaderComp';
 const FloorOne = lazy(() => import('../floors/FloorOne'));
 const FloorTwo = lazy(() => import('../floors/FloorTwo'));

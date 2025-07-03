@@ -7,6 +7,7 @@ const FirstFloorRooms: React.FC<FirstFloorRoomsProps> = ({hilightedRoom}) => {
   return (
     <>
       <div room-data='room-giraffee' className={`absolute top-[30%] left-[10.4%] w-[15.1%] h-[22%] responsive-room-text font-firago ${hilightedRoom === 'room-giraffee' ? '!bg-yellow-400 !text-black' : ''}`}>room giraffee</div>
+      <div room-data='101' className={`absolute top-[45.7%] left-[26.2%] w-[4.8%] h-[16%] responsive-room-text font-firago ${hilightedRoom === '102' ? '!bg-yellow-400 !text-black' : ''}`}>101</div>
       <div room-data='102' className={`absolute top-[30%] left-[27%] w-[6.5%] h-[7.1%] responsive-room-text font-firago ${hilightedRoom === '102' ? '!bg-yellow-400 !text-black' : ''}`}>102</div>
       <div room-data='103' className={`absolute top-[22.8%] left-[33.8%] w-[9.9%] h-[14.4%] responsive-room-text font-firago ${hilightedRoom === '103' ? '!bg-yellow-400 !text-black' : ''}`}>103</div>
       <div room-data='104' className={`absolute top-[30.1%] left-[44%] w-[4.8%] h-[7.2%] responsive-room-text font-firago ${hilightedRoom === '104' ? '!bg-yellow-400 !text-black' : ''}`}>104</div>

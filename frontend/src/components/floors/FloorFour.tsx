@@ -1,6 +1,6 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
-import { roomCoordinates } from '../../data/roomCoordinates';
+import { roomCoordinates } from '../../roomCoordinates/roomCoordinates';
 import "app/globals.css";
 import Image from 'next/image';
 import FourthFloorRooms from 'components/rooms/FourthFloorRooms';
