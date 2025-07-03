@@ -27,6 +27,7 @@
         "from": "From...",
         "to": "To...",
         "search": "Search",
+        "clear_path": "Clear Path",
         "lecturerName": "Name and lastname...",
         "error": {
             "noLecturerFound": "No lecturer found",
@@ -48,5 +49,8 @@
         "personalIdChars": "Personal ID must not contain spaces or other characters besides letters and numbers.",
         "passwordLength": "Password must be between 3 and 20 characters long.",
         "passwordNoSpaces": "Password must not contain spaces."
+    },
+    "not_found": {
+        "caption": "Sorry, such a page was not found..." 
     }
 }

@@ -13,6 +13,7 @@ import { WiDirectionRight } from 'react-icons/wi';
 import { fetchOffice } from 'assets/fetch_office/fetchOffice';
 import ButtonLoader from 'components/loaders/ButtonLoader';
 import { droebitiCxrili } from 'assets/droebitiCxrili';
+import { button } from 'framer-motion/client';
 
 interface Floors {
   id: number;
@@ -147,6 +148,8 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
         setPathResult(data.path);
         setPathCost(data.cost);
         setPathLoader(false);
+        setFromRoom('')
+        setToRoom('')
 
         const startingFloor = findFloorByroom(fromRoom);
         if(startingFloor) setSelectedFloor(startingFloor);
@@ -299,12 +302,19 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                         {pathError && (
                           <span className="text-red-500 text-[8px] text-center">{pathError}</span>
                         )}
-                        <button
+                        {pathResult ? 
+                        <button 
+                        onClick={() => setPathResult(null)}
+                        className='bg-blue-500 text-white w-[90px] rounded-full h-[30px] text-[12px] font-firago font-semibold cursor-pointer hover:scale-[1.05] transition-all duration-200'
+                        >
+                          {t('indoorMap.clear_path')}
+                        </button>
+                         : <button
                           type='submit'
                           className='bg-blue-500 text-white w-[90px] rounded-full h-[30px] text-[14px] font-firago font-semibold cursor-pointer hover:scale-[1.05] transition-all duration-200'
                         >
                           {pathLoader ? <ButtonLoader size={5} /> : t('indoorMap.search')}
-                        </button>
+                        </button> }
                       </form>
                     </div>
                   )}

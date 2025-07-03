@@ -23,6 +23,19 @@ const { setUser, setIsLoginModalOpen, user} = UseUser()
 const personalIdSchema = createPersonalIdSchema(t);
 const passwordSchema = createPasswordSchema(t);
 
+useEffect(() => {
+  const savedUser = sessionStorage.getItem('user')
+  if(savedUser){
+    try {
+      const parsedUser = JSON.parse(savedUser)
+      setUser(parsedUser)
+    } catch {
+      sessionStorage.removeItem('user')
+    }
+  }
+
+}, [setUser])
+
 const handlePassTypechange = (e: React.MouseEvent<HTMLButtonElement>) => {
   e.preventDefault();
   setShownPass((prev) => !prev)
@@ -41,11 +54,12 @@ const handleLogin  = async (e: React.MouseEvent<HTMLButtonElement>) => {
     } else {
       console.log('table data :', tableData)
       setUser(tableData);
+      sessionStorage.setItem('user', JSON.stringify(tableData))
       setIsLoginModalOpen(false);
     }
   } catch (error: any) {
     setUser(null);
-    setTableDataError('Server error. Please try again later.');
+    setTableDataError('Server error. Please try again.');
   } finally {
     setLoadingUser(false);
   }
