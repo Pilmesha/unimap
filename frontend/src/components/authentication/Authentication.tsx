@@ -18,23 +18,11 @@ const[loadingUser, setLoadingUser] = useState<boolean>(false);
 const[tableDataError, setTableDataError] = useState<string | null>(null);
 const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
 const { t } = useTranslation()
-const { setUser, setIsLoginModalOpen, user} = UseUser()
+const { setUser, setIsLoginModalOpen} = UseUser()
 
 const personalIdSchema = createPersonalIdSchema(t);
 const passwordSchema = createPasswordSchema(t);
 
-useEffect(() => {
-  const savedUser = sessionStorage.getItem('user')
-  if(savedUser){
-    try {
-      const parsedUser = JSON.parse(savedUser)
-      setUser(parsedUser)
-    } catch {
-      sessionStorage.removeItem('user')
-    }
-  }
-
-}, [setUser])
 
 const handlePassTypechange = (e: React.MouseEvent<HTMLButtonElement>) => {
   e.preventDefault();

@@ -10,9 +10,10 @@ interface FloorFourProps {
   pathPoints?: { x: number; y: number }[]; 
   cost?: number | null;
   hilightedRoom?: string | null;
+  handleStairClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cost, hilightedRoom }) => {
+const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cost, hilightedRoom, handleStairClick }) => {
   const floorRooms = roomCoordinates[4]; 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -29,7 +30,6 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cos
       const rect = e.currentTarget.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 100;
       const y = ((e.clientY - rect.top) / rect.height) * 100;
-      console.log(`{ x: ${x.toFixed(1)}, y: ${y.toFixed(1)} }`);
     };
 
   const pathD = pathPoints.length > 0
@@ -46,7 +46,10 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cos
         width={3000}
         height={3000}
       />
-      <FourthFloorRooms hilightedRoom={hilightedRoom} />
+      <FourthFloorRooms 
+      hilightedRoom={hilightedRoom}
+      handleStairClick={handleStairClick} />
+
       {Object.entries(floorRooms).map(([room, coords]) => (
         <div
           key={room}
@@ -59,7 +62,7 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cos
             height: '3px',
             transform: 'translate(-50%, -50%)',
             zIndex: 10,
-            boxShadow: '0 0 4px rgba(255,50,50,0.8)'
+            boxShadow: '0 0 4px rgba(255,255,50,0.8)',
           }}
           title={`Room ${room}`}
         />
@@ -77,11 +80,11 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cos
             d={pathD}
             fill="none"
             stroke="red"
-            strokeWidth={0.4}
+            strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
             className="path-animation"
-            style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))' }}
+            style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))',  vectorEffect: 'non-scaling-stroke', }}
           />
         )}
         
@@ -116,22 +119,11 @@ const FloorFour: React.FC<FloorFourProps> = ({ onRoomClick, pathPoints = [], cos
               alignmentBaseline="middle"
               style={{ pointerEvents: 'none' }}
             >
-              {cost}
+              {/* {cost} */}
             </text>
           </g>
         );
-        })()}
-        {pathPoints.map((pt, idx) => (
-          <circle
-            key={idx}
-            cx={pt.x}
-            cy={pt.y}
-            r={0.4}
-            fill="red"
-            className="animate-ping-fast"
-          />
-        ))}
-        
+        })()}    
       </svg>
     </div>
   );

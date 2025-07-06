@@ -37,8 +37,15 @@ const MainPage = () => {
           </Link>
         </div>
       </div>
-      <article>
-        some more design here, but for later, cause i didn`t think of anything
+      <article className='w-full h-auto bg-pink-200'>
+        <div className='w-full h-auto py-[20px]'>
+          <div className='mx-[2rem]'>
+            <h1 className='relative inline-block text-[var(--text)] font-firago lg:text-[20px] md:text-[18px] sm:text-[16px] text-[14px] tracking-wide leading-1.5 font-semibold'>
+              სასარგებლო ბმულები
+            <span className='absolute left-0 bottom-[-18px] h-[4px] lg:w-[80px] md:w-[70px] sm:w-[60px] w-[50px] bg-amber-400 rounded-full'></span>
+            </h1>
+          </div>
+        </div>
       </article>
     </main>
   )

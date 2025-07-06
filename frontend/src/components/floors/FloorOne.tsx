@@ -10,9 +10,10 @@ interface FloorOneProps {
   pathPoints?: { x: number; y: number }[];
   cost?: number | null;
   hilightedRoom?: string;
+  handleStairClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost, hilightedRoom }) => {
+const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost, hilightedRoom, handleStairClick }) => {
   const floorRooms = roomCoordinates[1]; 
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,7 +45,9 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost,
           />
          
          {/* otakhebi */}
-          <FirstFloorRooms  hilightedRoom={hilightedRoom} />
+          <FirstFloorRooms  
+          hilightedRoom={hilightedRoom}
+          handleStairClick={handleStairClick} />
         </div>
 
       {Object.entries(floorRooms).map(([room, coords]) => (
@@ -59,7 +62,7 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost,
             height: '3px',
             transform: 'translate(-50%, -50%)',
             zIndex: 10,
-            boxShadow: '0 0 4px rgba(255,50,50,0.8)'
+            boxShadow: '0 0 5px rgba(255,255,50,0.8)',
           }}
           title={`Room ${room}`}
         />
@@ -77,11 +80,11 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost,
             d={pathD}
             fill="none"
             stroke="red"
-            strokeWidth={0.4}
+            strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
             className="path-animation"
-            style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))' }}/>
+            style={{ filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.7))', vectorEffect: 'non-scaling-stroke', }}/>
         )}
 
         {cost !== null && pathPoints.length > 1 && (() => {
@@ -115,22 +118,11 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost,
               alignmentBaseline="middle"
               style={{ pointerEvents: 'none' }}
             >
-              {cost}
+              {/* {cost} */}
             </text>
           </g>
         );
         })()}
-        {pathPoints.map((pt, idx) => (
-          <circle
-            key={idx}
-            cx={pt.x}
-            cy={pt.y}
-            r={0.4}
-            fill="red"
-            className="animate-ping-fast"
-          />
-        ))}
-        
       </svg>
     </div>
   );

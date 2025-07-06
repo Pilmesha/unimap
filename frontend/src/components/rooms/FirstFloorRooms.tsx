@@ -1,9 +1,10 @@
 import React from 'react'
 interface FirstFloorRoomsProps {
   hilightedRoom?: string | null;
+  handleStairClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const FirstFloorRooms: React.FC<FirstFloorRoomsProps> = ({hilightedRoom}) => {
+const FirstFloorRooms: React.FC<FirstFloorRoomsProps> = ({hilightedRoom, handleStairClick}) => {
   return (
     <>
       <div room-data='room-giraffee' className={`absolute top-[30%] left-[10.4%] w-[15.1%] h-[22%] responsive-room-text font-firago ${hilightedRoom === 'room-giraffee' ? '!bg-yellow-400 !text-black' : ''}`}>room giraffee</div>
@@ -22,7 +23,9 @@ const FirstFloorRooms: React.FC<FirstFloorRoomsProps> = ({hilightedRoom}) => {
       <div room-data='113' className={`absolute top-[76%] left-[71.9%] w-[10.2%] h-[4.5%] responsive-room-text font-firago ${hilightedRoom === '113' ? '!bg-yellow-400 !text-black' : ''}`}>113</div>
       <div room-data='114' className={`absolute top-[76.6%] left-[61.9%] w-[2.5%] h-[7%] responsive-room-text font-firago ${hilightedRoom === '114' ? '!bg-yellow-400 !text-black' : ''}`}>114</div>
 
-      <div room-data='kibe' className='absolute top-[78.7%] left-[65.9%] w-[2.1%] h-[2.7%] stairs font-firago'></div>
+      <button 
+      onClick={handleStairClick}
+      room-data='s1b1' className='absolute top-[78.7%] left-[65.9%] w-[2.1%] h-[2.7%] stairs font-firago cursor-pointer'></button>
     </>
   )
 }

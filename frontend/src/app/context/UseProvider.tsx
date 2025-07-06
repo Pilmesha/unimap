@@ -1,5 +1,5 @@
 'use client'
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import '../../utils/i18n'
 export interface ILesson {
   ტიპი: string;
@@ -29,6 +29,17 @@ const UserContext = createContext<IUserContextType | undefined>(undefined);
  const UseProvider:React.FC<{children:React.ReactNode}> = ({children}) => {
     const[isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const[user, setUser] = useState<ITableData | null>(null)
+
+    useEffect(() => {
+      const saved = sessionStorage.getItem('user')
+      if(saved){
+        try {
+          setUser(JSON.parse(saved))
+        } catch {
+          sessionStorage.removeItem('user')
+        }
+      }
+    }, [])
     
   return (
     <UserContext.Provider value={{isLoginModalOpen, setIsLoginModalOpen, user, setUser}}>

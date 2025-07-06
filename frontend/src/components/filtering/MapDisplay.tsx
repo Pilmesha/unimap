@@ -1,5 +1,5 @@
 'use client'
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { roomCoordinates } from '../../roomCoordinates/roomCoordinates';
 import LoaderComp from '../loaders/LoaderComp';
 const FloorOne = lazy(() => import('../floors/FloorOne'));
@@ -13,7 +13,7 @@ import { WiDirectionRight } from 'react-icons/wi';
 import { fetchOffice } from 'assets/fetch_office/fetchOffice';
 import ButtonLoader from 'components/loaders/ButtonLoader';
 import { droebitiCxrili } from 'assets/droebitiCxrili';
-import { button } from 'framer-motion/client';
+import { UseUser } from 'app/context/UseProvider';
 
 interface Floors {
   id: number;
@@ -38,7 +38,44 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
   const [lecturerLoading, setLecturerLoading] = useState<boolean>(false);
   const [pathError, setPathError] = useState<string | null>(null);
   const [pathLoader, setPathLoader] = useState<boolean>(false);
+  const [laststair, setLaststair] = useState<string | null>(null)
   const { t } = useTranslation();
+  const { user, setIsLoginModalOpen} = UseUser()
+
+  useEffect(() => {
+  if (pathResult) {
+    const last = getLastStair(pathResult.split(' -> '));
+    setLaststair(last);
+  }
+}, [pathResult]);
+
+const getLastStair = (pathArray: string[]): string | null => {
+  const stairs = pathArray.filter(item => /^s[1-6][a-d]1$/.test(item));
+  return stairs.length> 0 ? stairs[stairs.length -1] : null
+}
+
+const handleStairClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const stairId = e.currentTarget.getAttribute('room-data')
+  if(!stairId) return;
+
+    if (laststair) {
+      const nextFloor = findFloorByroom(laststair);
+      if(nextFloor){
+        setSelectedFloor(nextFloor)
+      }
+    }
+}
+
+
+const findFloorByroom = (roomNumber: string): number | null => {
+  for(const [floor, rooms] of Object.entries(roomCoordinates)){
+    if(rooms.hasOwnProperty(roomNumber)) {
+      return parseInt(floor);
+    }
+  }
+  return null;
+}
+
 
   const handldeLecturerSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,7 +101,6 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
         if(floor) setSelectedFloor(floor);
         sethilightedRoom(String(room)); 
         setOpenModal(null);
-        console.log(lecturerRoom)
       }
     } catch (error) {
       setLecturerRoom(null)
@@ -73,14 +109,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
     }
   } 
 
-  const findFloorByroom = (roomNumber: string): number | null => {
-    for(const [floor, rooms] of Object.entries(roomCoordinates)){
-      if(rooms.hasOwnProperty(roomNumber)) {
-        return parseInt(floor);
-      }
-    }
-    return null;
-  }
+
 
   const handleTableRoom = (room: string, tableType: string) => {
     for(const[floor, rooms] of Object.entries(roomCoordinates)){
@@ -91,7 +120,6 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
       }
      }
     }
-
 
   const handleModalOpen = (type: 'route' | 'office' | 'table') => {
     setOpenModal(prev => (prev === type ? null : type));
@@ -166,7 +194,6 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
       setPathLoader(false);
     }
   };
-
   const pathRooms = parsePath(pathResult);
 
   return (
@@ -189,7 +216,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
               </button>
             ))}
           </div>
-          <h1>{pathResult}</h1>
+ <h1>{pathResult}</h1>
           <section className='mt-[3rem] mb-[1rem] flex flex-col lg:flex-row-reverse md:flex-row-reverse justify-center items-center lg:items-start gap-[2rem] relative py-[2rem] object-center object-contain'>
             {selectedFloor === 1 && (
               <Suspense fallback={
@@ -201,6 +228,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 1)}
                   cost = {pathCost}
+                  handleStairClick={handleStairClick}
                 />
               </Suspense>
             )}
@@ -214,6 +242,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 2)}
                   cost = {pathCost}  
+                  handleStairClick={handleStairClick}
                   />
                 </Suspense>
             )}
@@ -227,6 +256,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 3)}
                   cost = {pathCost}
+                  handleStairClick={handleStairClick}
                 />
               </Suspense>
             )}
@@ -240,6 +270,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 4)}
                   cost = {pathCost}
+                  handleStairClick={handleStairClick}
                 />
               </Suspense>
             )}
@@ -253,6 +284,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 5)}
                   cost = {pathCost}
+                  handleStairClick={handleStairClick}
                 />
               </Suspense>
             )}
@@ -265,6 +297,7 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                   hilightedRoom={hilightedRoom ?? undefined}
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 6)}
+                  handleStairClick={handleStairClick}
                 />
               </Suspense>
             )}
@@ -355,7 +388,13 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
 
             <div>
               <div
-                onClick={() => handleModalOpen('table')}
+                onClick={() =>{
+                  if(!user){
+                  setIsLoginModalOpen(true)
+                } else {
+                  handleModalOpen('table')}
+                }
+                }
                 className={`filtering-button text-[12px] text-center ${openModal === 'table' ? 'bg-blue-700 text-white' : 'bg-cyan-500'}`}
               >
                 {t('indoorMap.yourTable')}
@@ -372,15 +411,15 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
                   <table className='overflow-x-scroll border border-gray-600 text-sm text-left'>
                     <thead>
                       <tr>
-                        <th className='th-class font-firago'>საგანი</th>
-                        <th className='th-class font-firago'>ლექცია</th>
-                        <th className='th-class font-firago'>პრაქტიკული</th>
-                        <th className='th-class font-firago'>ლაბორატორიული</th>
-                        <th className='th-class whitespace-nowrap'>სამუშაო ჯგუფი</th>
+                        <th className='th-class font-firago'>{t('table.subject')}</th>
+                        <th className='th-class font-firago'>{t('table.lecture')}</th>
+                        <th className='th-class font-firago'>{t('table.practical')}</th>
+                        <th className='th-class font-firago'>{t('table.laboratory')}</th>
+                        <th className='th-class whitespace-nowrap'>{t('table.working_group')}</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {droebitiCxrili.საგნები.map((საგანი, index) => {
+                      {user?.საგნები.map((საგანი, index) => {
                         const findByType = (type: string) => საგანი.გაკვეთილები.filter((lesson) => lesson.ტიპი === type)
                         .map((lesson) => lesson.აუდიტორია)
                         return (

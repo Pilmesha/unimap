@@ -45,7 +45,7 @@ const openLoginMoadl = () => {
         <div className='w-full h-full flex justify-between items-center'>
             <Link href={'/'} >
                 <div className='flex gap-2 items-center'>
-                    <div className='w-[40px] h-[40px] overflow-hidden bg-white rounded-full'>
+                    <div className='w-[40px] h-[40px] overflow-hidden bg-white rounded-full transition-all transform duration-300 hover:scale-105'>
                         <Image
                         src={'/images/icon.png'}
                         alt='logo'
@@ -169,7 +169,7 @@ const openLoginMoadl = () => {
                     </Link>
                     <div 
                     onClick={openLoginMoadl}
-                    className='flex justify-center items-center min-w-[100px] h-[30px] font-firago text-[14px] font-semibold tracking-[1.2] bg-yellow-600 rounded-full cursor-pointer hover:transition hover:transform duration-300 hover:scale-110'>
+                    className='flex justify-center text-white items-center min-w-[100px] h-[30px] font-firago text-[14px] font-semibold tracking-[1.2] bg-yellow-600 rounded-full cursor-pointer hover:transition hover:transform duration-300 hover:scale-110'>
                         {t('header.authenticate')}
                     </div>
                 </div>

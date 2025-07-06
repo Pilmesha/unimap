@@ -1,8 +1,11 @@
 import React from 'react'
 
-interface SixFloorRoomsProps {  hilightedRoom?: string | null; }
+interface SixFloorRoomsProps {  
+  hilightedRoom?: string | null;
+  handleStairClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+ }
 
-const SixFloorRooms: React.FC<SixFloorRoomsProps> = ({hilightedRoom}) => {
+const SixFloorRooms: React.FC<SixFloorRoomsProps> = ({hilightedRoom, handleStairClick}) => {
   return (
     <>
       <div room-data='619' className={`absolute top-[21.5%] left-[44.4%] w-[4.7%] h-[18.5%] responsive-room-text font-firago ${hilightedRoom === '619' ? '!bg-yellow-400 !text-black' : ''}`}>619</div>
@@ -35,7 +38,9 @@ const SixFloorRooms: React.FC<SixFloorRoomsProps> = ({hilightedRoom}) => {
       <div room-data='608' className={`absolute top-[55%] left-[79.9%] w-[4.5%] h-[20%] responsive-room-text font-firago ${hilightedRoom === '608' ? '!bg-yellow-400 !text-black' : ''}`}>608</div>
       <div room-data='609' className={`absolute top-[55%] left-[84.5%] w-[4.7%] h-[20%] responsive-room-text font-firago ${hilightedRoom === '609' ? '!bg-yellow-400 !text-black' : ''}`}>609</div>
 
-      <div room-data='sixth_stair' className='absolute top-[28%] left-[41.2%] w-[1.7%] h-[6.3%] stairs font-firago'></div>
+      <button 
+      onClick={handleStairClick}
+      room-data='s6d1' className='absolute top-[28%] left-[41.2%] w-[1.7%] h-[6.3%] stairs font-firago cursor-pointer'></button>
     </>
   )
 }

@@ -69,6 +69,7 @@ body {
   --button-bg: black;
   --overlay-bg: rgba(255, 255, 255, 0.1);
   --third-text-color: #4e4d4d;
+  --text: #242424;
 }
 
 .dark-mode {
@@ -82,6 +83,7 @@ body {
   --second-text-color: black;
   --overlay-bg: rgba(0, 0, 0, 0.4);
   --third-text-color: #f5f3f3;
+  --text: #242424;
 
 }
 .floor-button {

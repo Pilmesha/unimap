@@ -41,7 +41,7 @@
         "mainText": "Please enter your <1>uni.tsu.ge</1> username and password",
         "personalId": "Perdonal Id...",
         "password": "Password...",
-        "log_In": "Log In",
+        "log_In": "Enter",
         "userNotFound": "User not found"
     },
     "validation": {
@@ -52,5 +52,12 @@
     },
     "not_found": {
         "caption": "Sorry, such a page was not found..." 
+    },
+    "table": {
+        "subject": "Subject",
+        "lecture": "Lecture",
+        "practical": "Practical",
+        "laboratory": "Laboratory",
+        "working_group": "Working Group"
     }
 }

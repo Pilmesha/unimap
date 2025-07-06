@@ -1,10 +1,11 @@
 import React from 'react'
 
 interface ThirdFloorRoomsProps { 
-   hilightedRoom?: string;  
+   hilightedRoom?: string; 
+   handleStairClick?: (e: React.MouseEvent<HTMLButtonElement>) => void; 
   } 
 
-const ThirdFloorRooms: React.FC<ThirdFloorRoomsProps> = ({ hilightedRoom }) => {
+const ThirdFloorRooms: React.FC<ThirdFloorRoomsProps> = ({ hilightedRoom , handleStairClick}) => {
   return (
     <>
       <div room-data='314' className={`absolute top-[3.3%] left-[1.55%] w-[4%] h-[8.5%] responsive-room-text font-firago ${hilightedRoom === '314' ? '!bg-yellow-400 !text-black' : ''}`}>314</div>
@@ -70,10 +71,18 @@ const ThirdFloorRooms: React.FC<ThirdFloorRoomsProps> = ({ hilightedRoom }) => {
       <div room-data='339' className={`absolute top-[69.7%] left-[89.3%] w-[6%] h-[8%] responsive-room-text font-firago ${hilightedRoom === '339' ? '!bg-yellow-400 !text-black' : ''}`}>339</div>
       <div room-data='340' className={`absolute top-[69.7%] left-[95.4%] w-[3.8%] h-[8%] responsive-room-text font-firago ${hilightedRoom === '340' ? '!bg-yellow-400 !text-black' : ''}`}>340</div>
 
-      <div room-data='third_t_l' className='absolute top-[21.5%] left-[37.8%] w-[1.5%] h-[2.7%] stairs font-firago z-0'></div>
-      <div room-data='third_t_r' className='absolute top-[21.6%] left-[87.1%] w-[1.5%] h-[2.9%] stairs font-firago z-0'></div>
-      <div room-data='third_b_l' className='absolute top-[72.4%] left-[38%] w-[1.6%] h-[3.2%] stairs font-firago z-0'></div>
-      <div room-data='third_b_r' className='absolute top-[72.6%] left-[86.2%] w-[1.6%] h-[3.1%] stairs font-firago z-0'></div>
+      <button 
+      onClick={handleStairClick}
+      room-data='s3b1' className='absolute top-[21.5%] left-[37.8%] w-[1.5%] h-[2.7%] stairs font-firago  cursor-pointer'></button>
+      <button 
+      onClick={handleStairClick}
+      room-data='s3c1' className='absolute top-[21.6%] left-[87.1%] w-[1.5%] h-[2.9%] stairs font-firago cursor-pointer'></button>
+      <button 
+      onClick={handleStairClick}
+      room-data='s3a1' className='absolute top-[72.4%] left-[38%] w-[1.6%] h-[3.2%] stairs font-firago cursor-pointer'></button>
+      <button 
+      onClick={handleStairClick}
+      room-data='s3d1' className='absolute top-[72.6%] left-[86.2%] w-[1.6%] h-[3.1%] stairs font-firago cursor-pointer'></button>
     </>
   )
 }

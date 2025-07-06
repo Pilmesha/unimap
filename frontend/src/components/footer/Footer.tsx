@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <section className='w-full h-[100px] flex justify-center gap-[5rem] items-center border-t border-[var(--foreground)] z-50'>
         <Link href={'/'}>
-        <div className='w-[60px] h-[60px] overflow-hidden founded-full'>
+        <div className='w-[60px] h-[60px] overflow-hidden founded-full transition transform duration-300 hover:scale-105'>
             <Image
             src={'/images/icon.png'}
             alt='icon'
@@ -25,13 +25,12 @@ const Footer = () => {
             <div className='flex gap-1 items-center underline'>
                 <HiLocationMarker />
                 <a href="https://maps.app.goo.gl/VLbjELpjeytwUAoW9" target='_blank'>
-                    <p>{t('footer.address')}</p>
-                </a>
-                
+                    <p className='font-firago hover:text-blue-700'>{t('footer.address')}</p>
+                </a>  
             </div>
             <div className='flex gap-1 items-center'>
                 <FaPhone />
-                <p>{t('footer.phone')} (+995 32) 2 25 04 84.</p>
+                <p className='font-firago'>{t('footer.phone')} (+995 32) 2 25 04 84.</p>
             </div>
         </div>
     </section>
