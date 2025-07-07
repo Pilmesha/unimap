@@ -75,6 +75,10 @@ const findFloorByroom = (roomNumber: string): number | null => {
   }
   return null;
 }
+const handlePathAndCost = () => {
+  setPathCost(null)
+  setPathResult(null)
+}
 
 
   const handldeLecturerSearch = async (e: React.FormEvent) => {
@@ -216,7 +220,6 @@ const findFloorByroom = (roomNumber: string): number | null => {
               </button>
             ))}
           </div>
- <h1>{pathResult}</h1>
           <section className='mt-[3rem] mb-[1rem] flex flex-col lg:flex-row-reverse md:flex-row-reverse justify-center items-center lg:items-start gap-[2rem] relative py-[2rem] object-center object-contain'>
             {selectedFloor === 1 && (
               <Suspense fallback={
@@ -297,6 +300,7 @@ const findFloorByroom = (roomNumber: string): number | null => {
                   hilightedRoom={hilightedRoom ?? undefined}
                   onRoomClick={handleRoomClick}
                   pathPoints={getPathForFloor(pathRooms, 6)}
+                  cost = {pathCost}
                   handleStairClick={handleStairClick}
                 />
               </Suspense>
@@ -319,7 +323,7 @@ const findFloorByroom = (roomNumber: string): number | null => {
                             value={fromRoom}
                             onChange={(e) => setFromRoom(e.target.value)}
                             placeholder={`${t('indoorMap.from')}`}
-                            className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
+                            className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[50px] md:w-[60px]'
                           />
                           <div className='h-[30px] flex justify-center items-center'>
                             <WiDirectionRight className='text-[var-(--foreground)] text-[20px]' />
@@ -329,7 +333,7 @@ const findFloorByroom = (roomNumber: string): number | null => {
                             value={toRoom}
                             onChange={(e) => setToRoom(e.target.value)}
                             placeholder={`${t('indoorMap.to')}`}
-                            className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[60px]'
+                            className='text-[12px] text-center border border-green-500 h-[30px] rounded-[5px] px-2 outline-none w-[50px] md:w-[60px]'
                           />
                         </div>
                         {pathError && (
@@ -337,7 +341,7 @@ const findFloorByroom = (roomNumber: string): number | null => {
                         )}
                         {pathResult ? 
                         <button 
-                        onClick={() => setPathResult(null)}
+                        onClick={() => handlePathAndCost()}
                         className='bg-blue-500 text-white w-[90px] rounded-full h-[30px] text-[12px] font-firago font-semibold cursor-pointer hover:scale-[1.05] transition-all duration-200'
                         >
                           {t('indoorMap.clear_path')}
@@ -419,7 +423,7 @@ const findFloorByroom = (roomNumber: string): number | null => {
                       </tr>
                     </thead>
                     <tbody>
-                      {user?.საგნები.map((საგანი, index) => {
+                      {droebitiCxrili?.საგნები.map((საგანი, index) => {
                         const findByType = (type: string) => საგანი.გაკვეთილები.filter((lesson) => lesson.ტიპი === type)
                         .map((lesson) => lesson.აუდიტორია)
                         return (

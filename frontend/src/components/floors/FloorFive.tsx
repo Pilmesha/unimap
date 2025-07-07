@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { roomCoordinates } from '../../roomCoordinates/roomCoordinates';
 import Image from 'next/image';
 import FifthFloorRoom from 'components/rooms/FifthFloorRoom';
+import { useTranslation } from 'react-i18next';
 
 interface FloorFiveProps {
   onRoomClick: (room: string) => void;
@@ -19,6 +20,7 @@ const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cos
         const x = ((e.clientX - rect.left) / rect.width) * 100;
         const y = ((e.clientY - rect.top) / rect.height) * 100;
       };
+  const { t } = useTranslation()    
   
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -48,6 +50,9 @@ const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cos
       <FifthFloorRoom 
       hilightedRoom={hilightedRoom} 
       handleStairClick={handleStairClick}/>
+
+       {cost && <div className='absolute top-[-30px] left-0 text-[var(--text-color)] font-sans font-semibold tracking-wide
+       text-[10px] sm:text-[12px] md:text-[14px] lg:text-[16px]'>{t('indoorMap.distance', {count: cost})}</div>}
       {Object.entries(floorRooms).map(([room, coords]) => (
         <div
           key={room}
@@ -106,7 +111,7 @@ const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cos
         const labelX = midX + offsetX;
         const labelY = midY + offsetY;
 
-        return (
+        /* return (
           <g>
             <text
               x={labelX}
@@ -117,10 +122,10 @@ const FloorFive: React.FC<FloorFiveProps> = ({ onRoomClick, pathPoints = [], cos
               alignmentBaseline="middle"
               style={{ pointerEvents: 'none' }}
             >
-              {/* {cost} */}
+              {cost}
             </text>
           </g>
-        );
+        ); */
         })()}        
       </svg>
     </div>

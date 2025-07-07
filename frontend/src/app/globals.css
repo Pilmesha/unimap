@@ -19,6 +19,11 @@
   }
 }
 
+.slick-prev:before,
+.slick-next:before {
+  color: #ffd900 !important; 
+  font-size: 20px !important; 
+}
 
 :root {
   --oklch: oklch(71.5% 0.143 215.221);
@@ -59,7 +64,7 @@ body {
 }
 .light-mode {
   --text-color: #171717;
-  --background: #ffffff;
+  --background: #faf8f8;
   --foreground: #171717;
   --hover-color-primary: rgba(38, 38, 39, 0.61);
   --hover-color-toggle: rgb(255, 217, 0);
@@ -70,6 +75,8 @@ body {
   --overlay-bg: rgba(255, 255, 255, 0.1);
   --third-text-color: #4e4d4d;
   --text: #242424;
+  --light-gray: #faf8f8;
+  --gray-border: rgb(212, 212, 212);
 }
 
 .dark-mode {
@@ -84,7 +91,8 @@ body {
   --overlay-bg: rgba(0, 0, 0, 0.4);
   --third-text-color: #f5f3f3;
   --text: #242424;
-
+  --light-gray: #faf8f8;
+  --gray-border: rgb(212, 212, 212);
 }
 .floor-button {
   font-family: 'Firago', sans-serif;

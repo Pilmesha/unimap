@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { roomCoordinates } from '../../roomCoordinates/roomCoordinates';
 import Image from 'next/image';
 import SixFloorRooms from 'components/rooms/SixFloorRooms';
+import { useTranslation } from 'react-i18next';
 
 interface FloorSixProps {
   onRoomClick: (room: string) => void;
@@ -19,6 +20,8 @@ const FloorSix: React.FC<FloorSixProps> = ({ onRoomClick, pathPoints = [], cost,
           const x = ((e.clientX - rect.left) / rect.width) * 100;
           const y = ((e.clientY - rect.top) / rect.height) * 100;
         };
+  const { t } = useTranslation()
+        
   const containerRef = useRef<HTMLDivElement>(null);
   
   const [containerSize, setContainerSize] = useState<{width: number; height: number}>({width: 0, height: 0});
@@ -45,6 +48,8 @@ const FloorSix: React.FC<FloorSixProps> = ({ onRoomClick, pathPoints = [], cost,
       hilightedRoom={hilightedRoom}
       handleStairClick={handleStairClick}
        />
+       {cost && <div className='absolute top-[-30px] left-0 text-[var(--text-color)] font-sans font-semibold tracking-wide
+       text-[10px] sm:text-[12px] md:text-[14px] lg:text-[16px]'>{t('indoorMap.distance', {count: cost})}</div>}
       {Object.entries(floorRooms).map(([room, coords]) => (
         <div
           key={room}
@@ -103,7 +108,7 @@ const FloorSix: React.FC<FloorSixProps> = ({ onRoomClick, pathPoints = [], cost,
         const labelX = midX + offsetX;
         const labelY = midY + offsetY;
 
-        return (
+        /* return (
           <g>
             <text
               x={labelX}
@@ -114,10 +119,10 @@ const FloorSix: React.FC<FloorSixProps> = ({ onRoomClick, pathPoints = [], cost,
               alignmentBaseline="middle"
               style={{ pointerEvents: 'none' }}
             >
-              {/* {cost} */}
+              {cost}
             </text>
           </g>
-        );
+        ); */
         })()}
       </svg>
     </div>

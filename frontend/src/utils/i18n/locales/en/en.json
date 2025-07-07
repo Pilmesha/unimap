@@ -2,7 +2,8 @@
     "mainPage":{
         "mainPageHeading":"GANIVI BUILDING INDOOR PLAN",
         "mainPageImageText": "This website helps TSU students easily navigate the campus and find rooms or lecturers offices. It provides a user-friendly interface to quickly locate classrooms and faculty offices, so students can focus on their studies.",
-        "exploreButton": "Explore"
+        "exploreButton": "Explore",
+        "links": "USEFUL LINKS"
     },
     "header": {
         "heading": "GANIVI-PLAN",
@@ -29,6 +30,7 @@
         "search": "Search",
         "clear_path": "Clear Path",
         "lecturerName": "Name and lastname...",
+        "distance": "The distance is: {{count}} meters, good luck😉",
         "error": {
             "noLecturerFound": "No lecturer found",
             "lecturerNameRequired": "Lecturer name is required.",
