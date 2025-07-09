@@ -25,7 +25,7 @@ const FirstFloorRooms: React.FC<FirstFloorRoomsProps> = ({hilightedRoom, handleS
 
       <button 
       onClick={handleStairClick}
-      room-data='s1b1' className='absolute top-[78.7%] left-[65.9%] w-[2.1%] h-[2.7%] stairs font-firago cursor-pointer'></button>
+      room-data='s1b1' className='absolute top-[78.7%] left-[65.9%] w-[2.1%] h-[2.7%] stairs font-firago cursor-pointer z-50'></button>
     </>
   )
 }

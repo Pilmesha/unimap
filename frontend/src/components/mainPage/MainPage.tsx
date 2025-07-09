@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Gopher from './Gopher'
 
 const MainPage = () => {
   const settings = {
@@ -46,6 +47,8 @@ const MainPage = () => {
     }
   ]
 };
+
+
       const { t } = useTranslation()
   return (
     <main className='w-full h-auto mt-6 z-0'>
@@ -57,13 +60,16 @@ const MainPage = () => {
           </h1>
         </div>
         <div className='w-full h-full relative flex justify-center'>
-          <div className='w-full max-h-[80vh] overflow-hidden'>
-            <Image
-            src={'/images/uni.jpg'}
-            alt='image'
-            width={1500}
-            height={1500}
-            className='w-full h-full object-center' />
+          <div className='relative'>
+            <div className='w-full max-h-[80vh] overflow-hidden rounded-[5px] border'>
+              <Image
+              src={'/images/uni.jpg'}
+              alt='image'
+              width={1500}
+              height={1500}
+              className='w-full h-full object-center z-10' />
+            </div>
+            <Gopher />
           </div>
           <div className='absolute top-[20%] w-[80%] h-auto p-[1rem] rounded-xl bg-[var(--blury-black)] backdrop-blur-sm  shadow-[0_0_50px_rgba(0,0,0,0.9)]'>
             <p className='lg:text-[18px] md:text-[16px] text-[10px] font-firago  text-white'>

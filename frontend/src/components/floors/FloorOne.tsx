@@ -112,21 +112,6 @@ const FloorOne: React.FC<FloorOneProps> = ({ onRoomClick, pathPoints = [], cost,
         const labelX = midX + offsetX;
         const labelY = midY + offsetY;
 
-        /* return (
-          <g>
-            <text
-              x={labelX}
-              y={labelY}
-              fontSize="1.7"
-              fill="black"
-              textAnchor="middle"
-              alignmentBaseline="middle"
-              style={{ pointerEvents: 'none' }}
-            >
-              {cost}
-            </text>
-          </g>
-        ); */
         })()}
       </svg>
     </div>

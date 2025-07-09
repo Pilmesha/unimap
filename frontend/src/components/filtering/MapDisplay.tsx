@@ -14,6 +14,7 @@ import { fetchOffice } from 'assets/fetch_office/fetchOffice';
 import ButtonLoader from 'components/loaders/ButtonLoader';
 import { droebitiCxrili } from 'assets/droebitiCxrili';
 import { UseUser } from 'app/context/UseProvider';
+import Gopher from 'components/mainPage/Gopher';
 
 interface Floors {
   id: number;
@@ -39,6 +40,8 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
   const [pathError, setPathError] = useState<string | null>(null);
   const [pathLoader, setPathLoader] = useState<boolean>(false);
   const [laststair, setLaststair] = useState<string | null>(null)
+  const [selectedDay, setSelectedDay] = useState<'ყველა საგანი' |  'ორშაბათი' | 'სამშაბათი' | 'ოთხშაბათი' |
+  'ხუთშაბათი' | 'პარასკევი' | 'შაბათი'>('ყველა საგანი')
   const { t } = useTranslation();
   const { user, setIsLoginModalOpen} = UseUser()
 
@@ -48,6 +51,17 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
     setLaststair(last);
   }
 }, [pathResult]);
+
+const handleFilteringTable = () => {
+  if (selectedDay === 'ყველა საგანი') {
+    return droebitiCxrili.საგნები;
+  }
+
+  return droebitiCxrili.საგნები.filter((subject) =>
+    subject.გაკვეთილები.some((lesson) => lesson.დღე === selectedDay)
+  );
+};
+
 
 const getLastStair = (pathArray: string[]): string | null => {
   const stairs = pathArray.filter(item => /^s[1-6][a-d]1$/.test(item));
@@ -307,12 +321,13 @@ const handlePathAndCost = () => {
             )}
 
             <div className='relative flex  lg:flex-col md:flex-col flex-row gap-4 min-w-[160px] lg:mt-[2rem] md:mt-[0.5rem] mt-0'>
-                <div> 
+                <div className='relative'> 
                   <div
                     onClick={() => handleModalOpen('route')}
                     className={`filtering-button text-[12px] text-center ${openModal === 'route' ? 'bg-blue-700 text-white' : 'bg-cyan-500 text-white'}`}>
                     {t('indoorMap.route')}
                   </div>
+                  <Gopher />
                 
                   {openModal === 'route' && (
                     <div className='bg-[var(--background)] lg:w-[160px] md:w-[160px] w-[150px] min-h-[120px] border border-blue-500 rounded-[8px] flex flex-col gap-[1rem] px-[0.5rem] py-[1rem]'>
@@ -405,14 +420,38 @@ const handlePathAndCost = () => {
               </div>
               
               {openModal === 'table' && (
+              (!droebitiCxrili || (droebitiCxrili.საგნები && droebitiCxrili.საგნები.length === 0)) ?
+              (<div  
+                onClick={() => handleModalOpen('table')}
+                className='fixed inset-0 flex items-center justify-center z-50 bg-black/90'>{t('indoorMap.no_subjects')}</div>
+              ) : (
               <div 
               onClick={() => handleModalOpen('table')}
               className='fixed inset-0 flex items-center justify-center z-50 bg-black/90'>
                 <div 
                 onClick={(e) => e.stopPropagation()}
-                className='bg-[var(--background)] w-auto h-auto border border-blue-500 rounded-[8px] flex flex-col 
-                gap-[1rem] p-[1rem] mx-[1rem]'>
-                  <table className='overflow-x-scroll border border-gray-600 text-sm text-left'>
+                className='bg-[var(--background)] relative w-auto h-auto border border-blue-500 rounded-[8px] flex flex-row 
+                gap-[1rem] p-[2rem] mx-[1rem]'>
+                  <select 
+                  value={selectedDay}
+                  onChange={(e) => setSelectedDay(e.target.value as typeof selectedDay)}
+                  className='absolute left-0 top-[0px] flex items-start  outline-none text-[var(--foreground)] bg-[var(--background)]
+                  rounded-[8px] p-[3px] md:text-[12px] lg:text-[14px] text-[10px]'>
+                    <option onChange={() => setSelectedDay('ყველა საგანი')} value="ყველა საგანი">{t('indoorMap.days.all')}</option>
+                    <option onChange={() => setSelectedDay('ორშაბათი')} value="ორშაბათი">{t('indoorMap.days.mo')}</option>
+                    <option onChange={() => setSelectedDay('სამშაბათი')} value="სამშაბათი">{t('indoorMap.days.tu')}</option>
+                    <option onChange={() => setSelectedDay('ოთხშაბათი')} value="ოთხშაბათი">{t('indoorMap.days.we')}</option>
+                    <option onChange={() => setSelectedDay('ხუთშაბათი')} value="ხუთშაბათი">{t('indoorMap.days.th')}</option>
+                    <option onChange={() => setSelectedDay('პარასკევი')} value="პარასკევი">{t('indoorMap.days.fr')}</option>
+                    <option onChange={() => setSelectedDay('შაბათი')} value="შაბათი">{t('indoorMap.days.sa')}</option>
+                  </select>
+                  {handleFilteringTable().length === 0 ? (
+                    <div className='w-[150px] lg:w-[400px] md:w-[300px] sm:w-[200px]  flex items-center justify-center '>
+                      <h1 className='md:text-[12px] lg:text-[14px] text-[10px]'>{t('indoorMap.noSubjectsThatDay')}</h1>
+                    </div>
+                  ):(
+                  <table 
+                  className='overflow-x-scroll border border-gray-600 text-sm text-left'>
                     <thead>
                       <tr>
                         <th className='th-class font-firago'>{t('table.subject')}</th>
@@ -423,19 +462,19 @@ const handlePathAndCost = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {droebitiCxrili?.საგნები.map((საგანი, index) => {
+                      {handleFilteringTable().map((საგანი, index) => {
                         const findByType = (type: string) => საგანი.გაკვეთილები.filter((lesson) => lesson.ტიპი === type)
                         .map((lesson) => lesson.აუდიტორია)
                         return (
                             <tr key={index}>
                               <td className='cursor-pointer border px-[4px] py-[4px] text-center md:text-[12px] lg:text-[14px] text-[10px] 
-                              hover:scale-110 transform transition ease-in-out duration-600'>{საგანი.დასახელება}</td>
+                               '>{საგანი.დასახელება}</td>
                               <td
                                 onClick={() => {
                                   const auds = findByType('ლექცია');
                                   if (auds.length > 0) handleTableRoom(auds[0],'table');
                                 }}
-                                className='cursor-pointer border px-[4px] hover:scale-110 transform transition ease-in-out duration-600 py-[4px] 
+                                className='cursor-pointer border px-[4px] hover:scale-105 hover:font-semibold transform transition ease-in-out duration-600 py-[4px] 
                                 text-center md:text-[12px] lg:text-[14px] text-[10px]'
                               >
                                 {findByType('ლექცია')}
@@ -445,7 +484,7 @@ const handlePathAndCost = () => {
                                   const auds = findByType('პრაქტიკული');
                                   if (auds.length > 0) handleTableRoom(auds[0], 'table');
                                 }}
-                                className='cursor-pointer border px-[4px] hover:scale-110 transform transition ease-in-out duration-600 py-[4px] 
+                                className='cursor-pointer border px-[4px] hover:scale-105 hover:font-semibold transform transition ease-in-out duration-600 py-[4px] 
                                 md:text-[12px] lg:text-[14px] text-[10px]'
                               >
                                 {findByType('პრაქტიკული')}
@@ -456,7 +495,7 @@ const handlePathAndCost = () => {
                                   if (auds.length > 0) handleTableRoom(auds[0],'table');
                                 }}
                                 className='cursor-pointer md:text-[12px] lg:text-[14px] text-[10px] 
-                                hover:scale-110 transform transition ease-in-out duration-600 border px-[4px] py-[4px] text-center'
+                                hover:scale-105 hover:font-semibold transform transition ease-in-out duration-600 border px-[4px] py-[4px] text-center'
                               >
                                 {findByType('ლაბორატორიული')}
                               </td>
@@ -465,7 +504,7 @@ const handlePathAndCost = () => {
                                   const auds = findByType('სამუშაო ჯგუფი');
                                   if (auds.length > 0) handleTableRoom(auds[0], 'table');
                                 }}
-                                className='cursor-pointer border px-[4px] hover:scale-110 transform transition ease-in-out duration-600 py-[4px]
+                                className='cursor-pointer border px-[4px] hover:scale-105 hover:font-semibold transform transition ease-in-out duration-600 py-[4px]
                                  text-center md:text-[12px] lg:text-[14px] text-[10px]'
                               >
                                 {findByType('სამუშაო ჯგუფი')}
@@ -475,9 +514,11 @@ const handlePathAndCost = () => {
                       })}
                     </tbody>
                   </table>
+                  )}
                 </div>
               </div>
-              )}
+            )
+              )}  
             </div> 
         </div>
       </section>

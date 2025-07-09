@@ -30,13 +30,25 @@
         "search": "Search",
         "clear_path": "Clear Path",
         "lecturerName": "Name and lastname...",
-        "distance": "The distance is: {{count}} meters, good luck😉",
+        "distance": "The distance is {{count}} meters, good luck😉",
+        "no_subjects": "No subjecs found",
+        "noSubjectsThatDay": "No subjects found for this day",
         "error": {
             "noLecturerFound": "No lecturer found",
             "lecturerNameRequired": "Lecturer name is required.",
             "sameRoom": "You selected the same room for both 'Starting' and 'Destination'. Please select different rooms.",
             "irrelevantData": "The data you entered is not relevant to the Ganivi building. Please check the information and try again."
+        },
+        "days": {
+            "all": "All Subjects",
+            "mo": "Monday",
+            "tu": "Tuesday",
+            "we": "Wednesday",
+            "th": "Thursday",
+            "fr": "Friday",
+            "sa": "Saturday"
         }
+
     },
     "authenticate": {
         "heading": "AUTHENTICATE",

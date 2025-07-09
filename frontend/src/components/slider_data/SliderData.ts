@@ -1,4 +1,11 @@
-export const SliderData = [
+interface ISliderData {
+    id: number,
+    image: string,
+    target: string
+}
+
+
+export const SliderData: ISliderData[] = [
     {
         id:1,
         image: '/slider_images/hum_conf.png',
