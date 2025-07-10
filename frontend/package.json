@@ -12,11 +12,11 @@
   "dependencies": {
     "@fontsource/firago": "^5.2.5",
     "framer-motion": "^12.16.0",
-    "i18next": "^25.2.1",
+    "i18next": "^25.3.2",
     "next": "15.2.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-i18next": "^15.5.3",
+    "react-i18next": "^15.6.0",
     "react-icons": "^5.5.0",
     "react-slick": "^0.30.3",
     "react-spinners": "^0.17.0",
