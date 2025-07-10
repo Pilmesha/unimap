@@ -4,7 +4,7 @@ import com.example.unimap.jsonConvertor.fromJson.SubjectFromJson;
 import com.example.unimap.jsonConvertor.fromJson.SubjectsFromJson;
 
 public class ClearSubjectsCreator {
-    private static Subjects subjects = new Subjects();
+    private static Subjects subjects;
 
     private static String subjectName;
     private static String lecture;
@@ -12,6 +12,7 @@ public class ClearSubjectsCreator {
     private static String lab;
 
     public static Subjects create(SubjectsFromJson subsFromJson) {
+        subjects = new Subjects();
 
         for (SubjectFromJson sub : subsFromJson.getSubjects()) {
             retrieveSubjectInfo(sub);
