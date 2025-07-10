@@ -54,10 +54,10 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
 
 const handleFilteringTable = () => {
   if (selectedDay === 'ყველა საგანი') {
-    return droebitiCxrili.საგნები;
+    return user?.საგნები;
   }
 
-  return droebitiCxrili.საგნები.filter((subject) =>
+  return user?.საგნები.filter((subject) =>
     subject.გაკვეთილები.some((lesson) => lesson.დღე === selectedDay)
   );
 };
@@ -420,7 +420,7 @@ const handlePathAndCost = () => {
               </div>
               
               {openModal === 'table' && (
-              (!droebitiCxrili || (droebitiCxrili.საგნები && droebitiCxrili.საგნები.length === 0)) ?
+              (!user || (user.საგნები && user.საგნები.length === 0)) ?
               (<div  
                 onClick={() => handleModalOpen('table')}
                 className='fixed inset-0 flex items-center justify-center z-50 bg-black/90'>{t('indoorMap.no_subjects')}</div>
@@ -445,7 +445,7 @@ const handlePathAndCost = () => {
                     <option onChange={() => setSelectedDay('პარასკევი')} value="პარასკევი">{t('indoorMap.days.fr')}</option>
                     <option onChange={() => setSelectedDay('შაბათი')} value="შაბათი">{t('indoorMap.days.sa')}</option>
                   </select>
-                  {handleFilteringTable().length === 0 ? (
+                  {handleFilteringTable()?.length === 0 ? (
                     <div className='w-[150px] lg:w-[400px] md:w-[300px] sm:w-[200px]  flex items-center justify-center '>
                       <h1 className='md:text-[12px] lg:text-[14px] text-[10px]'>{t('indoorMap.noSubjectsThatDay')}</h1>
                     </div>
@@ -462,9 +462,9 @@ const handlePathAndCost = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {handleFilteringTable().map((საგანი, index) => {
+                      {handleFilteringTable()?.map((საგანი, index) => {
                         const findByType = (type: string) => საგანი.გაკვეთილები.filter((lesson) => lesson.ტიპი === type)
-                        .map((lesson) => lesson.აუდიტორია)
+                        .map((lesson) => ({room:lesson.აუდიტორია, time:lesson.დრო}))
                         return (
                             <tr key={index}>
                               <td className='cursor-pointer border px-[4px] py-[4px] text-center md:text-[12px] lg:text-[14px] text-[10px] 
@@ -472,42 +472,70 @@ const handlePathAndCost = () => {
                               <td
                                 onClick={() => {
                                   const auds = findByType('ლექცია');
-                                  if (auds.length > 0) handleTableRoom(auds[0],'table');
+                                  if (auds.length > 0) handleTableRoom(auds[0].room,'table');
                                 }}
                                 className='cursor-pointer border px-[4px] hover:scale-105 hover:font-semibold transform transition ease-in-out duration-600 py-[4px] 
                                 text-center md:text-[12px] lg:text-[14px] text-[10px]'
                               >
-                                {findByType('ლექცია')}
+                               {findByType('ლექცია').map((lesson, i) => (
+                                <div key={i}>
+                                  <div className='flex flex-col gap-[3px]'>
+                                    <p>{lesson.room} </p>
+                                    ({lesson.time})
+                                  </div>
+                                </div>
+                               ))}
                               </td>
                               <td
                                 onClick={() => {
                                   const auds = findByType('პრაქტიკული');
-                                  if (auds.length > 0) handleTableRoom(auds[0], 'table');
+                                  if (auds.length > 0) handleTableRoom(auds[0].room, 'table');
                                 }}
                                 className='cursor-pointer border px-[4px] hover:scale-105 hover:font-semibold transform transition ease-in-out duration-600 py-[4px] 
                                 md:text-[12px] lg:text-[14px] text-[10px]'
                               >
-                                {findByType('პრაქტიკული')}
+                                {findByType('პრაქტიკული').map((lesson, i) => (
+                                <div key={i}>
+                                  <div className='flex flex-col gap-[3px]'>
+                                    <p>{lesson.room} </p>
+                                    ({lesson.time})
+                                  </div>
+                                </div>
+                                ))}
                               </td>
                               <td
                                 onClick={() => {
                                   const auds = findByType('ლაბორატორიული');
-                                  if (auds.length > 0) handleTableRoom(auds[0],'table');
+                                  if (auds.length > 0) handleTableRoom(auds[0].room,'table');
                                 }}
                                 className='cursor-pointer md:text-[12px] lg:text-[14px] text-[10px] 
                                 hover:scale-105 hover:font-semibold transform transition ease-in-out duration-600 border px-[4px] py-[4px] text-center'
                               >
-                                {findByType('ლაბორატორიული')}
+                                {findByType('ლაბორატორიული').map((lesson, i) => (
+                                <div key={i}>
+                                  <div className='flex flex-col gap-[3px]'>
+                                    <p>{lesson.room} </p>
+                                    ({lesson.time})
+                                  </div>
+                                </div>
+                                ))}
                               </td>
                               <td
                                 onClick={() => {
                                   const auds = findByType('სამუშაო ჯგუფი');
-                                  if (auds.length > 0) handleTableRoom(auds[0], 'table');
+                                  if (auds.length > 0) handleTableRoom(auds[0].room, 'table');
                                 }}
                                 className='cursor-pointer border px-[4px] hover:scale-105 hover:font-semibold transform transition ease-in-out duration-600 py-[4px]
                                  text-center md:text-[12px] lg:text-[14px] text-[10px]'
                               >
-                                {findByType('სამუშაო ჯგუფი')}
+                                {findByType('სამუშაო ჯგუფი').map((lesson, i) => (
+                                <div key={i}>
+                                  <div className='flex flex-col gap-[3px]'>
+                                    <p>{lesson.room} </p>
+                                    ({lesson.time})
+                                  </div>
+                                </div>
+                                ))}
                               </td>
                             </tr>
                           );

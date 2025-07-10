@@ -4,11 +4,11 @@ import Navigation from './Navigation'
 import { usePathname } from 'next/navigation'
 import { changeLanguage } from 'i18next'
 import { useTranslation } from 'react-i18next'
-import { UseUser } from 'app/context/UseProvider'
+import { UseUser } from '../../app/context/UseProvider'
 
 jest.mock('next/link', () => ({children}: any) => <div>{children}</div>)
 
-jest.mock('next/image', () =>({props}: any) => <div>{...props}</div>)
+jest.mock('next/image', () =>(props: any) => <div {...props}/>)
 
 jest.mock('next/navigation', () =>({
     usePathname: () => '/', 
@@ -38,13 +38,13 @@ describe('navigation', () => {
         expect(screen.getByRole('combobox')).toBeInTheDocument
     })
 
-    it('calls the i18n chngelanguage when the language is chcanged', () => {
-        const i18n = require('utils/i18n')
+    it('calls the i18n changelanguage when the language is chcanged', () => {
+        const i18n = require('../../utils/i18n')
         render(<Navigation />)
         fireEvent.change(screen.getAllByRole('combobox')[0], {
             target: {value: 'ka'},
         })
-        expect(i18n.chngelanguage).toHaveBeenLastCalledWith('ka')
+        expect(i18n.changeLanguage).toHaveBeenLastCalledWith('ka')
     })
     it('toggles theme when the toggle button is clicked', () => {
         render(<Navigation />)

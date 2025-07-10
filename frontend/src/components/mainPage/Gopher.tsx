@@ -36,12 +36,12 @@ function angle (cx: number, cy:number, ex: number, ey: number) {
             height={1000}
             className='absolute w-auto h-[100px] top-[-70px] left-0 -z-10'
              />
-             <div id='eye' className='absolute bg-white w-[17px] h-[17px] z-20 rounded-full top-[-42px] left-[28px] p-[2px]'>
+             <div id='eye' className='absolute bg-white w-[17px] h-[17px] z-20 rounded-full top-[-42px] left-[28px] '>
               <div className='bg-black w-[8px] h-[8px] rounded-full p-[1px] '>
                 <div className='bg-white w-[2px] h-[2px] rounded-full'></div>
               </div>
              </div>
-             <div id='eye' className='absolute bg-white w-[17px] h-[17px] z-20 rounded-full top-[-42px] left-[55px] p-[2px]'>
+             <div id='eye' className='absolute bg-white w-[17px] h-[17px] z-20 rounded-full top-[-42px] left-[55px] '>
               <div className='bg-black w-[8px] h-[8px] rounded-full p-[1px]'>
                 <div className='bg-white w-[2px] h-[2px] rounded-full'></div>
               </div>
