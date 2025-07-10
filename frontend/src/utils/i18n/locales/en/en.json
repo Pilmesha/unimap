@@ -1,0 +1,77 @@
+{
+    "mainPage":{
+        "mainPageHeading":"GANIVI BUILDING INDOOR PLAN",
+        "mainPageImageText": "This website helps TSU students easily navigate the campus and find rooms or lecturers offices. It provides a user-friendly interface to quickly locate classrooms and faculty offices, so students can focus on their studies.",
+        "exploreButton": "Explore",
+        "links": "USEFUL LINKS"
+    },
+    "header": {
+        "heading": "GANIVI-PLAN",
+        "indoorMap": "Indoor Map",
+        "aboutUs": "About Us",
+        "authenticate": "Authenticate"
+    },
+    "aboutUsPage": {
+        "heading": "About Us",
+        "aboutText":"The Ganivi building feels like a maze — and for first-year students, its basically a rite of passage to get lost in it. With all the winding hallways, unexpected turns, and lookalike doors, finding your classroom can be a daily challenge. <1/> Thats exactly why we created this website. Our indoor plan helps you explore the building with ease, showing you exactly where you need to go without the guesswork. No more wandering, no more panicking between lectures — just a clear path through the maze, right at your fingertips."
+    },
+    "footer": {
+        "address":"Address: Tbilisi, University str N13.",
+        "phone": "Phone:"
+    },
+    "indoorMap": {
+        "heading": "GANIVI FLOORS",
+        "floors": "Floor",
+        "route": "Route",
+        "office": "Lecturer`s Office",
+        "yourTable": "Your Table",
+        "from": "From...",
+        "to": "To...",
+        "search": "Search",
+        "clear_path": "Clear Path",
+        "lecturerName": "Name and lastname...",
+        "distance": "The distance is {{count}} meters, good luck😉",
+        "no_subjects": "No subjecs found",
+        "noSubjectsThatDay": "No subjects found for this day",
+        "error": {
+            "noLecturerFound": "No lecturer found",
+            "lecturerNameRequired": "Lecturer name is required.",
+            "sameRoom": "You selected the same room for both 'Starting' and 'Destination'. Please select different rooms.",
+            "irrelevantData": "The data you entered is not relevant to the Ganivi building. Please check the information and try again."
+        },
+        "days": {
+            "all": "All Subjects",
+            "mo": "Monday",
+            "tu": "Tuesday",
+            "we": "Wednesday",
+            "th": "Thursday",
+            "fr": "Friday",
+            "sa": "Saturday"
+        }
+
+    },
+    "authenticate": {
+        "heading": "AUTHENTICATE",
+        "mainText": "Please enter your <1>uni.tsu.ge</1> username and password",
+        "personalId": "Perdonal Id...",
+        "password": "Password...",
+        "log_In": "Enter",
+        "userNotFound": "User not found"
+    },
+    "validation": {
+        "personalIdLength": "Personal ID must be between 6 and 20 characters long.",
+        "personalIdChars": "Personal ID must not contain spaces or other characters besides letters and numbers.",
+        "passwordLength": "Password must be between 3 and 20 characters long.",
+        "passwordNoSpaces": "Password must not contain spaces."
+    },
+    "not_found": {
+        "caption": "Sorry, such a page was not found..." 
+    },
+    "table": {
+        "subject": "Subject",
+        "lecture": "Lecture",
+        "practical": "Practical",
+        "laboratory": "Laboratory",
+        "working_group": "Working Group"
+    }
+}
