@@ -47,10 +47,37 @@ const MapDisplay: React.FC<Props> = ({ floors }) => {
 
   useEffect(() => {
   if (pathResult) {
-    const last = getLastStair(pathResult.split(' -> '));
+    const pathArray = pathResult.split(' -> ');
+    const last = getLastStair(pathArray);
+    const lastRoom = getLastRoom(pathArray);
     setLaststair(last);
+    sethilightedRoom(lastRoom);
   }
 }, [pathResult]);
+
+useEffect(() => {
+  if(openModal === 'route'){
+     setLecturerRoom(null)
+    setLecturerName('')
+    setLecturerError(null)
+    sethilightedRoom(null)
+  }else if (openModal === 'office'){
+    setPathResult(null)
+    setPathCost(null)
+    setFromRoom('')
+    setToRoom('')
+    sethilightedRoom(null)
+  } else if(openModal === 'table'){
+    setPathResult(null)
+    setPathCost(null)
+    setFromRoom('')
+    setToRoom('')
+    setLecturerRoom(null)
+    setLecturerName('')
+    setLecturerError(null)
+    sethilightedRoom(null)
+  }
+}, [openModal])
 
 const handleFilteringTable = () => {
   if (selectedDay === 'ყველა საგანი') {
@@ -67,18 +94,56 @@ const getLastStair = (pathArray: string[]): string | null => {
   const stairs = pathArray.filter(item => /^s[1-6][a-d]1$/.test(item));
   return stairs.length> 0 ? stairs[stairs.length -1] : null
 }
+const getLastRoom = (pathArray: string[]): string | null => {
+   const lastRoom = pathArray.filter(item => /^[1-6cge]/i.test(item));
+  return  lastRoom.length > 0 ? lastRoom[lastRoom.length - 1] : null;
+}
 
 const handleStairClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-  const stairId = e.currentTarget.getAttribute('room-data')
-  if(!stairId) return;
+  const stairId = e.currentTarget.getAttribute('room-data');
+  if (!stairId || !pathResult) return;
 
-    if (laststair) {
-      const nextFloor = findFloorByroom(laststair);
-      if(nextFloor){
-        setSelectedFloor(nextFloor)
-      }
+  const pathArray = pathResult.split(' -> ');
+  const startIndex = pathArray.indexOf(stairId);
+  if (startIndex === -1) return;
+
+  const isStair = (item: string) => /^s[1-6][a-d]1$/i.test(item);
+  const isRoom = (item: string) => /^[1-6cge]/i.test(item);
+
+  let foundRoomBetween = false;
+  let newStairAfterRoom: string | null = null;
+
+  for (let i = startIndex + 1; i < pathArray.length; i++) {
+    const current = pathArray[i];
+
+    if (isRoom(current)) {
+      foundRoomBetween = true;
     }
-}
+
+    if (isStair(current) && foundRoomBetween) {
+      newStairAfterRoom = current;
+      break;
+    }
+  }
+
+  let targetStair = newStairAfterRoom;
+
+  if (!targetStair) {
+    for (let i = startIndex + 1; i < pathArray.length; i++) {
+      const current = pathArray[i];
+      if (!isStair(current)) break;
+      targetStair = current;
+    }
+  }
+
+  if (targetStair) {
+    const floor = findFloorByroom(targetStair);
+    if (floor) {
+      setSelectedFloor(floor);
+    }
+  }
+};
+
 
 
 const findFloorByroom = (roomNumber: string): number | null => {
@@ -92,6 +157,7 @@ const findFloorByroom = (roomNumber: string): number | null => {
 const handlePathAndCost = () => {
   setPathCost(null)
   setPathResult(null)
+  sethilightedRoom(null)
 }
 
 
@@ -177,7 +243,7 @@ const handlePathAndCost = () => {
       setPathError(t('indoorMap.error.sameRoom'));
       return;
     };
-    
+
     setPathLoader(true);
 
     try {
