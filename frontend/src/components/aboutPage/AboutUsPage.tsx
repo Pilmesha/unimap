@@ -19,8 +19,8 @@ const AboutUsPage = () => {
           className='w-auto h-full object-cover object-top' />
         </div>
         <Gopher />
-        <section className='md:col-span-4 row-span-1 w-full h-full  pt-[1rem]'>
-          <div className='w-full flex flex-col text-center gap-[1.5rem] items-center'>
+        <section className='md:col-span-4 row-span-1 w-full h-full  pt-[0rem]'>
+          <div className='relative w-full flex flex-col text-center gap-[1rem] items-center'>
             <div className=' flex flex-col z-10 px-[1rem]'>
               <h1 className='font-firago text-[5vw] font-bold text-[var(--foreground)]'>{t('aboutUsPage.heading')}</h1>
             </div>
@@ -31,15 +31,7 @@ const AboutUsPage = () => {
                 <br /> Thats exactly why we created this website. Our indoor plan helps you explore the building with ease, showing you exactly where you need to go without the guesswork. No more wandering, no more panicking between lectures — just a clear path through the maze, right at your fingertips.
             </Trans>
             </p>
-            <div className='w-[60px] h-[60px] overflow-hidden bg-white rounded-full'>
-                <Image
-                src={'/images/icon.png'}
-                alt='logo'
-                width={1200}
-                height={1200}
-                className='w-full h-full object-cover object-center rounded-full'
-                />
-            </div>
+            <span className='rounded-full absolute bottom-[-35px] left-auto h-[3px] w-[60%] bg-[var(--color-twitter-blue)]'></span>
         </div>
         </section>
       </div>
