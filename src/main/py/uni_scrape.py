@@ -18,8 +18,8 @@ def scrape_uni(username, password):
     driver.get('https://uni.tsu.ge/login')
     time.sleep(3)
     #Send creds
-    username_field = driver.find_element(By.XPATH, '/html/body/app-root/div/ng-component/div/div/div/form/div[1]/input') 
-    password_field = driver.find_element(By.XPATH, '/html/body/app-root/div/ng-component/div/div/div/form/div[2]/input') 
+    username_field = driver.find_element(By.XPATH, '//input[@formcontrolname=\'username\']') 
+    password_field = driver.find_element(By.XPATH, '//input[@formcontrolname=\'password\']') 
     username_field.send_keys(username)
     password_field.send_keys(password)
     password_field.send_keys(Keys.RETURN)
@@ -28,7 +28,7 @@ def scrape_uni(username, password):
     driver.get('https://uni.tsu.ge/schedule') 
     time.sleep(3)
     # Scrape schedule
-    schedule_table = driver.find_element(By.XPATH, '/html/body/app-root/div/audexamschedule/div[2]/div/div[2]/div/table')
+    schedule_table = driver.find_element(By.XPATH, '//table')
     # Extract all rows from the table
     rows = schedule_table.find_elements(By.TAG_NAME, 'tr')
     schedule_data = []
