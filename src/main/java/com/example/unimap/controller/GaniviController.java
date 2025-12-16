@@ -38,6 +38,7 @@ public class GaniviController {
     @PostMapping("/schedule")
     public ResponseEntity<String> getSchedule(@RequestBody ScheduleRequest scheduleReq) {
         String scheduleJson = PythonService.getSchedule(scheduleReq.getUsername(), scheduleReq.getPassword());
+        System.out.println(scheduleJson);
         String newSchedule = Convertor.newSchedule(scheduleJson);
         return ResponseEntity.ok(newSchedule);
     }
